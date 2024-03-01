@@ -883,7 +883,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605385260}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.042100567, y: -2.2165087e-16, z: 4.818621e-18, w: 0.9991134}
+  m_LocalRotation: {x: 0.04210057, y: 0.0000000037219876, z: -1.5683686e-10, w: 0.9991134}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1090,7 +1090,7 @@ Transform:
   m_GameObject: {fileID: 660108369}
   serializedVersion: 2
   m_LocalRotation: {x: -0.09620742, y: 0.09807604, z: 0.00952641, w: 0.99047184}
-  m_LocalPosition: {x: 0, y: -0.029999733, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1269,7 +1269,6 @@ MonoBehaviour:
   sprintSpeed: 10
   slideSpeed: 30
   wallrunSpeed: 8.5
-  climbSpeed: 3
   vaultSpeed: 15
   airMinSpeed: 7
   speedIncreaseMultiplier: 1.5
@@ -1289,19 +1288,15 @@ MonoBehaviour:
     m_Bits: 8192
   grounded: 0
   maxSlopeAngle: 40
-  climbingScript: {fileID: 0}
   orientation: {fileID: 939492795}
   state: 0
   sliding: 0
   crouching: 0
   wallrunning: 0
-  climbing: 0
   vaulting: 0
   freeze: 0
   unlimited: 0
   restricted: 0
-  text_speed: {fileID: 0}
-  text_mode: {fileID: 0}
 --- !u!1 &829140284
 GameObject:
   m_ObjectHideFlags: 3
@@ -1627,7 +1622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.042100575, y: -0.0000000037219878, z: 1.5683688e-10, w: 0.9991134}
+  m_LocalRotation: {x: 0.042100575, y: 0.0000000037219878, z: -1.5683688e-10, w: 0.9991134}
   m_LocalPosition: {x: 2.3139305, y: -3.8109422, z: -8.329702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerMovementAdvanced : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float sprintSpeed;
     public float slideSpeed;
     public float wallrunSpeed;
-    public float climbSpeed;
     public float vaultSpeed;
     public float airMinSpeed;
 
@@ -49,8 +47,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private bool exitingSlope;
 
     [Header("References")]
-    public Climbing climbingScript;
-    private ClimbingDone climbingScriptDone;
 
     public Transform orientation;
 
@@ -69,7 +65,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         walking,
         sprinting,
         wallrunning,
-        climbing,
         vaulting,
         crouching,
         sliding,
@@ -79,7 +74,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public bool sliding;
     public bool crouching;
     public bool wallrunning;
-    public bool climbing;
     public bool vaulting;
 
     public bool freeze;
@@ -87,12 +81,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
     
     public bool restricted;
 
-    public TextMeshProUGUI text_speed;
-    public TextMeshProUGUI text_mode;
-
     private void Start()
     {
-        climbingScriptDone = GetComponent<ClimbingDone>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -109,7 +99,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-        TextStuff();
 
         // handle drag
         if (state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching)
@@ -179,13 +168,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.vaulting;
             desiredMoveSpeed = vaultSpeed;
-        }
-
-        // Mode - Climbing
-        else if (climbing)
-        {
-            state = MovementState.climbing;
-            desiredMoveSpeed = climbSpeed;
         }
 
         // Mode - Wallrunning
@@ -291,8 +273,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void MovePlayer()
     {
-        //if (climbingScript.exitingWall) return;
-        //if (climbingScriptDone.exitingWall) return;
         if (restricted) return;
 
         // calculate movement direction
@@ -372,19 +352,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
-    }
-
-    private void TextStuff()
-    {
-        //Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        //if (OnSlope())
-        //    text_speed.SetText("Speed: " + Round(rb.velocity.magnitude, 1) + " / " + Round(moveSpeed, 1));
-
-        //else
-        //   text_speed.SetText("Speed: " + Round(flatVel.magnitude, 1) + " / " + Round(moveSpeed, 1));
-
-        //text_mode.SetText(state.ToString());
     }
 
     public static float Round(float value, int digits)
