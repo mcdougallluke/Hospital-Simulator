@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,6 +65,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         unlimited,
         walking,
         sprinting,
+        grappling,
         wallrunning,
         vaulting,
         crouching,
@@ -75,6 +77,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public bool crouching;
     public bool wallrunning;
     public bool vaulting;
+    public bool activeGrapple;
 
     public bool freeze;
     public bool unlimited;
@@ -101,7 +104,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         StateHandler();
 
         // handle drag
-        if (state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching)
+        if ((state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching) && !activeGrapple)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
@@ -154,6 +157,12 @@ public class PlayerMovementAdvanced : MonoBehaviour
             state = MovementState.freeze;
             rb.velocity = Vector3.zero;
             desiredMoveSpeed = 0f;
+        }
+
+        else if (activeGrapple)
+        {
+            state = MovementState.grappling;
+            moveSpeed = sprintSpeed;
         }
 
         // Mode - Unlimited
@@ -273,6 +282,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void MovePlayer()
     {
+        if (activeGrapple) return;
         if (restricted) return;
 
         // calculate movement direction
@@ -301,6 +311,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void SpeedControl()
     {
+        if (activeGrapple) return;
+
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
@@ -359,4 +371,55 @@ public class PlayerMovementAdvanced : MonoBehaviour
         float mult = Mathf.Pow(10.0f, (float)digits);
         return Mathf.Round(value * mult) / mult;
     }
+
+
+    private Vector3 velocityToSet;
+
+    bool enableMovementOnNextTouch;
+
+    private void SetVelocity()
+    {
+        enableMovementOnNextTouch = true;
+        rb.velocity = velocityToSet;
+    }
+
+    public void ResetRestrictions()
+    {
+        activeGrapple = false;
+    }
+
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+        //Invoke(nameof(ResetRestrictions), 3f);
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (enableMovementOnNextTouch)
+        {
+            enableMovementOnNextTouch = false;
+            ResetRestrictions();
+
+            GetComponent<Grappling>().StopGrapple();
+        }
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
+    }
+
+
 }
