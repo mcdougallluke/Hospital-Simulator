@@ -855,6 +855,8 @@ GameObject:
   - component: {fileID: 470800152}
   - component: {fileID: 470800151}
   - component: {fileID: 470800153}
+  - component: {fileID: 470800154}
+  - component: {fileID: 470800155}
   m_Layer: 0
   m_Name: GrapplingGun
   m_TagString: Untagged
@@ -936,7 +938,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470800147}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1032,6 +1034,71 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &470800154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470800147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe67ff2273de904c814dd08be5d6343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grappling: {fileID: 470800155}
+  quality: 500
+  damper: 14
+  strength: 800
+  velocity: 15
+  waveCount: 4
+  waveHeight: 10
+  affectCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0007019043
+      value: 0
+      inSlope: 0.72077024
+      outSlope: 0.72077024
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.01769407
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &470800155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470800147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74912716dbbadb47b0c2176ee60fa4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 963194228}
+  gunTip: {fileID: 393549450}
+  whatIsGrappleable:
+    serializedVersion: 2
+    m_Bits: 8192
+  maxGrappleDistance: 100
+  grappleDelayTime: 0.2
+  overshootYAxis: 5
+  grapplingCd: 1
+  grappleKey: 324
 --- !u!1 &605385260
 GameObject:
   m_ObjectHideFlags: 3
@@ -1283,7 +1350,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 70
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -1422,7 +1489,6 @@ GameObject:
   - component: {fileID: 718369815}
   - component: {fileID: 718369814}
   - component: {fileID: 718369816}
-  - component: {fileID: 718369817}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1495,7 +1561,7 @@ MonoBehaviour:
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
   groundDrag: 4
-  jumpForce: 10
+  jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
   crouchSpeed: 3.5
@@ -1519,29 +1585,6 @@ MonoBehaviour:
   freeze: 0
   unlimited: 0
   restricted: 0
---- !u!114 &718369817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718369813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c74912716dbbadb47b0c2176ee60fa4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 963194228}
-  gunTip: {fileID: 393549450}
-  whatIsGrappleable:
-    serializedVersion: 2
-    m_Bits: 8192
-  lr: {fileID: 470800153}
-  maxGrappleDistance: 100
-  grappleDelayTime: 0.2
-  overshootYAxis: 5
-  grapplingCd: 1
-  grappleKey: 324
 --- !u!1 &829140284
 GameObject:
   m_ObjectHideFlags: 3
@@ -1841,7 +1884,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 70
+  field of view: 60
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -1867,7 +1910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13076189, y: 0.09768325, z: 0.012947981, w: 0.9865048}
+  m_LocalRotation: {x: -0.12472425, y: 0.09776058, z: 0.01235013, w: 0.98728627}
   m_LocalPosition: {x: 2.3139305, y: -5.810942, z: -6.3297024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2077,7 +2120,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 70
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -2103,7 +2146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209028312}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13076188, y: 0.09768322, z: 0.012947977, w: 0.9865048}
+  m_LocalRotation: {x: -0.12472423, y: 0.0977606, z: 0.012350131, w: 0.9872863}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2138,7 +2181,7 @@ RectTransform:
   m_GameObject: {fileID: 1283355171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114029013}
@@ -2161,7 +2204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2314,7 +2357,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 70
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -2340,7 +2383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481171930}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1648246, y: 0.09717661, z: 0.016320856, w: 0.98138845}
+  m_LocalRotation: {x: -0.15294996, y: 0.09736677, z: 0.015145026, w: 0.98330903}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2903,7 +2946,7 @@ MonoBehaviour:
   m_Follow: {fileID: 718369815}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 70
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000

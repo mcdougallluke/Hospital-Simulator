@@ -404,7 +404,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
             enableMovementOnNextTouch = false;
             ResetRestrictions();
 
-            GetComponent<Grappling>().StopGrapple();
+            GetComponentInChildren<Grappling>().StopGrapple();
         }
     }
 

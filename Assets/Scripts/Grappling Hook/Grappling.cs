@@ -9,7 +9,6 @@ public class Grappling : MonoBehaviour
     public Transform cam;
     public Transform gunTip;
     public LayerMask whatIsGrappleable;
-    public LineRenderer lr;
 
     [Header("Grappling")]
     public float maxGrappleDistance;
@@ -29,7 +28,7 @@ public class Grappling : MonoBehaviour
 
     private void Start()
     {
-        pm = GetComponent<PlayerMovementAdvanced>();
+        pm = GetComponentInParent<PlayerMovementAdvanced>();
     }
 
     private void Update()
@@ -38,12 +37,6 @@ public class Grappling : MonoBehaviour
 
         if (grapplingCdTimer > 0)
             grapplingCdTimer -= Time.deltaTime;
-    }
-
-    private void LateUpdate()
-    {
-         if (grappling)
-            lr.SetPosition(0, gunTip.position);
     }
 
     private void StartGrapple()
@@ -55,7 +48,7 @@ public class Grappling : MonoBehaviour
         pm.freeze = true;
 
         RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, whatIsGrappleable))
+        if(Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, whatIsGrappleable))
         {
             grapplePoint = hit.point;
 
@@ -67,9 +60,6 @@ public class Grappling : MonoBehaviour
 
             Invoke(nameof(StopGrapple), grappleDelayTime);
         }
-
-        lr.enabled = true;
-        lr.SetPosition(1, grapplePoint);
     }
 
     private void ExecuteGrapple()
@@ -96,7 +86,7 @@ public class Grappling : MonoBehaviour
 
         grapplingCdTimer = grapplingCd;
 
-        lr.enabled = false;
+        //lr.enabled = false;
     }
 
     public bool IsGrappling()
