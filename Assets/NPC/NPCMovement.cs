@@ -1,45 +1,38 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCMovement : MonoBehaviour
 {
-    public Transform pointA;
-    public Transform pointB;
-    public float speed = 2f;
+    public Transform target;
+    public NavMeshAgent agent;
     private Animator animator;
+    public static bool isWalking = false; // Made public and static for simplicity
 
-    void Start()
+    private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        StartCoroutine(MoveBetweenPoints());
+        StartCoroutine(MoveAndWait());
     }
 
-    IEnumerator MoveBetweenPoints()
+    IEnumerator MoveAndWait()
     {
         while (true)
         {
-            yield return StartCoroutine(MoveToPoint(pointB.position));
-            yield return new WaitForSeconds(1f); // Wait at point B
+            agent.SetDestination(target.position);
+            isWalking = true;
+            animator.SetBool("isWalking", isWalking);
 
-            yield return StartCoroutine(MoveToPoint(pointA.position));
-            yield return new WaitForSeconds(1f); // Wait at point A
+            while (agent.pathPending || agent.remainingDistance > 0.1f)
+            {
+                yield return null;
+            }
+
+            isWalking = false;
+            animator.SetBool("isWalking", isWalking);
+            yield return new WaitForSeconds(2f);
+            break;
         }
-    }
-
-    IEnumerator MoveToPoint(Vector3 target)
-    {
-        animator.SetBool("isWalking", true);
-
-        // Keep moving until very close to the target
-        while (Vector3.Distance(transform.position, target) > 0.001f) // Reduced threshold
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-            yield return null;
-        }
-
-        // Directly set position to target to prevent getting stuck due to floating-point issues
-        transform.position = target;
-
-        animator.SetBool("isWalking", false);
     }
 }
