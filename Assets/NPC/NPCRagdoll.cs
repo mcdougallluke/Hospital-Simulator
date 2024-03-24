@@ -50,14 +50,11 @@ public class NPCRagdoll : MonoBehaviour
         // Wait until the "Getting Up" animation is done playing
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Getting Up") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
 
-        // After getting up, decide what to do next based on the NPC's state
-        if (NPCMovement.isWalking) // Make sure this reflects the current walking state accurately
+        // Restart MoveAndWait coroutine in NPCMovement
+        NPCMovement npcMovement = GetComponent<NPCMovement>();
+        if (npcMovement != null)
         {
-            animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            animator.Play("Happy Idle");
+            StartCoroutine(npcMovement.MoveAndWait());
         }
     }
 

@@ -16,23 +16,28 @@ public class NPCMovement : MonoBehaviour
         StartCoroutine(MoveAndWait());
     }
 
-    IEnumerator MoveAndWait()
+    public IEnumerator MoveAndWait()
     {
         while (true)
         {
-            agent.SetDestination(target.position);
-            isWalking = true;
-            animator.SetBool("isWalking", isWalking);
-
-            while (agent.pathPending || agent.remainingDistance > 0.1f)
+            if (agent.enabled) // Only attempt to move if the agent is enabled
             {
-                yield return null;
+                agent.SetDestination(target.position);
+                isWalking = true;
+                animator.SetBool("isWalking", isWalking);
+
+                // Wait until the path is calculated and the agent has reached the destination
+                while (agent.pathPending || (agent.enabled && agent.remainingDistance > 0.1f))
+                {
+                    yield return null;
+                }
             }
 
             isWalking = false;
             animator.SetBool("isWalking", isWalking);
-            yield return new WaitForSeconds(2f);
-            break;
+            yield return new WaitForSeconds(2f); // Adjust the wait time as needed for your game's pacing
+            // Removed the break statement to allow continuous execution
         }
     }
+
 }
