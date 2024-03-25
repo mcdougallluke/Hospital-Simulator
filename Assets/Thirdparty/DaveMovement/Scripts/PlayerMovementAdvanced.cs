@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerMovementAdvanced : MonoBehaviour
 {
+    [Header("Animation")]
+    public Animator animator;
+
     [Header("Movement")]
     private float moveSpeed;
     private float desiredMoveSpeed;
@@ -97,7 +100,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, 0.4f, whatIsGround);
 
         MyInput();
         SpeedControl();
@@ -420,6 +423,21 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         return velocityXZ + velocityY;
     }
+
+    void OnDrawGizmos() {
+        // Set the color of the gizmo
+        Gizmos.color = Color.red;
+
+        // Start the gizmo line 0.2 units above the player's position
+        Vector3 rayStart = transform.position + Vector3.up * 0.2f;
+
+        // Calculate the end point of the gizmo line based on the raycast distance
+        Vector3 rayEnd = rayStart + Vector3.down * (0.4f);
+
+        // Draw the gizmo line in the scene view
+        Gizmos.DrawLine(rayStart, rayEnd);
+    }
+
 
 
 }
