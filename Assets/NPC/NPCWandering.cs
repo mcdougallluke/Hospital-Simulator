@@ -1,68 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPCWandering : MonoBehaviour
 {
-    public float moveSpeed = 3f;
-    public float rotSpeed = 100f;
-    private bool isWandering = false;
-    private bool isRotatingLeft = false;
-    private bool isRotatingRight = false;
-    private bool isWalking = false;
+    public Transform initialPoint;
+    public Transform[] optionalPoints;
+    private NavMeshAgent agent;
+    private bool isWaiting = false;
 
-    // Update is called once per frame
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        MoveToInitialPoint();
+    }
+
     void Update()
     {
-        if (isWandering == false)
+        if (!isWaiting && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            StartCoroutine(Wander());
-        }
-        if (isRotatingRight == true)
-        {
-            gameObject.GetComponent<Animator>().Play("idle");
-            transform.Rotate(transform.up * Time.deltaTime * rotSpeed);
-        }
-        if (isRotatingLeft == true)
-        {
-            gameObject.GetComponent<Animator>().Play("idle");
-            transform.Rotate(transform.up * Time.deltaTime * -rotSpeed);
-        }
-        if (isWalking == true)
-        {
-            gameObject.GetComponent<Animator>().Play("Walking");
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            
+            CheckAndMoveToOptionalPoint();
+                // NPC has arrived at the optional point
+                isWaiting = true; // NPC will now wait here
+                Debug.Log("NPC has arrived at the point and is now waiting.");
+            
+
         }
     }
 
-    IEnumerator Wander()
+    void MoveToInitialPoint()
     {
-        int rotTime = Random.Range(1, 3);
-        int rotateWait = Random.Range(1, 4);
-        int rotateLorR = Random.Range(1, 2);
-        int walkWait = Random.Range(1, 5);
-        int walkTime = Random.Range(1, 6);
+        agent.destination = initialPoint.position;
+    }
 
-        isWandering = true;
+    void CheckAndMoveToOptionalPoint()
+    {
+        bool pointFound = false;
+        foreach (var point in optionalPoints)
+        {
+            if (PointManager.Instance.IsPointAvailable(point))
+            {
+                pointFound = true;
+                PointManager.Instance.SetPointAvailability(point, false); // Mark the point as unavailable
+                agent.destination = point.position;
+                Debug.Log($"Moving to point: {point.name}");
+                return;
+            }
+        }
+        
+        if (!pointFound)
+        {
+            Debug.Log("No available points found.");
+        }
+    }
 
-        yield return new WaitForSeconds(walkWait);
-        isWalking = true;
-        yield return new WaitForSeconds(walkTime);
-        isWalking = false;
-        yield return new WaitForSeconds(rotateWait);
-        if (rotateLorR == 1)
+
+    void TryMoveToOptionalPointAgain()
+    {
+        foreach (var point in optionalPoints)
         {
-            isRotatingRight = true;
-            yield return new WaitForSeconds(rotTime);
-            isRotatingRight = false;
+            if (PointManager.Instance.IsPointAvailable(point))
+            {
+                CancelInvoke("TryMoveToOptionalPointAgain"); // Stop checking
+                PointManager.Instance.SetPointAvailability(point, false);
+                agent.destination = point.position;
+                break;
+            }
         }
-        if (rotateLorR == 2)
-        {
-            isRotatingLeft = true;
-            yield return new WaitForSeconds(rotTime);
-            isRotatingLeft = false;
-        }
-        isWandering = false;
     }
 }
