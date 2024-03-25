@@ -17,6 +17,7 @@ public class NPCWandering : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        currentDestinationPoint = initialPoint;
         MoveToInitialPoint();
     }
 
@@ -116,11 +117,15 @@ public class NPCWandering : MonoBehaviour
 
     void MoveToAnotherPointAndDespawn()
     {
-        // Example: Move back to the initial point, then despawn
+        // Move back to initial point then despawn
         agent.destination = initialPoint.position;
-        
-        // Despawn logic (e.g., disable, destroy, or return to a pool)
         Debug.Log("NPC moving away and despawning.");
-        Destroy(gameObject, 5); // Waits 5 seconds before destroying, adjust as needed
+        Destroy(gameObject, 10); // Waits x seconds before destroying
     }
+
+    public void ResetAfterRagdoll()
+    {
+        agent.destination = currentDestinationPoint.position;
+    }
+
 }

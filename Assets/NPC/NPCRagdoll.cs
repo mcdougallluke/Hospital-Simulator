@@ -47,16 +47,23 @@ public class NPCRagdoll : MonoBehaviour
         SetRagdoll(false);
         animator.Play("Getting Up");
 
+        // Reset the NPC's navigation and state
+        if (agent != null)
+        {
+            agent.enabled = true; // Re-enable the NavMeshAgent
+            agent.ResetPath(); // Clear any existing path
+        }
+
+        NPCWandering npcWandering = GetComponent<NPCWandering>();
+        if (npcWandering != null)
+        {
+            npcWandering.ResetAfterRagdoll(); // Add this method to your NPCWandering script
+        }
+
         // Wait until the "Getting Up" animation is done playing
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Getting Up") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
-
-        // Restart MoveAndWait coroutine in NPCMovement
-        NPCMovement npcMovement = GetComponent<NPCMovement>();
-        if (npcMovement != null)
-        {
-            StartCoroutine(npcMovement.MoveAndWait());
-        }
     }
+
 
     void OnCollisionEnter(Collision collision)
     {
