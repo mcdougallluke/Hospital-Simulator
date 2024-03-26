@@ -372,10 +372,19 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         exitingSlope = true;
         animator.SetTrigger("Jump");
-        // reset y velocity
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        // Start the coroutine to delay the jump force
+        StartCoroutine(DelayedJump(jumpForce));
+    }
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    private IEnumerator DelayedJump(float force)
+    {
+        // Wait for the specified time (in seconds)
+        // Assuming your game runs at 60 FPS, 15 frames would be 0.25 seconds
+        yield return new WaitForSeconds(0.3f);
+
+        // reset y velocity and apply the jump force after the delay
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(transform.up * force, ForceMode.Impulse);
     }
     private void ResetJump()
     {
