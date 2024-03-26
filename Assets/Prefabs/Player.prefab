@@ -1002,7 +1002,7 @@ GameObject:
   - component: {fileID: 3223568026010173879}
   - component: {fileID: 9035751136799188695}
   - component: {fileID: 6637376282949085661}
-  - component: {fileID: 687103231020619342}
+  - component: {fileID: 5317652308315358858}
   m_Layer: 0
   m_Name: Player
   m_TagString: Doctor
@@ -1100,8 +1100,8 @@ MonoBehaviour:
   freeze: 0
   unlimited: 0
   restricted: 0
---- !u!135 &687103231020619342
-SphereCollider:
+--- !u!136 &5317652308315358858
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1118,9 +1118,11 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.1566582
-  m_Center: {x: 0, y: 0.6566582, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.90764
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.90031457, z: 0}
 --- !u!1 &3078018520475774769
 GameObject:
   m_ObjectHideFlags: 0
