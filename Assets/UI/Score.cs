@@ -24,4 +24,10 @@ public class Score : MonoBehaviour
         MyText.text = "Score: " + score; // Correctly display the current score
     }
 
+    public int CurrentScore()
+    {
+        return score;
+    }
+
+
 }
