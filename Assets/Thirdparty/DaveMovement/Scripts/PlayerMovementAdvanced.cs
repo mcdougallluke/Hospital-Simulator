@@ -13,6 +13,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
     public float walkSpeed;
+    public float backwardsWalkSpeed;
     public float sprintSpeed;
     public float slideSpeed;
     public float wallrunSpeed;
@@ -68,6 +69,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         unlimited,
         idle,
         walking,
+        walkingBackwards,
         sprinting,
         grappling,
         wallrunning,
@@ -120,6 +122,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         // Set the animator parameters
         animator.SetBool("IsWalking", state == MovementState.walking);
         animator.SetBool("IsSprinting", state == MovementState.sprinting);
+        animator.SetBool("IsWalkingBackwards", state == MovementState.walkingBackwards);
         animator.SetBool("IsInAir", state == MovementState.grappling || state == MovementState.air);
     }
 
@@ -230,11 +233,19 @@ public class PlayerMovementAdvanced : MonoBehaviour
             rb.drag = 15;
         }
 
-        // Mode - Sprinting
-        else if (grounded && Input.GetKey(sprintKey))
+        // Mode - Sprinting (but not backwards)
+        else if (grounded && Input.GetKey(sprintKey) && verticalInput >= 0)
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
+            rb.drag = groundDrag;
+        }
+
+        // Mode - Walking Backwards (no sprinting allowed)
+        else if (grounded && verticalInput < 0)
+        {
+            state = MovementState.walkingBackwards;
+            desiredMoveSpeed = backwardsWalkSpeed;
             rb.drag = groundDrag;
         }
 

@@ -1123,6 +1123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 7031383116586980619}
   walkSpeed: 7
+  backwardsWalkSpeed: 3
   sprintSpeed: 10
   slideSpeed: 30
   wallrunSpeed: 8.5
@@ -1130,7 +1131,7 @@ MonoBehaviour:
   airMinSpeed: 7
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
-  groundDrag: 8
+  groundDrag: 4
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
