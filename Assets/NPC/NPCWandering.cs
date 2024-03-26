@@ -11,6 +11,8 @@ public class NPCWandering : MonoBehaviour
     private bool hasArrivedAtOptionalPoint = false;
     private bool hasArrivedAtWaitingRoom = false;
     private Transform currentDestinationPoint; 
+    public SpellingMinigame spellingMinigame; // Assign this in the inspector
+
 
     
 
@@ -19,6 +21,7 @@ public class NPCWandering : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         currentDestinationPoint = initialPoint;
         MoveToInitialPoint();
+        
     }
 
     void Update()
@@ -106,12 +109,18 @@ public class NPCWandering : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // if (hasArrivedAtOptionalPoint && other.CompareTag("Doctor"))
+        // {
+        //     Debug.Log(hasArrivedAtOptionalPoint);
+        //     PointManager.Instance.SetPointAvailability(currentDestinationPoint, true);
+        //     // Triggered when a "doctor" tagged object comes near the NPC after it has arrived at an optional point
+        //     MoveToAnotherPointAndDespawn();
+        // }
+
         if (hasArrivedAtOptionalPoint && other.CompareTag("Doctor"))
         {
-            Debug.Log(hasArrivedAtOptionalPoint);
-            PointManager.Instance.SetPointAvailability(currentDestinationPoint, true);
-            // Triggered when a "doctor" tagged object comes near the NPC after it has arrived at an optional point
-            MoveToAnotherPointAndDespawn();
+            spellingMinigame.StartMinigame(); // Start the spelling minigame
+            // Optionally pause NPC actions here
         }
     }
 
