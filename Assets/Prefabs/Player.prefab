@@ -1105,10 +1105,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.90764
+  m_Radius: 0.81236994
+  m_Height: 1.9
   m_Direction: 1
-  m_Center: {x: 0, y: 0.90031457, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &6637376282949085661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,6 +1394,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4483104835017531006}
+  - {fileID: 4910834336731491359}
   m_Father: {fileID: 7879296112695718928}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3654066908819853389
@@ -1985,13 +1986,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5010914955735417253}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.157, y: 0.968, z: 0.137}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.2}
+  m_LocalRotation: {x: 0.057745457, y: 0.00000029606892, z: 0.00009004375, w: 0.99833137}
+  m_LocalPosition: {x: 0.15704179, y: -0.27198315, z: 0.1339766}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.20000003}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3171987031339323011}
-  m_Father: {fileID: 7199769439415463455}
+  m_Father: {fileID: 3243006814950596736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7526119678434349370
 MeshFilter:
@@ -3326,7 +3327,6 @@ Transform:
   - {fileID: 3281874665552666322}
   - {fileID: 4418888970161510378}
   - {fileID: 1333478767991823357}
-  - {fileID: 4910834336731491359}
   m_Father: {fileID: 3223568026010173879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8410888788826869458
@@ -3579,12 +3579,12 @@ PrefabInstance:
     - {fileID: 1017467114332762112, guid: 155ecd456288eeb41b403d357d74bcd7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6288269068751399274, guid: 155ecd456288eeb41b403d357d74bcd7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4910834336731491359}
     - targetCorrespondingSourceObject: {fileID: 7573917515087217851, guid: 155ecd456288eeb41b403d357d74bcd7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 357562111625749111}
+    - targetCorrespondingSourceObject: {fileID: 4639125493689970309, guid: 155ecd456288eeb41b403d357d74bcd7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4910834336731491359}
     - targetCorrespondingSourceObject: {fileID: 5294965225313169737, guid: 155ecd456288eeb41b403d357d74bcd7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8489925529335755699}
