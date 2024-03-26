@@ -222,10 +222,12 @@ public class PlayerMovementAdvanced : MonoBehaviour
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
         }
+        // Mode - Idle
         else if (grounded && horizontalInput == 0 && verticalInput == 0)
         {
             state = MovementState.idle;
             desiredMoveSpeed = walkSpeed;
+            rb.drag = 15;
         }
 
         // Mode - Sprinting
@@ -233,6 +235,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
+            rb.drag = groundDrag;
         }
 
         // Mode - Walking
@@ -240,6 +243,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
+            rb.drag = groundDrag;
         }
 
         // Mode - Air
