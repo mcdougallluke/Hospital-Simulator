@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class NPCSpawner : MonoBehaviour
+public class PatientSpawner : MonoBehaviour
 {
     public GameObject npcPrefab; // Assign in the inspector
     public Transform spawnPoint; // Assign a transform as the spawn point in the inspector
@@ -29,7 +29,7 @@ public class NPCSpawner : MonoBehaviour
 
     private void SpawnNPCIfPossible()
     {
-        if (GameObject.FindObjectsOfType<NPCWandering>().Length < maxNPCCount)
+        if (GameObject.FindObjectsOfType<PatientAI>().Length < maxNPCCount)
         {
             SpawnNPC();
         }
@@ -41,7 +41,7 @@ public class NPCSpawner : MonoBehaviour
         GameObject npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
 
         // Get the NPCWandering component and assign the references
-        NPCWandering npcWanderingScript = npc.GetComponent<NPCWandering>();
+        PatientAI npcWanderingScript = npc.GetComponent<PatientAI>();
         if (npcWanderingScript != null)
         {
             npcWanderingScript.spellingMinigame = spellingMinigame;

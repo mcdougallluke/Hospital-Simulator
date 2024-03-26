@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class NPCWandering : MonoBehaviour
+public class PatientAI : MonoBehaviour
 {
     public Transform initialPoint;
     public Transform[] optionalPoints;
@@ -75,9 +75,9 @@ public class NPCWandering : MonoBehaviour
     {
         foreach (var point in optionalPoints)
         {
-            if (PointManager.Instance.IsPointAvailable(point))
+            if (RoomManager.Instance.IsRoomAvailable(point))
             {
-                PointManager.Instance.SetPointAvailability(point, false); // Mark the point as unavailable
+                RoomManager.Instance.SetRoomAvailability(point, false); // Mark the point as unavailable
                 agent.destination = point.position;
                 currentDestinationPoint = point; // Store the current destination
                 Debug.Log($"Moving to point: {point.name}");
@@ -94,10 +94,10 @@ public class NPCWandering : MonoBehaviour
     {
         foreach (var point in optionalPoints)
         {
-            if (PointManager.Instance.IsPointAvailable(point))
+            if (RoomManager.Instance.IsRoomAvailable(point))
             {
                 CancelInvoke("TryMoveToOptionalPointAgain"); // Stop checking
-                PointManager.Instance.SetPointAvailability(point, false);
+                RoomManager.Instance.SetRoomAvailability(point, false);
                 agent.destination = point.position;
                 break;
             }
@@ -128,7 +128,7 @@ public class NPCWandering : MonoBehaviour
     public void MoveToAnotherPointAndDespawn()
     {
         // Move back to initial point then despawn
-        PointManager.Instance.SetPointAvailability(currentDestinationPoint, true);
+        RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
         agent.destination = initialPoint.position;
         Debug.Log("NPC moving away and despawning.");
 

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCRagdoll : MonoBehaviour
+public class PatientRagdoll : MonoBehaviour
 {       
     private NavMeshAgent agent; // Add this line
     public float forceThreshold = 5f; // Minimum force to trigger ragdoll
@@ -54,7 +54,7 @@ public class NPCRagdoll : MonoBehaviour
             agent.ResetPath(); // Clear any existing path
         }
 
-        NPCWandering npcWandering = GetComponent<NPCWandering>();
+        PatientAI npcWandering = GetComponent<PatientAI>();
         if (npcWandering != null)
         {
             npcWandering.ResetAfterRagdoll(); // Add this method to your NPCWandering script

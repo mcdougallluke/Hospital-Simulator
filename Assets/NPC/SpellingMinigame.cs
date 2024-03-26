@@ -11,7 +11,7 @@ public class SpellingMinigame : MonoBehaviour
     public Text wordText; // Assign in inspector
     public Button submitButton; // Assign in inspector
     private string currentWord; // Word to spell, will be randomized from a list
-    public NPCWandering npcWandering;
+    public PatientAI patientAI;
     
     // List of words to use in the minigame
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
@@ -61,7 +61,7 @@ public class SpellingMinigame : MonoBehaviour
         if (inputField.text.ToLower().Equals(currentWord.ToLower()))
         {
             Debug.Log("SpellingMinigame: Correct spelling!");
-            npcWandering.MoveToAnotherPointAndDespawn(); // Call MoveToAnotherPointAndDespawn if the spelling is correct
+            patientAI.MoveToAnotherPointAndDespawn(); // Call MoveToAnotherPointAndDespawn if the spelling is correct
         }
         else
         {
@@ -72,9 +72,9 @@ public class SpellingMinigame : MonoBehaviour
         minigameUI.SetActive(false); // Optionally hide the UI after submission
     }
 
-    public void SetNPC(NPCWandering npc)
+    public void SetNPC(PatientAI npc)
     {
-        npcWandering = npc; // Method to set the NPC reference
+        patientAI = npc; // Method to set the NPC reference
     }
 
 }
