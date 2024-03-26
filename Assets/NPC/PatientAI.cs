@@ -14,6 +14,8 @@ public class PatientAI : MonoBehaviour
     private Transform currentDestinationPoint; 
     public SpellingMinigame spellingMinigame;
     public Score scoreScript; 
+    private bool hasStartedMinigame = false;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -91,18 +93,11 @@ public class PatientAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // if (hasArrivedAtOptionalPoint && other.CompareTag("Doctor"))
-        // {
-        //     Debug.Log(hasArrivedAtOptionalPoint);
-        //     PointManager.Instance.SetPointAvailability(currentDestinationPoint, true);
-        //     // Triggered when a "doctor" tagged object comes near the NPC after it has arrived at an optional point
-        //     MoveToAnotherPointAndDespawn();
-        // }
-
-        if (hasArrivedAtExamRoom && other.CompareTag("Doctor"))
+        if (hasArrivedAtExamRoom && other.CompareTag("Doctor") && !hasStartedMinigame)
         {
             spellingMinigame.StartMinigame(); // Start the spelling minigame
             spellingMinigame.SetNPC(this); // This line sets the reference to this NPC instance in the spelling minigame
+            hasStartedMinigame = true; // Prevent the mini-game from starting again for this NPC
 
             // Optionally pause NPC actions here
         }

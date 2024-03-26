@@ -21,13 +21,13 @@ public class SpellingMinigame : MonoBehaviour
         Debug.Log("SpellingMinigame: Start called.");
         minigameUI.SetActive(false); // Hide the UI initially
         submitButton.onClick.AddListener(CheckSpelling); // Add click listener to the submit button
+        inputField.onEndEdit.AddListener(delegate { OnInputFieldSubmit(inputField.text); });
+
     }
 
     public void StartMinigame()
     {
         Debug.Log("SpellingMinigame: Starting Minigame.");
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         
         // Randomly select a word from the list
         currentWord = words[Random.Range(0, words.Count)];
@@ -67,14 +67,23 @@ public class SpellingMinigame : MonoBehaviour
         {
             Debug.Log("SpellingMinigame: Incorrect spelling.");
         }
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
         minigameUI.SetActive(false); // Optionally hide the UI after submission
     }
 
     public void SetNPC(PatientAI npc)
     {
         patientAI = npc; // Method to set the NPC reference
+    }
+
+    private void OnInputFieldSubmit(string input)
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            CheckSpelling();
+        }
+        // Optionally, you can also automatically hide the keyboard on mobile devices
+        inputField.DeactivateInputField();
     }
 
 }
