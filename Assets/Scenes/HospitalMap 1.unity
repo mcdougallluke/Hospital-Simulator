@@ -5596,12 +5596,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5804dbfc65fef84cad85d158384e0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcPrefab: {fileID: 2242589670696231582, guid: fa461495786752548b184d9a19325f9b, type: 3}
+  patientPrefab: {fileID: 2242589670696231582, guid: fa461495786752548b184d9a19325f9b, type: 3}
   spawnPoint: {fileID: 330832550}
   spellingMinigame: {fileID: 7699413}
   scoreScript: {fileID: 1514051305}
-  initialPoint: {fileID: 767961923}
-  optionalPoints:
+  waitingRoom: {fileID: 767961923}
+  examRooms:
   - {fileID: 2039758985}
   - {fileID: 627057877}
 --- !u!1 &367442463
@@ -35003,7 +35003,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481171930}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.17844565, y: 0.040890455, z: 0.007422372, w: 0.98307174}
+  m_LocalRotation: {x: -0.17844564, y: 0.04089047, z: 0.0074223736, w: 0.98307174}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

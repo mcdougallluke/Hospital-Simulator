@@ -61,7 +61,7 @@ public class SpellingMinigame : MonoBehaviour
         if (inputField.text.ToLower().Equals(currentWord.ToLower()))
         {
             Debug.Log("SpellingMinigame: Correct spelling!");
-            patientAI.MoveToAnotherPointAndDespawn(); // Call MoveToAnotherPointAndDespawn if the spelling is correct
+            patientAI.MoveToPointAndDespawn(); // Call MoveToAnotherPointAndDespawn if the spelling is correct
         }
         else
         {

@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class PatientAI : MonoBehaviour
 {
-    public Transform initialPoint;
-    public Transform[] optionalPoints;
+    public Transform waitingRoom;
+    public Transform[] examRooms;
     private NavMeshAgent agent;
     private bool isWaiting = false;
-    private bool hasArrivedAtOptionalPoint = false;
+    private bool hasArrivedAtExamRoom = false;
     private bool hasArrivedAtWaitingRoom = false;
     private Transform currentDestinationPoint; 
     public SpellingMinigame spellingMinigame;
@@ -17,14 +17,14 @@ public class PatientAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        currentDestinationPoint = initialPoint;
-        MoveToInitialPoint();
+        currentDestinationPoint = waitingRoom;
+        MoveToWaitingRoom();
         
     }
 
     void Update()
     {
-        if(hasArrivedAtWaitingRoom && isWaiting && !hasArrivedAtOptionalPoint)
+        if(hasArrivedAtWaitingRoom && isWaiting && !hasArrivedAtExamRoom)
         {
             bool foundPoint = CheckAndMoveToOptionalPoint();
             
@@ -57,7 +57,7 @@ public class PatientAI : MonoBehaviour
                 if (!isWaiting) // This ensures the message is logged only once upon arrival
                 {
                     Debug.Log("NPC has arrived at the optional point and is now waiting.");
-                    hasArrivedAtOptionalPoint = true; // NPC has arrived at the optional point
+                    hasArrivedAtExamRoom = true; // NPC has arrived at the optional point
 
                 }
                 isWaiting = true; // NPC will now wait here
@@ -66,14 +66,14 @@ public class PatientAI : MonoBehaviour
     }
 
 
-    void MoveToInitialPoint()
+    void MoveToWaitingRoom()
     {
-        agent.destination = initialPoint.position;
+        agent.destination = waitingRoom.position;
     }
 
     bool CheckAndMoveToOptionalPoint()
     {
-        foreach (var point in optionalPoints)
+        foreach (var point in examRooms)
         {
             if (RoomManager.Instance.IsRoomAvailable(point))
             {
@@ -89,21 +89,6 @@ public class PatientAI : MonoBehaviour
         return false; // No point found
     }
 
-
-    void TryMoveToOptionalPointAgain()
-    {
-        foreach (var point in optionalPoints)
-        {
-            if (RoomManager.Instance.IsRoomAvailable(point))
-            {
-                CancelInvoke("TryMoveToOptionalPointAgain"); // Stop checking
-                RoomManager.Instance.SetRoomAvailability(point, false);
-                agent.destination = point.position;
-                break;
-            }
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         // if (hasArrivedAtOptionalPoint && other.CompareTag("Doctor"))
@@ -114,7 +99,7 @@ public class PatientAI : MonoBehaviour
         //     MoveToAnotherPointAndDespawn();
         // }
 
-        if (hasArrivedAtOptionalPoint && other.CompareTag("Doctor"))
+        if (hasArrivedAtExamRoom && other.CompareTag("Doctor"))
         {
             spellingMinigame.StartMinigame(); // Start the spelling minigame
             spellingMinigame.SetNPC(this); // This line sets the reference to this NPC instance in the spelling minigame
@@ -125,11 +110,11 @@ public class PatientAI : MonoBehaviour
 
 
 
-    public void MoveToAnotherPointAndDespawn()
+    public void MoveToPointAndDespawn()
     {
         // Move back to initial point then despawn
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
-        agent.destination = initialPoint.position;
+        agent.destination = waitingRoom.position;
         Debug.Log("NPC moving away and despawning.");
 
         // Increment the score by 10

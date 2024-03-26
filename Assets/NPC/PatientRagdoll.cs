@@ -54,10 +54,10 @@ public class PatientRagdoll : MonoBehaviour
             agent.ResetPath(); // Clear any existing path
         }
 
-        PatientAI npcWandering = GetComponent<PatientAI>();
-        if (npcWandering != null)
+        PatientAI patientAI = GetComponent<PatientAI>();
+        if (patientAI != null)
         {
-            npcWandering.ResetAfterRagdoll(); // Add this method to your NPCWandering script
+            patientAI.ResetAfterRagdoll(); // Add this method to your NPCWandering script
         }
 
         // Wait until the "Getting Up" animation is done playing

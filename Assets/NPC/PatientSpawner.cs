@@ -3,51 +3,51 @@ using System.Collections;
 
 public class PatientSpawner : MonoBehaviour
 {
-    public GameObject npcPrefab; // Assign in the inspector
+    public GameObject patientPrefab; // Assign in the inspector
     public Transform spawnPoint; // Assign a transform as the spawn point in the inspector
     public SpellingMinigame spellingMinigame; // Assign in the inspector
     public Score scoreScript; // Assign in the inspector
-    public Transform initialPoint; // Assign in the inspector
-    public Transform[] optionalPoints; // Assign in the inspector
+    public Transform waitingRoom; // Assign in the inspector
+    public Transform[] examRooms; // Assign in the inspector
 
     private float spawnCooldown = 2.0f;
-    private int maxNPCCount = 3;
+    private int maxPatientCount = 3;
 
     void Start()
     {
-        StartCoroutine(SpawnNPCRoutine());
+        StartCoroutine(SpawnPatientRoutine());
     }
 
-    private IEnumerator SpawnNPCRoutine()
+    private IEnumerator SpawnPatientRoutine()
     {
         while (true)
         {
             yield return new WaitForSeconds(spawnCooldown);
-            SpawnNPCIfPossible();
+            SpawnPatientIfPossible();
         }
     }
 
-    private void SpawnNPCIfPossible()
+    private void SpawnPatientIfPossible()
     {
-        if (GameObject.FindObjectsOfType<PatientAI>().Length < maxNPCCount)
+        if (GameObject.FindObjectsOfType<PatientAI>().Length < maxPatientCount)
         {
-            SpawnNPC();
+            SpawnPatient();
         }
     }
 
-    private void SpawnNPC()
+    private void SpawnPatient()
     {
         // Instantiate the NPC at the spawn point
-        GameObject npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject patient = Instantiate(patientPrefab, spawnPoint.position, spawnPoint.rotation);
 
         // Get the NPCWandering component and assign the references
-        PatientAI npcWanderingScript = npc.GetComponent<PatientAI>();
-        if (npcWanderingScript != null)
+        PatientAI patientAI = patient.GetComponent<PatientAI>();
+        if (patientAI != null)
         {
-            npcWanderingScript.spellingMinigame = spellingMinigame;
-            npcWanderingScript.scoreScript = scoreScript;
-            npcWanderingScript.initialPoint = initialPoint;
-            npcWanderingScript.optionalPoints = optionalPoints;
+            patientAI.spellingMinigame = spellingMinigame;
+            patientAI.scoreScript = scoreScript;
+            patientAI.waitingRoom = waitingRoom;
+            patientAI.examRooms = examRooms;
         }
     }
 }
