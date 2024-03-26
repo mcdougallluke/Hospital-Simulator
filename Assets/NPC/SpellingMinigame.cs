@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // Required for setting focus
 using System.Collections;
+using System.Collections.Generic; // Required for using Lists
 
 public class SpellingMinigame : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class SpellingMinigame : MonoBehaviour
     public InputField inputField; // Assign in inspector
     public Text wordText; // Assign in inspector
     public Button submitButton; // Assign in inspector
-    private string currentWord = "example"; // Word to spell, could be randomized from a list
+    private string currentWord; // Word to spell, will be randomized from a list
     public NPCWandering npcWandering;
+    
+    // List of words to use in the minigame
+    private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
 
     void Start()
     {
@@ -24,6 +28,10 @@ public class SpellingMinigame : MonoBehaviour
         Debug.Log("SpellingMinigame: Starting Minigame.");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+        // Randomly select a word from the list
+        currentWord = words[Random.Range(0, words.Count)];
+        
         wordText.text = $"Spell the word: {currentWord}"; // Set the word in the UI
         inputField.text = ""; // Clear the input field
         minigameUI.SetActive(true); // Show the minigame UI
