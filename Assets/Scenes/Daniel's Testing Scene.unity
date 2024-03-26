@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   inputField: {fileID: 1527415880}
   wordText: {fileID: 1347924686}
   submitButton: {fileID: 2110702342}
-  npcWandering: {fileID: 0}
+  patientAI: {fileID: 0}
 --- !u!4 &140441754
 Transform:
   m_ObjectHideFlags: 0
@@ -4599,7 +4599,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -24221,6 +24222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   walkSpeed: 7
+  backwardsWalkSpeed: 0
   sprintSpeed: 10
   slideSpeed: 30
   wallrunSpeed: 8.5
@@ -33194,14 +33196,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5804dbfc65fef84cad85d158384e0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcPrefab: {fileID: 2242589670696231582, guid: fa461495786752548b184d9a19325f9b, type: 3}
+  patientPrefab: {fileID: 0}
   spawnPoint: {fileID: 1503058643}
   spellingMinigame: {fileID: 140441753}
   scoreScript: {fileID: 2071952875}
-  initialPoint: {fileID: 297234935}
-  optionalPoints:
-  - {fileID: 688985104}
-  - {fileID: 1543785856}
+  waitingRoom: {fileID: 0}
+  examRooms: []
 --- !u!64 &1503058645
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -35216,9 +35216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be69f35ab4671ed4c89d6c99e9f463ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPoints:
-  - {fileID: 688985104}
-  - {fileID: 1543785856}
+  initialRooms: []
 --- !u!4 &1653556209
 Transform:
   m_ObjectHideFlags: 0

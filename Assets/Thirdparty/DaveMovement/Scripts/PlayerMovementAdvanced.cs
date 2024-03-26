@@ -314,6 +314,17 @@ public class PlayerMovementAdvanced : MonoBehaviour
         moveSpeed = desiredMoveSpeed;
     }
 
+    public void SetPlayerFreeze(bool shouldFreeze)
+    {
+        freeze = shouldFreeze;
+        if (freeze)
+        {
+            rb.velocity = Vector3.zero;
+            desiredMoveSpeed = 0;
+        }
+    }
+
+
     private void MovePlayer()
     {
         if (activeGrapple) return;
