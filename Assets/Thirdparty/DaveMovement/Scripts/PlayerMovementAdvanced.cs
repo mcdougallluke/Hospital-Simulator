@@ -66,6 +66,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         freeze,
         unlimited,
+        idle,
         walking,
         sprinting,
         grappling,
@@ -105,6 +106,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+        UpdateAnimator();
 
         // handle drag
         if ((state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching) && !activeGrapple)
@@ -112,6 +114,15 @@ public class PlayerMovementAdvanced : MonoBehaviour
         else
             rb.drag = 0;
     }
+
+    private void UpdateAnimator()
+    {
+        // Set the animator parameters
+        animator.SetBool("IsWalking", state == MovementState.walking);
+        animator.SetBool("IsSprinting", state == MovementState.sprinting);
+        animator.SetBool("IsInAir", state == MovementState.grappling || state == MovementState.air);
+    }
+
 
     private void FixedUpdate()
     {
@@ -211,6 +222,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
         }
+        else if (grounded && horizontalInput == 0 && verticalInput == 0)
+        {
+            state = MovementState.idle;
+            desiredMoveSpeed = walkSpeed;
+        }
 
         // Mode - Sprinting
         else if (grounded && Input.GetKey(sprintKey))
@@ -220,7 +236,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
 
         // Mode - Walking
-        else if (grounded)
+        else if (grounded && (horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
@@ -340,7 +356,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void Jump()
     {
         exitingSlope = true;
-
+        animator.SetTrigger("Jump");
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -423,21 +439,4 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         return velocityXZ + velocityY;
     }
-
-    void OnDrawGizmos() {
-        // Set the color of the gizmo
-        Gizmos.color = Color.red;
-
-        // Start the gizmo line 0.2 units above the player's position
-        Vector3 rayStart = transform.position + Vector3.up * 0.2f;
-
-        // Calculate the end point of the gizmo line based on the raycast distance
-        Vector3 rayEnd = rayStart + Vector3.down * (0.4f);
-
-        // Draw the gizmo line in the scene view
-        Gizmos.DrawLine(rayStart, rayEnd);
-    }
-
-
-
 }
