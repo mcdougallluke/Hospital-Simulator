@@ -10,6 +10,7 @@ public class SpellingMinigame : MonoBehaviour
     public Text wordText; // Assign in inspector
     public Button submitButton; // Assign in inspector
     private string currentWord = "example"; // Word to spell, could be randomized from a list
+    public NPCWandering npcWandering;
 
     void Start()
     {
@@ -52,16 +53,20 @@ public class SpellingMinigame : MonoBehaviour
         if (inputField.text.ToLower().Equals(currentWord.ToLower()))
         {
             Debug.Log("SpellingMinigame: Correct spelling!");
-            // Handle correct spelling (e.g., allow NPC to move)
+            npcWandering.MoveToAnotherPointAndDespawn(); // Call MoveToAnotherPointAndDespawn if the spelling is correct
         }
         else
         {
             Debug.Log("SpellingMinigame: Incorrect spelling.");
-            // Handle incorrect spelling (e.g., try again or fail)
         }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         minigameUI.SetActive(false); // Optionally hide the UI after submission
-        Debug.Log("SpellingMinigame: Minigame UI deactivated.");
     }
+
+    public void SetNPC(NPCWandering npc)
+    {
+        npcWandering = npc; // Method to set the NPC reference
+    }
+
 }

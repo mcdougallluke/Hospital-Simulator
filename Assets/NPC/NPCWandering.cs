@@ -2,6 +2,7 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class NPCWandering : MonoBehaviour
 {
     public Transform initialPoint;
@@ -12,6 +13,9 @@ public class NPCWandering : MonoBehaviour
     private bool hasArrivedAtWaitingRoom = false;
     private Transform currentDestinationPoint; 
     public SpellingMinigame spellingMinigame; // Assign this in the inspector
+    public Score scoreScript; // Add this line to hold a reference to the Score script
+
+
 
 
     
@@ -120,17 +124,34 @@ public class NPCWandering : MonoBehaviour
         if (hasArrivedAtOptionalPoint && other.CompareTag("Doctor"))
         {
             spellingMinigame.StartMinigame(); // Start the spelling minigame
+            spellingMinigame.SetNPC(this); // This line sets the reference to this NPC instance in the spelling minigame
+
             // Optionally pause NPC actions here
         }
     }
 
-    void MoveToAnotherPointAndDespawn()
+
+
+    public void MoveToAnotherPointAndDespawn()
     {
         // Move back to initial point then despawn
+        PointManager.Instance.SetPointAvailability(currentDestinationPoint, true);
         agent.destination = initialPoint.position;
         Debug.Log("NPC moving away and despawning.");
+
+        // Increment the score by 10
+        if(scoreScript != null) // Check if the scoreScript reference is set
+        {
+            scoreScript.updateScore(10); // Increase the score by 10
+        }
+        else
+        {
+            Debug.LogError("Score script reference not set in NPCWandering.");
+        }
+
         Destroy(gameObject, 10); // Waits x seconds before destroying
     }
+
 
     public void ResetAfterRagdoll()
     {
