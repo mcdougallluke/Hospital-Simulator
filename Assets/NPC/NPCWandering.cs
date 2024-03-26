@@ -30,48 +30,32 @@ public class NPCWandering : MonoBehaviour
 
     void Update()
     {
-        if(hasArrivedAtWaitingRoom && isWaiting && !hasArrivedAtOptionalPoint)
-        {
-            bool foundPoint = CheckAndMoveToOptionalPoint();
-            
-            if(foundPoint)
-            {
-                isWaiting = false;
-
-            }
-
-        }
-
-        if (!isWaiting && !agent.pathPending && agent.remainingDistance < 0.5f)
+        // Add checks to ensure the NavMeshAgent is enabled and has a path
+        if (!isWaiting && !agent.pathPending && agent.isOnNavMesh && agent.enabled && agent.hasPath && agent.remainingDistance < 0.5f)
         {
             if (!hasArrivedAtWaitingRoom)
             {
                 bool foundPoint = CheckAndMoveToOptionalPoint();
                 hasArrivedAtWaitingRoom = true;
 
-                // Only set isWaiting to true if no points are available
                 if (!foundPoint)
                 {
-                    isWaiting = true; // NPC will now wait here if no optional points are available
+                    isWaiting = true;
                     Debug.Log("No available points found. NPC has arrived at the initial point and is now waiting.");
                 }
             }
-            // Removed the else block that was incorrectly logging the arrival at an optional point
-
             else
             {
-                // This condition is met when the NPC arrives at an optional point
-                // Log the arrival only once
-                if (!isWaiting) // This ensures the message is logged only once upon arrival
+                if (!isWaiting)
                 {
                     Debug.Log("NPC has arrived at the optional point and is now waiting.");
-                    hasArrivedAtOptionalPoint = true; // NPC has arrived at the optional point
-
+                    hasArrivedAtOptionalPoint = true;
+                    isWaiting = true;
                 }
-                isWaiting = true; // NPC will now wait here
             }
         }    
     }
+
 
     void MoveToInitialPoint()
     {
