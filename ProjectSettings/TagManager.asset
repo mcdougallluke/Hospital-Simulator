@@ -8,6 +8,7 @@ TagManager:
   - WaitingRoom
   - Doctor
   - Item
+  - Audio
   layers:
   - Default
   - TransparentFX
