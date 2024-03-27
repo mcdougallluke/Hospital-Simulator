@@ -19,17 +19,19 @@ public class SpellingMinigame : MonoBehaviour
     {
         minigameUI.SetActive(false);
         submitButton.onClick.AddListener(CheckSpelling);
+        inputField.onValueChanged.AddListener(ValidateInput);
         inputField.onEndEdit.AddListener(delegate { OnInputFieldSubmit(inputField.text); });
     }
 
     public void StartMinigame()
     {
         currentWord = words[Random.Range(0, words.Count)];
-        wordText.text = $"Spell the word: {currentWord}";
+        wordText.text = $"You probably have: {currentWord}";
         inputField.text = "";
         minigameUI.SetActive(true);
         playerMovementAdvanced.SetPlayerFreeze(true);
         StartCoroutine(SetInputFieldFocus());
+        ValidateInput(inputField.text); // Ensure the button's correct state is set at minigame start
     }
 
     IEnumerator SetInputFieldFocus()
@@ -76,10 +78,19 @@ public class SpellingMinigame : MonoBehaviour
 
     private void OnInputFieldSubmit(string input)
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        // Check if the Enter or Keypad Enter key is pressed and the submit button is interactable
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && submitButton.interactable)
         {
             CheckSpelling();
         }
+        // Deactivate the input field after checking
         inputField.DeactivateInputField();
+    }
+
+
+    // New method to validate input and toggle the submit button's interactability
+    void ValidateInput(string input)
+    {
+        submitButton.interactable = input.ToLower().Equals(currentWord.ToLower());
     }
 }
