@@ -13,10 +13,17 @@ public class AudioManager : MonoBehaviour
     public AudioClip walking;
     public AudioClip jump;
     public AudioClip pickupItem;
-
+    public AudioClip dropItem;
+    public AudioClip grapple;
+    public AudioClip miniGameOneCorrectAnswer;
     public void Start()
     {
         musicSource.clip = background;
         musicSource.Play();
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        SFXSource.PlayOneShot(clip);
     }
 }
