@@ -19358,7 +19358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660108369}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.56799173, y: 0.18656826, z: 0.13408467, w: 0.7903158}
+  m_LocalRotation: {x: -0.56799173, y: 0.18656829, z: 0.13408469, w: 0.79031575}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -31908,7 +31908,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209028312}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.59054154, y: 0.18262483, z: 0.13940796, w: 0.7736112}
+  m_LocalRotation: {x: -0.5905416, y: 0.18262483, z: 0.13940796, w: 0.7736112}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32393,6 +32393,8 @@ MonoBehaviour:
   itemPrefabs:
   - {fileID: 6353516325685010094, guid: 664c9eeea030adc408c02ce65e60b10f, type: 3}
   - {fileID: 8506456173144818955, guid: 599ef8884616fb84c98ad13b946dcde4, type: 3}
+  - {fileID: 249574174099575906, guid: 86b55282ef81d8c4e94081381453f868, type: 3}
+  - {fileID: 5549734038316843278, guid: 3891ce01b972e4643b71749b7dec0d0b, type: 3}
   spawnInterval: 5
   spawnPoint: {fileID: 1711722021}
 --- !u!136 &1239068295
@@ -37222,6 +37224,7 @@ MonoBehaviour:
   - {fileID: 8406368519955956484, guid: a0db0f8128fc460468dd071a93eab7ea, type: 3}
   - {fileID: 6353516325685010094, guid: 664c9eeea030adc408c02ce65e60b10f, type: 3}
   - {fileID: 4570552192879693798, guid: f1fa8f09d88016f42a6257fe7a339fc5, type: 3}
+  - {fileID: 5549734038316843278, guid: 3891ce01b972e4643b71749b7dec0d0b, type: 3}
   spawnInterval: 5
   spawnPoint: {fileID: 1749608320}
 --- !u!136 &1368138656
