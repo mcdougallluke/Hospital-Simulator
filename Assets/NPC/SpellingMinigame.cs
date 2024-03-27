@@ -12,7 +12,7 @@ public class SpellingMinigame : MonoBehaviour
     public Button submitButton; // Assign in inspector
     private string currentWord; // Word to spell, will be randomized from a list
     public PatientAI patientAI;
-    
+    public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
 
     void Start()
@@ -28,6 +28,7 @@ public class SpellingMinigame : MonoBehaviour
         wordText.text = $"Spell the word: {currentWord}";
         inputField.text = "";
         minigameUI.SetActive(true);
+        playerMovementAdvanced.SetPlayerFreeze(true);
         StartCoroutine(SetInputFieldFocus());
     }
 
@@ -64,6 +65,7 @@ public class SpellingMinigame : MonoBehaviour
         {
             Debug.Log("SpellingMinigame: Incorrect spelling.");
         }
+        playerMovementAdvanced.SetPlayerFreeze(false);
         minigameUI.SetActive(false);
     }
 
