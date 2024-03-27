@@ -26,13 +26,19 @@ public class SpellingMinigame : MonoBehaviour
     public void StartMinigame()
     {
         currentWord = words[Random.Range(0, words.Count)];
-        wordText.text = $"You probably have: {currentWord}";
-        inputField.text = "";
+        wordText.text = $"You probably have: {currentWord}"; // Display the word elsewhere if needed
+        inputField.text = ""; // Clear previous input
+
+        // Update the placeholder text to show the current word
+        // Assumes the placeholder is the first child of the input field and has a Text component
+        Text placeholderText = inputField.placeholder as Text;
+        placeholderText.text = $"{currentWord}"; // Customize this message as needed
+
         minigameUI.SetActive(true);
         playerMovementAdvanced.SetPlayerFreeze(true);
         StartCoroutine(SetInputFieldFocus());
-        ValidateInput(inputField.text); // Ensure the button's correct state is set at minigame start
     }
+
 
     IEnumerator SetInputFieldFocus()
     {
