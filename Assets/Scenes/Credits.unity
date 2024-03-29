@@ -883,7 +883,15 @@ MonoBehaviour:
 
 
 
-    Artists'
+    Artists
+
+
+    3rd Party Assets
+
+
+    Credits Background
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
   m_sharedMaterial: {fileID: 21419154506056544, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
@@ -1619,7 +1627,13 @@ MonoBehaviour:
 
 
     Tyaire
-    Cook'
+    Cook
+
+
+
+
+
+    drechneaux - deviant art'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
   m_sharedMaterial: {fileID: 21419154506056544, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
