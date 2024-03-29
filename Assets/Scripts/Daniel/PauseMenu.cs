@@ -28,6 +28,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+        Cursor.visible = false; // Hide the cursor
     }
 
     public void Pause()
@@ -35,6 +36,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        Cursor.visible = true; // Show the cursor
+        Cursor.lockState = CursorLockMode.None; // Unlock the cursor
     }
 
     public void LoadMenu()
