@@ -5,7 +5,7 @@ using UnityEngine;
 public class Grappling : MonoBehaviour
 {
     [Header("References")]
-    private PlayerLocomotion playerLocomotion;
+    private PlayerMovementAdvanced pm;
     public Transform cam;
     public Transform gunTip;
     public LayerMask whatIsGrappleable;
@@ -28,12 +28,12 @@ public class Grappling : MonoBehaviour
 
     private void Start()
     {
-        playerLocomotion = GetComponentInParent<PlayerLocomotion>();
+        pm = GetComponentInParent<PlayerMovementAdvanced>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(grappleKey)) StartGrapple();
+        if (Input.GetKeyDown(grappleKey) && (pm.state != PlayerMovementAdvanced.MovementState.freeze)) StartGrapple();
 
         if (grapplingCdTimer > 0)
             grapplingCdTimer -= Time.deltaTime;
@@ -45,7 +45,7 @@ public class Grappling : MonoBehaviour
 
         grappling = true;
 
-       //pm.freeze = true;
+        pm.freeze = true;
 
         RaycastHit hit;
         if(Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, whatIsGrappleable))
@@ -64,6 +64,8 @@ public class Grappling : MonoBehaviour
 
     private void ExecuteGrapple()
     {
+        pm.freeze = false;
+
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
 
         float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
@@ -71,14 +73,14 @@ public class Grappling : MonoBehaviour
 
         if (grapplePointRelativeYPos < 0) highestPointOnArc = overshootYAxis;
 
-        playerLocomotion.JumpToPosition(grapplePoint, highestPointOnArc);
+        pm.JumpToPosition(grapplePoint, highestPointOnArc);
 
         Invoke(nameof(StopGrapple), 1f);
     }
 
     public void StopGrapple()
     {
-        //pm.freeze = false;
+        pm.freeze = false;
 
         grappling = false;
 
