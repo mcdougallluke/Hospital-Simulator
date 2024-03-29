@@ -230,7 +230,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.idle;
             desiredMoveSpeed = walkSpeed;
-            rb.drag = 15;
+            rb.drag = 25;
         }
 
         // Mode - Sprinting (but not backwards)
