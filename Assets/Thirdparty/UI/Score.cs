@@ -1,17 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Score : MonoBehaviour
 {
+    public TextMeshProUGUI textMeshProUGUI;
     public Text MyText;
-    private int score = 0;
 
-    // Start is called before the first frame update
+    // Reference to the ScoreData ScriptableObject
+    public ScoreData scoreData;
+
     void Start()
     {
+        // Initialize the score if the ScoreData is null
+        if (scoreData == null)
+        {
+            scoreData = ScriptableObject.CreateInstance<ScoreData>();
+            scoreData.score = 0;
+        }
+
         updateScore(0);
+    }
+
+    public void Update()
+    {
+        //testing
+        if (Input.GetKey(KeyCode.L))
+        {
+            // score++;
+            updateScore(1);
+        }
     }
 
     /// <summary>
@@ -20,14 +38,19 @@ public class Score : MonoBehaviour
     /// </summary>
     public void updateScore(int change)
     {
-        score += change;
-        MyText.text = "Score: " + score; // Correctly display the current score
+        scoreData.score += change;
+        if (textMeshProUGUI != null && MyText == null)
+        {
+            textMeshProUGUI.text = "Score: " + scoreData.score;
+        }
+        else if (textMeshProUGUI == null && MyText != null)
+        {
+            MyText.text = "Score: " + scoreData.score; // Correctly display the current score
+        }
     }
 
     public int CurrentScore()
     {
-        return score;
+        return scoreData.score;
     }
-
-
 }

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
-    public float timeValue = 300;
+    public float timeValue = 20; //300 (5 minutes)
     public Text timerText;
     public Image endGameFadePanel; // Reference to the fade panel
     public Text scoreText; // Reference to display score at the end
@@ -20,7 +20,9 @@ public class Timer : MonoBehaviour
         else
         {
             timeValue = 0;
+
             StartCoroutine(EndGameSequence());
+           
         }
         DisplayTime(timeValue);
     }
@@ -41,10 +43,10 @@ public class Timer : MonoBehaviour
             endGameFadePanel.color = new Color(0, 0, 0, alpha);
             yield return null;
         }
-
+        SceneManager.LoadScene(3);
         // Display the final score
-        scoreText.text = "Final Score: " + scoreScript.CurrentScore();
-        scoreText.gameObject.SetActive(true);
+        // scoreText.text = "Final Score: " + scoreScript.CurrentScore();
+        // scoreText.gameObject.SetActive(true);
     }
 
     void DisplayTime(float timeToDisplay)

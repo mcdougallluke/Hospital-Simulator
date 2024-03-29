@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        Cursor.visible = true;
         SceneManager.LoadScene(1);
     }
     public void Credits()
