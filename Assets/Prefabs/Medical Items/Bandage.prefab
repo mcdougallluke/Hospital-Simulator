@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 276813507992678918}
   - component: {fileID: 2845556114066189889}
   - component: {fileID: 7342090726647509127}
+  - component: {fileID: 4138211347643258424}
   m_Layer: 0
   m_Name: Bandage
   m_TagString: Item
@@ -148,3 +149,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e912e456b85a7bb4a98a533c93790c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &4138211347643258424
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406368519955956484}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010978704
+  m_Center: {x: 4.656613e-10, y: -0.000013892539, z: 0}

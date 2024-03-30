@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1930235571650903072}
   - component: {fileID: 1466459645599421507}
   - component: {fileID: -7087801954204002087}
+  - component: {fileID: -3418094946387899500}
   m_Layer: 0
   m_Name: Box of Patches (Bandages)
   m_TagString: Item
@@ -97,6 +98,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e912e456b85a7bb4a98a533c93790c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &-3418094946387899500
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549734038316843278}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5645349323048469484
 GameObject:
   m_ObjectHideFlags: 0

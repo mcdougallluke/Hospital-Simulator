@@ -12,6 +12,8 @@ public class PatientSpawner : MonoBehaviour
 
     private float spawnCooldown = 2.0f;
     private int maxPatientCount = 3;
+    public FetchMinigame fetchMinigame; // Assign in the inspector
+
 
     void Start()
     {
@@ -40,7 +42,7 @@ public class PatientSpawner : MonoBehaviour
         // Instantiate the NPC at the spawn point
         GameObject patient = Instantiate(patientPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        // Get the NPCWandering component and assign the references
+        // Get the PatientAI component and assign the references
         PatientAI patientAI = patient.GetComponent<PatientAI>();
         if (patientAI != null)
         {
@@ -48,6 +50,10 @@ public class PatientSpawner : MonoBehaviour
             patientAI.scoreScript = scoreScript;
             patientAI.waitingRoom = waitingRoom;
             patientAI.examRooms = examRooms;
+
+            // Additionally, assign the FetchMinigame script reference
+            patientAI.fetchMinigame = fetchMinigame;
         }
     }
+
 }

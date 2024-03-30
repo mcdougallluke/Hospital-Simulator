@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6880284774888833242}
   - component: {fileID: 6855410625567131173}
   - component: {fileID: 8418293870743438908}
+  - component: {fileID: -3737103228741075187}
   m_Layer: 0
   m_Name: BloodBag
   m_TagString: Item
@@ -145,4 +146,25 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.058461897, y: 0.0154359825, z: 0.13199161}
+  m_Center: {x: 0, y: -0.0000000023283064, z: 0}
+--- !u!135 &-3737103228741075187
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152336085575961208}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.065995805
   m_Center: {x: 0, y: -0.0000000023283064, z: 0}
