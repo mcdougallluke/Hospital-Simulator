@@ -6,13 +6,13 @@ public class PatientSpawner : MonoBehaviour
     public GameObject patientPrefab; // Assign in the inspector
     public Transform spawnPoint; // Assign a transform as the spawn point in the inspector
     public SpellingMinigame spellingMinigame; // Assign in the inspector
+    public FetchMinigame fetchMinigame; // Assign in the inspector
     public Score scoreScript; // Assign in the inspector
     public Transform waitingRoom; // Assign in the inspector
     public Transform[] examRooms; // Assign in the inspector
 
     private float spawnCooldown = 2.0f;
     private int maxPatientCount = 3;
-    public FetchMinigame fetchMinigame; // Assign in the inspector
 
 
     void Start()
@@ -47,12 +47,11 @@ public class PatientSpawner : MonoBehaviour
         if (patientAI != null)
         {
             patientAI.spellingMinigame = spellingMinigame;
+            patientAI.fetchMinigame = fetchMinigame;
             patientAI.scoreScript = scoreScript;
             patientAI.waitingRoom = waitingRoom;
             patientAI.examRooms = examRooms;
-
-            // Additionally, assign the FetchMinigame script reference
-            patientAI.fetchMinigame = fetchMinigame;
+        
         }
     }
 

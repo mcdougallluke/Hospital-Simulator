@@ -2,23 +2,28 @@ using UnityEngine;
 
 public class FetchMinigame : MonoBehaviour
 {
-    public GameObject minigameUI; // Assign this in the inspector
-    private PatientAI patientAI; // Reference to the PatientAI script
+    public PatientAI patientAI; // Reference to the PatientAI script
 
-    public void StartMinigame(PatientAI patient)
+    // Call this method to start the minigame
+    public void StartMinigame()
     {
-        patientAI = patient;
-        minigameUI.SetActive(true);
-        // Initialize your minigame here (e.g., set up the game environment, display instructions, etc.)
-        Debug.Log("Fetch Minigame started!");
+        
+    }
+
+    public void SetNPC(PatientAI npc)
+    {
+        patientAI = npc;
+    }
+
+    // New method to be called when the doctor/player brings the correct item
+    public void OnItemDelivered()
+    {
+        EndMinigame();
     }
 
     // Call this method to end the minigame
     public void EndMinigame()
     {
-        minigameUI.SetActive(false);
         patientAI.MoveToPointAndDespawn();
-        // Handle the minigame completion here (e.g., cleanup, rewarding the player, etc.)
-        Debug.Log("Fetch Minigame ended!");
     }
 }
