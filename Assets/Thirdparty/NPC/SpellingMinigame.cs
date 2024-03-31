@@ -39,7 +39,6 @@ public class SpellingMinigame : MonoBehaviour
         StartCoroutine(SetInputFieldFocus());
     }
 
-
     IEnumerator SetInputFieldFocus()
     {
         yield return null;

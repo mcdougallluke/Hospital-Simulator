@@ -13,14 +13,23 @@ public class PatientAI : MonoBehaviour
     private bool hasArrivedAtWaitingRoom = false;
     private Transform currentDestinationPoint; 
     public SpellingMinigame spellingMinigame;
+    public FetchMinigame fetchMinigame;
     public Score scoreScript; 
     private bool hasStartedMinigame = false;
+    private int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
+    private bool fetchMinigameEnded = false; // Add this field
+
+
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         currentDestinationPoint = waitingRoom;
         MoveToWaitingRoom();
+        fetchMinigameEnded = false; // Ensure it's false at the start
+        
+        // Randomly select a minigame for the NPC
+        selectedMinigameIndex = Random.Range(0, 2);
         
     }
 
@@ -93,15 +102,35 @@ public class PatientAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"OnTriggerEnter called. SelectedMinigameIndex: {selectedMinigameIndex}, HasStartedMinigame: {hasStartedMinigame}");
+
         if (hasArrivedAtExamRoom && other.CompareTag("Doctor") && !hasStartedMinigame)
         {
-            spellingMinigame.StartMinigame(); // Start the spelling minigame
-            spellingMinigame.SetNPC(this); // This line sets the reference to this NPC instance in the spelling minigame
-            hasStartedMinigame = true; // Prevent the mini-game from starting again for this NPC
 
-            // Optionally pause NPC actions here
+            hasStartedMinigame = true;
+
+            if (selectedMinigameIndex == 0)
+            {
+                Debug.Log("Starting Spelling Minigame.");
+                spellingMinigame.StartMinigame();
+                spellingMinigame.SetNPC(this);
+            }
+            else if (selectedMinigameIndex == 1) // This is the fetch minigame
+            {
+                Debug.Log("Starting Fetch Minigame.");
+                fetchMinigame.StartMinigame();
+                fetchMinigame.SetNPC(this); // Ensure the NPC is set for the fetchMinigame
+            }
+        }
+
+        if (other.CompareTag("Item") && selectedMinigameIndex == 1 && hasStartedMinigame && !fetchMinigameEnded)
+        {
+            Debug.Log("Item delivered to NPC, ending Fetch Minigame.");
+            fetchMinigame.OnItemDelivered(); // Call to end the fetch minigame
+            fetchMinigameEnded = true; // Prevent future execution
         }
     }
+
 
 
 
