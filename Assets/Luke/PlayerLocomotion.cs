@@ -58,18 +58,25 @@ public class PlayerLocomotion : MonoBehaviour
     
     private void HandleMovement()
     {
-        if (activeGrapple) return;
+         if (activeGrapple) return;
 
-        // Calculate the movement direction based on input and camera orientation
-        moveDirection = cameraObject.forward * inputManager.verticalInput;
-        moveDirection += cameraObject.right * inputManager.horizontalInput;
+        // Use the camera's forward and right vectors, but ignore their y-component to only move in the horizontal plane
+        Vector3 forward = cameraObject.forward;
+        Vector3 right = cameraObject.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        // Calculate the movement direction based on input and the adjusted camera orientation
+        moveDirection = forward * inputManager.verticalInput;
+        moveDirection += right * inputManager.horizontalInput;
         moveDirection.Normalize();
-        moveDirection.y = 0; // Ensure movement is only horizontal
 
         // Determine the speed based on sprinting status and input magnitude
         float currentSpeed = isSprinting ? sprintSpeed : (inputManager.moveAmount >= 0.5f ? runningSpeed : walkingSpeed);
 
-        // Modify moveDirection with the current speed
+        // Apply the determined speed to the move direction
         moveDirection *= currentSpeed;
 
         // If the player is grounded or jumping (but not just falling without a jump), apply horizontal movement
