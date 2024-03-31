@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Michsky.MUIP; // Import the namespace of ButtonManager
+using Michsky.MUIP;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -65,9 +65,9 @@ public class PauseMenu : MonoBehaviour
                 if (i == currentSelection)
                 {
                     // Set the button's state properties for highlight effect
-                    buttonManagers[i].normalCG.alpha = 0; // Assuming this controls the normal state appearance
-                    buttonManagers[i].highlightCG.alpha = 1; // Assuming this controls the highlight state appearance
-                    buttonManagers[i].disabledCG.alpha = 0; // Assuming this controls the disabled state appearance
+                    buttonManagers[i].normalCG.alpha = 0; // the normal state appearance
+                    buttonManagers[i].highlightCG.alpha = 1; // the highlight state appearance
+                    buttonManagers[i].disabledCG.alpha = 0; // the disabled state appearance
                 }
                 else
                 {
@@ -79,12 +79,6 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
     private void ExecuteSelection()
     {
         switch (currentSelection)
