@@ -17,6 +17,8 @@ public class PatientAI : MonoBehaviour
     public Score scoreScript; 
     private bool hasStartedMinigame = false;
     private int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
+    private bool fetchMinigameEnded = false; // Add this field
+
 
 
     void Start()
@@ -24,9 +26,10 @@ public class PatientAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         currentDestinationPoint = waitingRoom;
         MoveToWaitingRoom();
+        fetchMinigameEnded = false; // Ensure it's false at the start
         
         // Randomly select a minigame for the NPC
-        selectedMinigameIndex = Random.Range(1, 2);
+        selectedMinigameIndex = Random.Range(0, 2);
         
     }
 
@@ -120,10 +123,11 @@ public class PatientAI : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Item") && selectedMinigameIndex == 1 && hasStartedMinigame)
+        if (other.CompareTag("Item") && selectedMinigameIndex == 1 && hasStartedMinigame && !fetchMinigameEnded)
         {
             Debug.Log("Item delivered to NPC, ending Fetch Minigame.");
             fetchMinigame.OnItemDelivered(); // Call to end the fetch minigame
+            fetchMinigameEnded = true; // Prevent future execution
         }
     }
 
