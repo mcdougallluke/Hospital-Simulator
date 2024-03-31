@@ -7,15 +7,18 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
     [SerializeField] private string interactText;
 
     private Animator animator;
+    private NPCHeadLookAt npcHeadLookAt;
 
     private void Awake() {
         animator = GetComponent<Animator>();
+        npcHeadLookAt = GetComponent<NPCHeadLookAt>();
     }
 
     public void Interact(Transform interactorTransform) {
-        ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Happy, "Hello there!");
-
+        Debug.Log("Interacting with NPC");
+        ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Neutral, "I don't feel too well.");
         //animator.SetTrigger("Talk");
+        npcHeadLookAt.LookAtPosition(interactorTransform.position + Vector3.up * 1.6f);
     }
 
     public string GetInteractText() {

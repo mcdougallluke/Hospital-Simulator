@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3728437067036764362}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.88, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3728437068038445425}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3728437067036764360
 SpriteRenderer:
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 30, y: 8.333333}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3728437067391506973
@@ -116,7 +116,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3728437068038445425}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -275,8 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3728437068038445425}
   - component: {fileID: 3629238919459462207}
-  - component: {fileID: 837055399}
-  - component: {fileID: 660167868309425261}
+  - component: {fileID: 2181357476416706902}
   m_Layer: 0
   m_Name: ChatBubble3D
   m_TagString: Untagged
@@ -291,6 +289,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3728437068038445427}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 53.3, y: 15.7, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
@@ -301,7 +300,6 @@ Transform:
   - {fileID: 3728437067391506962}
   - {fileID: 3890732336104597906}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &3629238919459462207
 Animation:
@@ -319,7 +317,7 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &837055399
+--- !u!114 &2181357476416706902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,28 +326,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3728437068038445427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e7b6eaae75c9b45a63ab1aba88ca4a, type: 3}
+  m_Script: {fileID: 11500000, guid: afb86c51fc68d3e428f52cca507a1e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  method: 1
---- !u!114 &660167868309425261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3728437068038445427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 310cd3f5572d33b4d8f2005f8886697e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  happyIconSprite: {fileID: 6057340437567830950, guid: 271da4bc8fdd7de40b54c08d416cfa61,
-    type: 3}
-  neutralIconSprite: {fileID: 98482534372328656, guid: 271da4bc8fdd7de40b54c08d416cfa61,
-    type: 3}
-  angryIconSprite: {fileID: -2479988511871901995, guid: 271da4bc8fdd7de40b54c08d416cfa61,
-    type: 3}
+  happyIconSprite: {fileID: 0}
+  neutralIconSprite: {fileID: 0}
+  angryIconSprite: {fileID: 0}
 --- !u!1 &3728437068281146895
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,13 +356,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3728437068281146895}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3728437068038445425}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3728437068281146893
 SpriteRenderer:
@@ -423,8 +405,7 @@ SpriteRenderer:
   m_SortingLayerID: -609044573
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 6057340437567830950, guid: 271da4bc8fdd7de40b54c08d416cfa61,
-    type: 3}
+  m_Sprite: {fileID: 6057340437567830950, guid: 271da4bc8fdd7de40b54c08d416cfa61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -432,7 +413,7 @@ SpriteRenderer:
   m_Size: {x: 0.14, y: 0.14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7516478287855176356
@@ -461,13 +442,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7516478287855176356}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.715, y: -0.001, z: 0.55}
   m_LocalScale: {x: 27.529818, y: 6.895409, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3728437068038445425}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1067917189364036626
 MeshFilter:
@@ -527,8 +508,16 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7516478287855176356}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
