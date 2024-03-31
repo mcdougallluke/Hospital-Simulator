@@ -26,8 +26,6 @@ public class ChatBubble3D : MonoBehaviour {
         Destroy(chatBubbleTransform.gameObject, 6f);
     }
 
-
-
     public enum IconType {
         Happy,
         Neutral,
@@ -45,11 +43,10 @@ public class ChatBubble3D : MonoBehaviour {
 
     private void Awake() {
         backgroundSpriteRenderer = transform.Find("Background").GetComponent<SpriteRenderer>();
-        backgroundCube = transform.Find("BackgroundCube");
+        //backgroundCube = transform.Find("BackgroundCube");
         iconSpriteRenderer = transform.Find("Icon").GetComponent<SpriteRenderer>();
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
     }
-
     private void Setup(IconType iconType, string text) {
         textMeshPro.SetText(text);
         textMeshPro.ForceMeshUpdate();
@@ -57,17 +54,13 @@ public class ChatBubble3D : MonoBehaviour {
 
         Vector2 padding = new Vector2(7f, 3f);
         backgroundSpriteRenderer.size = textSize + padding;
-        backgroundCube.localScale = textSize + padding * .5f;
 
         Vector3 offset = new Vector3(-3f, 0f);
-        backgroundSpriteRenderer.transform.localPosition = 
-            new Vector3(backgroundSpriteRenderer.size.x / 2f, 0f) + offset;
-        backgroundCube.localPosition =
-            new Vector3(backgroundSpriteRenderer.size.x / 2f, 0f, +.1f) + offset;
+        backgroundSpriteRenderer.transform.localPosition = new Vector3(backgroundSpriteRenderer.size.x / 2f, 0f) + offset;
 
         iconSpriteRenderer.sprite = GetIconSprite(iconType);
 
-        TextWriter.AddWriter_Static(textMeshPro, text, .03f, true, true, () => { });
+        TextWriter.AddWriter_Static(textMeshPro, text, .05f, true, true, () => {});
     }
 
     private Sprite GetIconSprite(IconType iconType) {
