@@ -90,6 +90,12 @@ public class PlayerMovementAdvanced : MonoBehaviour
     
     public bool restricted;
 
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -178,6 +184,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         else if (activeGrapple)
         {
+            audioManager.PlaySFX(audioManager.grapple);
             state = MovementState.grappling;
             moveSpeed = sprintSpeed;
         }

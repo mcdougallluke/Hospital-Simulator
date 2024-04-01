@@ -20235,7 +20235,7 @@ MonoBehaviour:
   pickupItem: {fileID: 0}
   dropItem: {fileID: 0}
   grapple: {fileID: 8300000, guid: d3c4ff9e65644464ca6a511840d1eb3a, type: 3}
-  miniGameOneCorrectAnswer: {fileID: 0}
+  miniGameOneCorrectAnswer: {fileID: 8300000, guid: c9a9f91fb179c594c9b8ab66e1650efb, type: 3}
 --- !u!4 &675728413
 Transform:
   m_ObjectHideFlags: 0
@@ -32514,7 +32514,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1166599346}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7699413}
+        m_TargetAssemblyTypeName: SpellingMinigame, Assembly-CSharp
+        m_MethodName: playSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1166599346
 MonoBehaviour:
   m_ObjectHideFlags: 0
