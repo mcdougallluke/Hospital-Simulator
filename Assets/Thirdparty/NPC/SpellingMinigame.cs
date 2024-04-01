@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems; // Required for setting focus
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class SpellingMinigame : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class SpellingMinigame : MonoBehaviour
     public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
 
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
     void Start()
     {
         minigameUI.SetActive(false);
@@ -87,6 +93,7 @@ public class SpellingMinigame : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && submitButton.interactable)
         {
             CheckSpelling();
+            audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
         }
         // Deactivate the input field after checking
         inputField.DeactivateInputField();
@@ -97,5 +104,10 @@ public class SpellingMinigame : MonoBehaviour
     void ValidateInput(string input)
     {
         submitButton.interactable = input.ToLower().Equals(currentWord.ToLower());
+    }
+
+    public void playSound()
+    {
+        audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
     }
 }
