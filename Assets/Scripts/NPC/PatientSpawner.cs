@@ -14,7 +14,7 @@ public class PatientSpawner : MonoBehaviour
     public Transform[] examRooms; // Assign in the inspector
 
     private float spawnCooldown = 2.0f;
-    private int maxPatientCount = 5;
+    private int maxPatientCount = 2;
 
 
     void Start()

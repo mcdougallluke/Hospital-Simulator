@@ -698,6 +698,7 @@ MonoBehaviour:
   waitingRoom: {fileID: 0}
   examRooms: []
   spellingMinigame: {fileID: 0}
+  fetchMinigame: {fileID: 0}
   scoreScript: {fileID: 0}
 --- !u!135 &8855358715290298648
 SphereCollider:
@@ -733,6 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactText: 
+  responseText: 
 --- !u!1 &2382203997211721560
 GameObject:
   m_ObjectHideFlags: 0
