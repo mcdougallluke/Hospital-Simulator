@@ -802,6 +802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactText: Diagnose patient
   responseText: I think my arm is broken...
+  patientAI: {fileID: 6648342355865499705}
 --- !u!114 &1539469495331548537
 MonoBehaviour:
   m_ObjectHideFlags: 0
