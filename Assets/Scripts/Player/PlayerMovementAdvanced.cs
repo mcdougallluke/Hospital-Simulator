@@ -184,7 +184,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         else if (activeGrapple)
         {
-            audioManager.PlaySFX(audioManager.grapple);
             state = MovementState.grappling;
             moveSpeed = sprintSpeed;
         }
@@ -451,6 +450,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
     {
+        audioManager.PlaySFX(audioManager.grapple);
         activeGrapple = true;
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
         Invoke(nameof(SetVelocity), 0.1f);
@@ -464,7 +464,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             enableMovementOnNextTouch = false;
             ResetRestrictions();
-
             GetComponentInChildren<Grappling>().StopGrapple();
         }
     }
