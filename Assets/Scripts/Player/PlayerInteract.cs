@@ -48,5 +48,4 @@ public class PlayerInteract : MonoBehaviour {
 
         return closestInteractable;
     }
-
 }
