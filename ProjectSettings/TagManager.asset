@@ -9,6 +9,7 @@ TagManager:
   - Doctor
   - Item
   - Audio
+  - Skin
   layers:
   - Default
   - TransparentFX

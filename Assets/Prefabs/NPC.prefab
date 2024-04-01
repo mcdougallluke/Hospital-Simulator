@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 1706268797688386807}
   m_Layer: 0
   m_Name: Character_Grandma
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 2772517792617378796}
   m_Layer: 0
   m_Name: Character_Hobo
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -716,7 +716,7 @@ Transform:
   m_GameObject: {fileID: 1938850257978176478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.5133165, z: 0, w: 0.85819936}
-  m_LocalPosition: {x: 7.64, y: 1.21, z: 0.231}
+  m_LocalPosition: {x: 8.747827, y: 1.0119667, z: -0.029583454}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1075,7 +1075,7 @@ GameObject:
   - component: {fileID: 3447714479109817237}
   m_Layer: 0
   m_Name: Character_PunkGirl
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1263,7 +1263,7 @@ GameObject:
   - component: {fileID: 3577650181672818556}
   m_Layer: 0
   m_Name: Character_PunkGuy
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1461,7 +1461,7 @@ GameObject:
   - component: {fileID: 2582035838197907731}
   m_Layer: 0
   m_Name: Character_Paramedic
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1906,7 +1906,7 @@ GameObject:
   - component: {fileID: 2166778984386892718}
   m_Layer: 0
   m_Name: Character_ShopKeeper
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2103,7 +2103,7 @@ GameObject:
   - component: {fileID: 5927567586526878502}
   m_Layer: 0
   m_Name: Character_Gangster
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2269,7 +2269,7 @@ GameObject:
   - component: {fileID: 8366668645668033790}
   m_Layer: 0
   m_Name: Character_FastFoodGuy
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2403,7 +2403,7 @@ GameObject:
   - component: {fileID: 1580037272230690032}
   m_Layer: 0
   m_Name: Character_Grandpa
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2600,7 +2600,7 @@ GameObject:
   - component: {fileID: 2421289929642066030}
   m_Layer: 0
   m_Name: Character_Tourist
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2766,7 +2766,7 @@ GameObject:
   - component: {fileID: 7301992005527621690}
   m_Layer: 0
   m_Name: Character_Roadworker
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3026,7 +3026,7 @@ GameObject:
   - component: {fileID: 433468924612982274}
   m_Layer: 0
   m_Name: Character_FireFighter
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3224,11 +3224,11 @@ GameObject:
   - component: {fileID: 8889239918430809950}
   m_Layer: 0
   m_Name: Character_Jock
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7647125246075447031
 Transform:
   m_ObjectHideFlags: 0
@@ -3358,7 +3358,7 @@ GameObject:
   - component: {fileID: 8538651853403641812}
   m_Layer: 0
   m_Name: Character_HipsterGirl
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3752,7 +3752,7 @@ GameObject:
   - component: {fileID: 6147796819810823266}
   m_Layer: 0
   m_Name: Character_SummerGirl
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3949,7 +3949,7 @@ GameObject:
   - component: {fileID: 804427063152976066}
   m_Layer: 0
   m_Name: Character_Biker
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4115,7 +4115,7 @@ GameObject:
   - component: {fileID: 3414816971926821147}
   m_Layer: 0
   m_Name: Character_HipsterGuy
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4249,7 +4249,7 @@ GameObject:
   - component: {fileID: 4375286843232862374}
   m_Layer: 0
   m_Name: Character_Hotdog
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4383,7 +4383,7 @@ GameObject:
   - component: {fileID: 2165717488869802076}
   m_Layer: 0
   m_Name: Character_GamerGirl
-  m_TagString: Untagged
+  m_TagString: Skin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

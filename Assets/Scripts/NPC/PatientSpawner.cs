@@ -14,7 +14,7 @@ public class PatientSpawner : MonoBehaviour
     public Transform[] examRooms; // Assign in the inspector
 
     private float spawnCooldown = 2.0f;
-    private int maxPatientCount = 2;
+    private int maxPatientCount = 10;
 
 
     void Start()
@@ -59,8 +59,12 @@ public class PatientSpawner : MonoBehaviour
         List<GameObject> childSkins = new List<GameObject>();
         foreach (Transform child in patient.transform)
         {
-            childSkins.Add(child.gameObject);
+            if (child.gameObject.tag == "Skin")
+            {
+                childSkins.Add(child.gameObject);
+            }
         }
+
 
         // Disable all skins initially
         childSkins.ForEach(child => child.SetActive(false));
