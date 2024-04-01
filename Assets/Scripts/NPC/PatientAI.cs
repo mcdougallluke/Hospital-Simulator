@@ -18,23 +18,28 @@ public class PatientAI : MonoBehaviour
     private bool hasStartedMinigame = false;
     private int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
     private bool fetchMinigameEnded = false; // Add this field
+    private Animator animator;
+
 
 
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>(); // Get the Animator component
         currentDestinationPoint = waitingRoom;
         MoveToWaitingRoom();
-        fetchMinigameEnded = false; // Ensure it's false at the start
+        fetchMinigameEnded = false;
         
-        // Randomly select a minigame for the NPC
         selectedMinigameIndex = Random.Range(0, 2);
-        
     }
+
 
     void Update()
     {
+        bool isMoving = agent.velocity.magnitude > 0.1f; // Adjust the threshold as needed
+        animator.SetBool("IsRunning", isMoving);
+
         if(hasArrivedAtWaitingRoom && isWaiting && !hasArrivedAtExamRoom)
         {
             bool foundPoint = CheckAndMoveToOptionalPoint();
@@ -59,6 +64,8 @@ public class PatientAI : MonoBehaviour
                 {
                     isWaiting = true; // NPC will now wait here if no optional points are available
                     Debug.Log("No available points found. NPC has arrived at the initial point and is now waiting.");
+                    agent.velocity = Vector3.zero; // Explicitly stop the agent
+                    agent.isStopped = true; // Prevent the agent from recalculating path
                 }
             }
             else
@@ -69,7 +76,8 @@ public class PatientAI : MonoBehaviour
                 {
                     Debug.Log("NPC has arrived at the optional point and is now waiting.");
                     hasArrivedAtExamRoom = true; // NPC has arrived at the optional point
-
+                    agent.velocity = Vector3.zero; // Explicitly stop the agent
+                    agent.isStopped = true; // Stop the agent
                 }
                 isWaiting = true; // NPC will now wait here
             }
@@ -87,6 +95,7 @@ public class PatientAI : MonoBehaviour
         {
             if (RoomManager.Instance.IsRoomAvailable(point))
             {
+                agent.isStopped = false;
                 RoomManager.Instance.SetRoomAvailability(point, false); // Mark the point as unavailable
                 agent.destination = point.position;
                 currentDestinationPoint = point; // Store the current destination
@@ -134,6 +143,7 @@ public class PatientAI : MonoBehaviour
     public void MoveToPointAndDespawn()
     {
         // Move back to initial point then despawn
+        agent.isStopped = false;
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
         agent.destination = waitingRoom.position;
         Debug.Log("NPC moving away and despawning.");
@@ -150,7 +160,6 @@ public class PatientAI : MonoBehaviour
 
         Destroy(gameObject, 10); // Waits x seconds before destroying
     }
-
 
     public void ResetAfterRagdoll()
     {
