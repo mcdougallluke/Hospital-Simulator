@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class PatientAI : MonoBehaviour
 {
+    public Transform despawnPoint;
     public Transform waitingRoom;
     public Transform[] examRooms;
     private NavMeshAgent agent;
@@ -137,16 +138,19 @@ public class PatientAI : MonoBehaviour
             Debug.Log("Item delivered to NPC, ending Fetch Minigame.");
             fetchMinigame.OnItemDelivered(); // Call to end the fetch minigame
             fetchMinigameEnded = true; // Prevent future execution
+
+            Destroy(other.gameObject); // Destroy the item GameObject
         }
     }
 
     public void MoveToPointAndDespawn()
     {
-        // Move back to initial point then despawn
         agent.isStopped = false;
+        // Free up the room the NPC was using
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
-        agent.destination = waitingRoom.position;
-        Debug.Log("NPC moving away and despawning.");
+        // Update this line to use despawnPoint instead of waitingRoom
+        agent.destination = despawnPoint.position; 
+        Debug.Log("NPC moving to despawn point and will be despawned.");
 
         // Increment the score by 10
         if(scoreScript != null) // Check if the scoreScript reference is set
@@ -155,11 +159,12 @@ public class PatientAI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Score script reference not set in NPCWandering.");
+            Debug.LogError("Score script reference not set in NPC.");
         }
 
-        Destroy(gameObject, 10); // Waits x seconds before destroying
+        Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
     }
+
 
     public void ResetAfterRagdoll()
     {

@@ -6534,6 +6534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5804dbfc65fef84cad85d158384e0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  despawnPoint: {fileID: 1560165614}
   patientPrefab: {fileID: 1938850257978176478, guid: 805820c298e7b564793b26523cc31879, type: 3}
   spawnPoint: {fileID: 1560165614}
   spellingMinigame: {fileID: 7699413}

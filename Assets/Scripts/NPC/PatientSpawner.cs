@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class PatientSpawner : MonoBehaviour
 {
+    public Transform despawnPoint;
     public GameObject patientPrefab; // Assign in the inspector
     public Transform spawnPoint; // Assign a transform as the spawn point in the inspector
     public SpellingMinigame spellingMinigame; // Assign in the inspector
@@ -48,6 +49,7 @@ public class PatientSpawner : MonoBehaviour
         PatientAI patientAI = patient.GetComponent<PatientAI>();
         if (patientAI != null)
         {
+            patientAI.despawnPoint = despawnPoint;
             patientAI.spellingMinigame = spellingMinigame;
             patientAI.fetchMinigame = fetchMinigame;
             patientAI.scoreScript = scoreScript;
