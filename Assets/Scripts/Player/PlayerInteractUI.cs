@@ -9,7 +9,7 @@ public class PlayerInteractUI : MonoBehaviour
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private TextMeshProUGUI interactText;
 
-    private void Update() {
+    private void FixedUpdate() {
         if (playerInteract.GetInteractableObject() != null) {
             Show(playerInteract.GetInteractableObject());
         } else {
