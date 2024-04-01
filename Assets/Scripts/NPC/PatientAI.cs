@@ -76,7 +76,6 @@ public class PatientAI : MonoBehaviour
         }    
     }
 
-
     void MoveToWaitingRoom()
     {
         agent.destination = waitingRoom.position;
@@ -100,29 +99,30 @@ public class PatientAI : MonoBehaviour
         return false; // No point found
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void StartSelectedMinigame()
     {
-        Debug.Log($"OnTriggerEnter called. SelectedMinigameIndex: {selectedMinigameIndex}, HasStartedMinigame: {hasStartedMinigame}");
-
-        if (hasArrivedAtExamRoom && other.CompareTag("Doctor") && !hasStartedMinigame)
+        if (!hasStartedMinigame && hasArrivedAtExamRoom)
         {
-
             hasStartedMinigame = true;
 
-            if (selectedMinigameIndex == 0)
+            switch (selectedMinigameIndex)
             {
-                Debug.Log("Starting Spelling Minigame.");
-                spellingMinigame.StartMinigame();
-                spellingMinigame.SetNPC(this);
-            }
-            else if (selectedMinigameIndex == 1) // This is the fetch minigame
-            {
-                Debug.Log("Starting Fetch Minigame.");
-                fetchMinigame.StartMinigame();
-                fetchMinigame.SetNPC(this); // Ensure the NPC is set for the fetchMinigame
+                case 0:
+                    Debug.Log("Starting Spelling Minigame.");
+                    spellingMinigame.StartMinigame();
+                    spellingMinigame.SetNPC(this);
+                    break;
+                case 1:
+                    Debug.Log("Starting Fetch Minigame.");
+                    fetchMinigame.StartMinigame();
+                    fetchMinigame.SetNPC(this);
+                    break;
             }
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Item") && selectedMinigameIndex == 1 && hasStartedMinigame && !fetchMinigameEnded)
         {
             Debug.Log("Item delivered to NPC, ending Fetch Minigame.");
@@ -130,9 +130,6 @@ public class PatientAI : MonoBehaviour
             fetchMinigameEnded = true; // Prevent future execution
         }
     }
-
-
-
 
     public void MoveToPointAndDespawn()
     {

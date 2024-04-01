@@ -6,7 +6,7 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
 
     [SerializeField] private string interactText;
     [SerializeField] private string responseText;
-
+    public PatientAI patientAI;
     private Animator animator;
     private NPCHeadLookAt npcHeadLookAt;
 
@@ -20,6 +20,7 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
         npcHeadLookAt.LookAtPosition(interactorTransform.position + Vector3.up * 1.6f);
         ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Neutral, responseText);
         animator.SetTrigger("Talk");
+        patientAI.StartSelectedMinigame();
     }
 
     public string GetInteractText() {
