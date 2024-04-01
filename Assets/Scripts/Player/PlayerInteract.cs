@@ -10,8 +10,7 @@ public class PlayerInteract : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
-            audioManager.PlaySFX(audioManager.pickupItem);
+        if (Input.GetKeyDown(KeyCode.E)) { 
             float interactRange = 1.5f;
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
             
