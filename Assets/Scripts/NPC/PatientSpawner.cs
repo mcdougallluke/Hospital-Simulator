@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class PatientSpawner : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class PatientSpawner : MonoBehaviour
     public Transform[] examRooms; // Assign in the inspector
 
     private float spawnCooldown = 2.0f;
-    private int maxPatientCount = 3;
+    private int maxPatientCount = 5;
 
 
     void Start()
@@ -51,8 +53,23 @@ public class PatientSpawner : MonoBehaviour
             patientAI.scoreScript = scoreScript;
             patientAI.waitingRoom = waitingRoom;
             patientAI.examRooms = examRooms;
-        
+        }
+
+        // New logic: Get all child GameObjects (skins) of the instantiated patient
+        List<GameObject> childSkins = new List<GameObject>();
+        foreach (Transform child in patient.transform)
+        {
+            childSkins.Add(child.gameObject);
+        }
+
+        // Disable all skins initially
+        childSkins.ForEach(child => child.SetActive(false));
+
+        // If there are any child skins, pick one at random and enable it
+        if (childSkins.Count > 0)
+        {
+            int skinIndex = Random.Range(0, childSkins.Count);
+            childSkins[skinIndex].SetActive(true);
         }
     }
-
 }
