@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
     public GameObject[] menuOptions;
     private int currentSelection = 0;
     private ButtonManager[] buttonManagers; // Array to hold ButtonManager components for menu options
-
+    public ScoreData scoreData;
     void Start()
     {
         buttonManagers = new ButtonManager[menuOptions.Length];
@@ -101,11 +101,13 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        scoreData.score = 0;
         Cursor.visible = true;
         SceneManager.LoadScene(1);
     }
     public void Credits()
     {
+        scoreData.score = 0;
         Debug.Log("Going to credits scene.");
         SceneManager.LoadScene(2);
     }

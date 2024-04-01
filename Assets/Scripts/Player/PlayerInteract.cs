@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour {
-
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
+            audioManager.PlaySFX(audioManager.pickupItem);
             float interactRange = 1.5f;
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
             
