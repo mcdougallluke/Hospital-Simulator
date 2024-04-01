@@ -16,9 +16,9 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
 
     public void Interact(Transform interactorTransform) {
         Debug.Log("Interacting with NPC");
-        ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Neutral, "I don't feel too well.");
-        //animator.SetTrigger("Talk");
         npcHeadLookAt.LookAtPosition(interactorTransform.position + Vector3.up * 1.6f);
+        ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Neutral, "I don't feel too well.");
+        animator.SetTrigger("Talk");
     }
 
     public string GetInteractText() {
