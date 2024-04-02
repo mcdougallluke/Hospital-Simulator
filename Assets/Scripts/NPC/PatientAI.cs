@@ -18,8 +18,10 @@ public class PatientAI : MonoBehaviour
     public Score scoreScript; 
     private bool hasStartedMinigame = false;
     private int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
-    private bool fetchMinigameEnded = false; // Add this field
+    private bool fetchMinigameEnded = false; 
     private Animator animator;
+    public string desiredPill; 
+
 
 
 
@@ -123,7 +125,8 @@ public class PatientAI : MonoBehaviour
                     spellingMinigame.SetNPC(this);
                     break;
                 case 1:
-                    Debug.Log("Starting Fetch Minigame.");
+                    desiredPill = ChooseRandomPill(); // Select a random pill
+                    Debug.Log($"Starting Fetch Minigame. Please bring me the {desiredPill}.");
                     fetchMinigame.StartMinigame();
                     fetchMinigame.SetNPC(this);
                     break;
@@ -131,15 +134,33 @@ public class PatientAI : MonoBehaviour
         }
     }
 
+    private string ChooseRandomPill()
+    {
+        string[] pills = { "RedPill", "BluePill", "GreenPill" };
+        int index = Random.Range(0, pills.Length);
+        return pills[index];
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item") && selectedMinigameIndex == 1 && hasStartedMinigame && !fetchMinigameEnded)
         {
-            Debug.Log("Item delivered to NPC, ending Fetch Minigame.");
-            fetchMinigame.OnItemDelivered(); // Call to end the fetch minigame
-            fetchMinigameEnded = true; // Prevent future execution
 
-            Destroy(other.gameObject); // Destroy the item GameObject
+            string collidedObjectName = other.gameObject.name.Split('(')[0].Trim(); // Splits the name and takes the first part
+
+            if (collidedObjectName.Equals(desiredPill))
+            {
+                Debug.Log("Correct pill delivered to NPC, ending Fetch Minigame.");
+                fetchMinigame.OnItemDelivered(); // Call to end the minigame
+                fetchMinigameEnded = true; // Prevent future execution
+                Destroy(other.gameObject); // Destroy the correct pill GameObject
+            }
+            else
+            {
+                Debug.Log(other.gameObject.name + " is colliding. It should be " + desiredPill);
+                Debug.Log("Incorrect pill. Please bring the correct one.");
+                // Optionally, handle the case for incorrect pill delivery (e.g., provide feedback to the player)
+            }
         }
     }
 

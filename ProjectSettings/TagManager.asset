@@ -10,6 +10,7 @@ TagManager:
   - Item
   - Audio
   - Skin
+  - Pill
   layers:
   - Default
   - TransparentFX
