@@ -17,7 +17,7 @@ public class PatientAI : MonoBehaviour
     public FetchMinigame fetchMinigame;
     public Score scoreScript; 
     private bool hasStartedMinigame = false;
-    private int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
+    public int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
     private bool fetchMinigameEnded = false; 
     private Animator animator;
     public string desiredPill; 
