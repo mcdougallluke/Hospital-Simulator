@@ -6,8 +6,7 @@ public class FetchMinigame : MonoBehaviour
 
     // Call this method to start the minigame
     public void StartMinigame()
-    {
-        
+    { 
     }
 
     public void SetNPC(PatientAI npc)

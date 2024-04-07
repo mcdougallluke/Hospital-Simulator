@@ -22,10 +22,6 @@ public class PatientAI : MonoBehaviour
     private Animator animator;
     public string desiredPill; 
 
-
-
-
-
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -106,7 +102,6 @@ public class PatientAI : MonoBehaviour
                 return true; // Point found
             }
         }
-
         // If this point is reached, no available points were found
         return false; // No point found
     }
@@ -116,7 +111,6 @@ public class PatientAI : MonoBehaviour
         if (!hasStartedMinigame && hasArrivedAtExamRoom)
         {
             hasStartedMinigame = true;
-
             switch (selectedMinigameIndex)
             {
                 case 0:
@@ -186,10 +180,8 @@ public class PatientAI : MonoBehaviour
         Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
     }
 
-
     public void ResetAfterRagdoll()
     {
         agent.destination = currentDestinationPoint.position;
     }
-
 }

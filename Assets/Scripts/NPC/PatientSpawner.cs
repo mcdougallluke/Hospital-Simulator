@@ -67,7 +67,6 @@ public class PatientSpawner : MonoBehaviour
             }
         }
 
-
         // Disable all skins initially
         childSkins.ForEach(child => child.SetActive(false));
 

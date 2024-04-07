@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject[] menuOptions;
     private ButtonManager[] buttonManagers; // Array to hold ButtonManager components for menu options
     public ScoreData scoreData;
+    public RoomManager roomManager;
     void Start()
     {
         buttonManagers = new ButtonManager[menuOptions.Length];
@@ -111,6 +112,7 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
+        RoomManager.Instance.ResetAllRoomsAvailability();
         scoreData.score = 0;
         Time.timeScale = 1f;
         Debug.Log("Loading main menu");
@@ -120,6 +122,8 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        RoomManager.Instance.ResetAllRoomsAvailability();
+        scoreData.score = 0;
         Debug.Log("Quitting game...");
         Application.Quit();
     }

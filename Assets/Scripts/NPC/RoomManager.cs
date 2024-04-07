@@ -7,7 +7,6 @@ public class RoomManager : MonoBehaviour
     
     // Public list to assign in the Unity Editor
     public List<Transform> initialRooms;
-
     private Dictionary<Transform, bool> roomAvailability = new Dictionary<Transform, bool>();
 
     void Awake()
@@ -15,7 +14,7 @@ public class RoomManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
 
             // Automatically register the points added in the list through the Unity Editor
             foreach (var room in initialRooms)
@@ -57,4 +56,15 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    public void ResetAllRoomsAvailability()
+    {
+        // Create a copy of the dictionary keys to avoid modifying the collection while iterating
+        var keys = new List<Transform>(roomAvailability.Keys);
+
+        foreach (var room in keys)
+        {
+            roomAvailability[room] = true; // Reset all rooms to available
+            Debug.Log($"Room {room.name} availability reset to: true");
+        }
+    }
 }

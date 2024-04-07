@@ -695,11 +695,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677d5f8ad35e88c408b14c476a1de777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  despawnPoint: {fileID: 0}
   waitingRoom: {fileID: 0}
   examRooms: []
   spellingMinigame: {fileID: 0}
   fetchMinigame: {fileID: 0}
   scoreScript: {fileID: 0}
+  desiredPill: 
 --- !u!135 &8855358715290298648
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -735,6 +737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactText: 
   responseText: 
+  patientAI: {fileID: 0}
 --- !u!1 &2382203997211721560
 GameObject:
   m_ObjectHideFlags: 0
