@@ -93,37 +93,42 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    /*AudioManager audioManager;
+    AudioManager audioManager;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-    }*/
+    }
 
     public void PlayGame()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         scoreData.score = 0;
         Cursor.visible = true;
         SceneManager.LoadScene(1);
     }
     public void Credits()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         scoreData.score = 0;
         Debug.Log("Going to credits scene.");
         SceneManager.LoadScene(2);
     }
     public void QuitGame()
-    { 
+    {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         Application.Quit();
         Debug.Log("Quiting Game.");
     }
 
     public void Back()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         SceneManager.LoadScene("MainMenu");
     }
 
     public void LoadMainMenu()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         SceneManager.LoadScene("MainMenu");
     }
 }

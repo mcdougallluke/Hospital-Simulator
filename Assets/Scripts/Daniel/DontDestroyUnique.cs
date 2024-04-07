@@ -14,9 +14,9 @@ public class DontDestroyUnique : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         // If an instance already exists and it's not this one, destroy this one
-        /*else if (instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
-        }*/
+        }
     }
 }
