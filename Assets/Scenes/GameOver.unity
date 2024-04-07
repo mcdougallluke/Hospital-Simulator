@@ -481,6 +481,8 @@ MonoBehaviour:
   menuOptions:
   - {fileID: 690527546}
   - {fileID: 2027626508}
+  scoreData: {fileID: 11400000, guid: ff7d60fcc363e104a8ea35a9c039f328, type: 2}
+  roomManager: {fileID: 0}
 --- !u!114 &689292661
 MonoBehaviour:
   m_ObjectHideFlags: 0

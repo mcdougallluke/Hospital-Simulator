@@ -48,7 +48,6 @@ public class Score : MonoBehaviour
             MyText.text = "Score: " + scoreData.score; // Correctly display the current score
         }
     }
-
     public int CurrentScore()
     {
         return scoreData.score;

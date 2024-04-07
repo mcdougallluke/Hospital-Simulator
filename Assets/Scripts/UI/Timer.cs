@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     public Image endGameFadePanel; // Reference to the fade panel
     public Text scoreText; // Reference to display score at the end
     public Score scoreScript; // Reference to the Score script
-
+    public RoomManager roomManager;
     void Update()
     {
         if (timeValue > 0)
@@ -20,7 +20,7 @@ public class Timer : MonoBehaviour
         else
         {
             timeValue = 0;
-
+           
             StartCoroutine(EndGameSequence());
            
         }
@@ -40,9 +40,10 @@ public class Timer : MonoBehaviour
         while (alpha < 1)
         {
             alpha += Time.deltaTime / fadeDuration;
-            endGameFadePanel.color = new Color(0, 0, 0, alpha);
+           // endGameFadePanel.color = new Color(0, 0, 0, alpha);
             yield return null;
         }
+        RoomManager.Instance.ResetAllRoomsAvailability();
         SceneManager.LoadScene(3);
         // Display the final score
         // scoreText.text = "Final Score: " + scoreScript.CurrentScore();
