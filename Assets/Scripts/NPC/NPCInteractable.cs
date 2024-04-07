@@ -43,23 +43,23 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
     }
 
     private string DetermineResponseText() {
-        if(patientAI.selectedMinigameIndex == 0) { // Spelling Minigame
-            // Array of possible things the patient might say
-            string[] phrases = new string[] {
-                "My face looks different",
-                "My bones turned into liquid",
-                "I forgot how to read",
-                "I can smell the color blue",
-                "I can hear the sun"
-            };
-            // Randomly select one of the phrases
-            int randomIndex = Random.Range(0, phrases.Length);
-            return phrases[randomIndex];
-        } else if(patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
+        // Check if the NPC has not arrived at an exam room
+        if (!patientAI.HasArrivedAtExamRoom) {
+            return "Hi";
+        }
+        
+        // Existing conditions for minigame responses
+        if (patientAI.selectedMinigameIndex == 0) { // Spelling Minigame
+
+            return "I have a horrible disease";
+            
+        } else if (patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
             return "Bring me the " + patientAI.desiredPill;
         }
+        
         return ""; // Default response if none match
     }
+
 
 
     public string GetInteractText() {

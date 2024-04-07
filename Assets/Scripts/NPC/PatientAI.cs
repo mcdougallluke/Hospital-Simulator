@@ -189,4 +189,9 @@ public class PatientAI : MonoBehaviour
         agent.destination = currentDestinationPoint.position;
     }
 
+    public bool HasArrivedAtExamRoom {
+    get { return hasArrivedAtExamRoom; }
+}   
+
+
 }
