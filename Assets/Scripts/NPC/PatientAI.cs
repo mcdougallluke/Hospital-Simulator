@@ -29,8 +29,13 @@ public class PatientAI : MonoBehaviour
         currentDestinationPoint = waitingRoom;
         MoveToWaitingRoom();
         fetchMinigameEnded = false;
+
         
         selectedMinigameIndex = Random.Range(0, 2);
+        if(selectedMinigameIndex == 1)
+        {
+            desiredPill = ChooseRandomPill();
+        }
     }
 
 
@@ -119,7 +124,6 @@ public class PatientAI : MonoBehaviour
                     spellingMinigame.SetNPC(this);
                     break;
                 case 1:
-                    desiredPill = ChooseRandomPill(); // Select a random pill
                     Debug.Log($"Starting Fetch Minigame. Please bring me the {desiredPill}.");
                     fetchMinigame.StartMinigame();
                     fetchMinigame.SetNPC(this);
@@ -184,4 +188,5 @@ public class PatientAI : MonoBehaviour
     {
         agent.destination = currentDestinationPoint.position;
     }
+
 }

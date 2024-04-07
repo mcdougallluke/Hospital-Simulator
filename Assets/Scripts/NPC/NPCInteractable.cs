@@ -17,6 +17,8 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
     }
 
     public void Interact(Transform interactorTransform) {
+
+        
         Debug.Log("Interacting with NPC");
 
         // Calculate the direction to look at by subtracting the current position from the target's position.
