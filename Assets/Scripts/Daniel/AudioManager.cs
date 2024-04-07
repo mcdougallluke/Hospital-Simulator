@@ -28,35 +28,25 @@ public class AudioManager : MonoBehaviour
     private Dictionary<string, AudioClip> sceneBackgroundMusic = new Dictionary<string, AudioClip>();
     private static AudioManager instance;
 
-
     public void Awake()
     {
         if (instance == null)
         {
-            // If not, set the instance to this
             instance = this;
-            // Ensure this instance persists across scenes
             DontDestroyOnLoad(gameObject);
-
-
-            //musicSource.volume = 0.40f;
-
 
             SFXSource.volume = 0.25f;
             sceneBackgroundMusic.Add("HospitalMap 1", gameBackground);
             sceneBackgroundMusic.Add("MainMenu", mainMenuBackground);
             sceneBackgroundMusic.Add("Credits", creditsBackground);
             sceneBackgroundMusic.Add("GameOver", endBackground);
-            // Subscribe to the scene loaded event
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
-            // If an instance already exists, destroy this one
             Destroy(gameObject);
         }
     }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Check if the loaded scene exists in the sceneBackgroundMusic dictionary
@@ -66,10 +56,12 @@ public class AudioManager : MonoBehaviour
             if (scene.name == "HospitalMap 1")
             {
                 musicSource.volume = 0.2f; // Set volume to 10%
+                musicSource.loop = true;
             }
             else
             {
                 musicSource.volume = 0.4f; // Set volume to default (40%)
+                musicSource.loop = true;
             }
 
             // Set the background music for the loaded scene
@@ -77,7 +69,6 @@ public class AudioManager : MonoBehaviour
             musicSource.Play();
         }
     }
-
     public void PlaySFX(AudioClip clip)
     {
         SFXSource.PlayOneShot(clip);
