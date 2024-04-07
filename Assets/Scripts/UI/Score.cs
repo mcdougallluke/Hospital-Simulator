@@ -25,11 +25,11 @@ public class Score : MonoBehaviour
     public void Update()
     {
         //testing
-        if (Input.GetKey(KeyCode.L))
+        /*if (Input.GetKey(KeyCode.L))
         {
             // score++;
             updateScore(1);
-        }
+        }*/
     }
 
     /// <summary>
