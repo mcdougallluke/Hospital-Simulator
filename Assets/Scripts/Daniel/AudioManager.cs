@@ -39,7 +39,9 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
 
-            musicSource.volume = 0.40f;
+            //musicSource.volume = 0.40f;
+
+
             SFXSource.volume = 0.25f;
             sceneBackgroundMusic.Add("HospitalMap 1", gameBackground);
             sceneBackgroundMusic.Add("MainMenu", mainMenuBackground);
@@ -60,6 +62,16 @@ public class AudioManager : MonoBehaviour
         // Check if the loaded scene exists in the sceneBackgroundMusic dictionary
         if (sceneBackgroundMusic.ContainsKey(scene.name))
         {
+
+            if (scene.name == "HospitalMap 1")
+            {
+                musicSource.volume = 0.2f; // Set volume to 10%
+            }
+            else
+            {
+                musicSource.volume = 0.4f; // Set volume to default (40%)
+            }
+
             // Set the background music for the loaded scene
             musicSource.clip = sceneBackgroundMusic[scene.name];
             musicSource.Play();
