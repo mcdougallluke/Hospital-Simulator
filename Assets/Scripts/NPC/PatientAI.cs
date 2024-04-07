@@ -21,6 +21,8 @@ public class PatientAI : MonoBehaviour
     private bool fetchMinigameEnded = false; 
     private Animator animator;
     public string desiredPill; 
+    private bool isDespawning = false; // Add this line
+
 
     void Start()
     {
@@ -41,6 +43,9 @@ public class PatientAI : MonoBehaviour
 
     void Update()
     {
+        if(isDespawning) return; // Add this line to prevent further actions
+
+
         bool isMoving = agent.velocity.magnitude > 0.1f; // Adjust the threshold as needed
         animator.SetBool("IsRunning", isMoving);
 
@@ -164,6 +169,8 @@ public class PatientAI : MonoBehaviour
 
     public void MoveToPointAndDespawn()
     {
+        isDespawning = true; // Set despawning state
+
         agent.isStopped = false;
         // Free up the room the NPC was using
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
