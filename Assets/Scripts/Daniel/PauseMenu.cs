@@ -13,6 +13,13 @@ public class PauseMenu : MonoBehaviour
     private ButtonManager[] buttonManagers; // Array to hold ButtonManager components for menu options
     public ScoreData scoreData;
     public RoomManager roomManager;
+
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     void Start()
     {
         buttonManagers = new ButtonManager[menuOptions.Length];
@@ -28,6 +35,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+          
             if (GameIsPaused)
             {
                 Resume();
@@ -98,6 +106,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -105,6 +114,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -112,6 +122,7 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         RoomManager.Instance.ResetAllRoomsAvailability();
         scoreData.score = 0;
         Time.timeScale = 1f;
@@ -122,6 +133,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         RoomManager.Instance.ResetAllRoomsAvailability();
         scoreData.score = 0;
         Debug.Log("Quitting game...");

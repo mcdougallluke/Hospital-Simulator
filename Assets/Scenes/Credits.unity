@@ -931,6 +931,7 @@ MonoBehaviour:
   gameBackground: {fileID: 8300000, guid: 7597deea52f7e134eb6e1b6fb860ae9a, type: 3}
   mainMenuBackground: {fileID: 8300000, guid: 1c9668b2dd4e15747871b4b927235efc, type: 3}
   creditsBackground: {fileID: 8300000, guid: 7c68b67c58ad91a44953d633c8fc8210, type: 3}
+  endBackground: {fileID: 0}
 --- !u!4 &997425231
 Transform:
   m_ObjectHideFlags: 0
@@ -1098,7 +1099,10 @@ MonoBehaviour:
 
 
     UI
-    Click Sound Pack'
+    Click Sound Pack
+
+
+    Background Tracks'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
   m_sharedMaterial: {fileID: 21419154506056544, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
@@ -1937,8 +1941,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 338.94702, y: 61.375}
-  m_SizeDelta: {x: 677.894, y: 122.75}
+  m_AnchoredPosition: {x: 372.62744, y: 61.375}
+  m_SizeDelta: {x: 745.2549, y: 122.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107099223
 MonoBehaviour:
@@ -1980,7 +1984,11 @@ MonoBehaviour:
     drechneaux - deviant art
 
 
-    swishswoosh (Unity Asset Store)'
+    swishswoosh (Unity Asset Store)
+
+
+    Theme
+    Hospital Music (Youtube vnlls)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
   m_sharedMaterial: {fileID: 21419154506056544, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
@@ -2043,7 +2051,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 60.135254, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

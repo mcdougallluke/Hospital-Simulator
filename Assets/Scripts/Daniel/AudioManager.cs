@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip gameBackground;
     public AudioClip mainMenuBackground;
     public AudioClip creditsBackground;
+    public AudioClip endBackground;
 
     private Dictionary<string, AudioClip> sceneBackgroundMusic = new Dictionary<string, AudioClip>();
     private static AudioManager instance;
@@ -43,6 +44,7 @@ public class AudioManager : MonoBehaviour
             sceneBackgroundMusic.Add("HospitalMap 1", gameBackground);
             sceneBackgroundMusic.Add("MainMenu", mainMenuBackground);
             sceneBackgroundMusic.Add("Credits", creditsBackground);
+            sceneBackgroundMusic.Add("GameOver", endBackground);
             // Subscribe to the scene loaded event
             SceneManager.sceneLoaded += OnSceneLoaded;
         }

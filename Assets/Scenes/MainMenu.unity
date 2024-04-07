@@ -1148,6 +1148,7 @@ MonoBehaviour:
   gameBackground: {fileID: 8300000, guid: e1428c6bae1e56b4bbd867331adb5a14, type: 3}
   mainMenuBackground: {fileID: 8300000, guid: 1c9668b2dd4e15747871b4b927235efc, type: 3}
   creditsBackground: {fileID: 8300000, guid: 7c68b67c58ad91a44953d633c8fc8210, type: 3}
+  endBackground: {fileID: 8300000, guid: f83c8fc3d6ba15942a205f78590e2bf3, type: 3}
 --- !u!4 &1247051967
 Transform:
   m_ObjectHideFlags: 0
