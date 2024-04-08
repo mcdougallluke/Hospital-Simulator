@@ -22,6 +22,10 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        //REMOVE CURSOR MOVEMENT
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         buttonManagers = new ButtonManager[menuOptions.Length];
 
         // Get ButtonManager components for each menu option
@@ -38,6 +42,7 @@ public class PauseMenu : MonoBehaviour
           
             if (GameIsPaused)
             {
+
                 Resume();
             }
             else
@@ -106,6 +111,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         audioManager.PlaySFX(audioManager.buttonPressed);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
@@ -114,6 +121,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         audioManager.PlaySFX(audioManager.buttonPressed);
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
