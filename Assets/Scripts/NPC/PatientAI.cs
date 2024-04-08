@@ -21,7 +21,7 @@ public class PatientAI : MonoBehaviour
     private bool fetchMinigameEnded = false; 
     private Animator animator;
     public string desiredPill; 
-    private bool isDespawning = false; // Add this line
+    private bool isDespawning = false; 
 
 
     void Start()
