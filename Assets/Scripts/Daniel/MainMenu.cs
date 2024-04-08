@@ -10,6 +10,10 @@ public class MainMenu : MonoBehaviour
     public ScoreData scoreData;
     void Start()
     {
+        //ENABLE CURSOR MOVEMENT
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         buttonManagers = new ButtonManager[menuOptions.Length];
 
         // Get ButtonManager components for each menu option
