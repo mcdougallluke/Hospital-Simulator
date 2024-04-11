@@ -72,7 +72,7 @@ public class SpellingMinigame : MonoBehaviour
     {
         if (inputField.text.ToLower().Equals(currentWord.ToLower()))
         {
-            patientAI.MoveToPointAndDespawn();
+            patientAI.currentState = PatientState.Despawning;
         }
         else
         {

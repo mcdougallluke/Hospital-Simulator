@@ -2,6 +2,16 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum PatientState
+{
+    MovingToWaitingRoom,
+    Waiting,
+    MovingToExamRoom,
+    InExamRoom,
+    PlayingMinigame,
+    Despawning
+}
+
 
 public class PatientAI : MonoBehaviour
 {
@@ -9,9 +19,6 @@ public class PatientAI : MonoBehaviour
     public Transform waitingRoom;
     public Transform[] examRooms;
     private NavMeshAgent agent;
-    private bool isWaiting = false;
-    private bool hasArrivedAtExamRoom = false;
-    private bool hasArrivedAtWaitingRoom = false;
     private Transform currentDestinationPoint; 
     public SpellingMinigame spellingMinigame;
     public FetchMinigame fetchMinigame;
@@ -21,18 +28,15 @@ public class PatientAI : MonoBehaviour
     private bool fetchMinigameEnded = false; 
     private Animator animator;
     public string desiredPill; 
-    private bool isDespawning = false; 
-
+    public PatientState currentState;
 
     void Start()
     {
+        currentState = PatientState.MovingToWaitingRoom;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>(); // Get the Animator component
-        currentDestinationPoint = waitingRoom;
-        MoveToWaitingRoom();
         fetchMinigameEnded = false;
 
-        
         selectedMinigameIndex = Random.Range(0, 2);
         if(selectedMinigameIndex == 1)
         {
@@ -40,63 +44,89 @@ public class PatientAI : MonoBehaviour
         }
     }
 
-
     void Update()
     {
-        if(isDespawning) return; // Add this line to prevent further actions
-
-
-        bool isMoving = agent.velocity.magnitude > 0.1f; // Adjust the threshold as needed
-        animator.SetBool("IsRunning", isMoving);
-
-        if(hasArrivedAtWaitingRoom && isWaiting && !hasArrivedAtExamRoom)
+        switch (currentState)
         {
-            bool foundPoint = CheckAndMoveToOptionalPoint();
-            
-            if(foundPoint)
-            {
-                isWaiting = false;
-
-            }
-
+            case PatientState.MovingToWaitingRoom:
+                HandleMovingToWaitingRoomState();
+                break;
+            case PatientState.Waiting:
+                HandleWaitingState();
+                break;
+            case PatientState.MovingToExamRoom:
+                HandleMovingToExamRoomState();
+                break;
+            case PatientState.InExamRoom:
+                HandleInExamRoomState();
+                break;
+            case PatientState.PlayingMinigame:
+                HandlePlayingMinigameState();
+                break;
+            case PatientState.Despawning:
+                HandleDespawningState();
+                break;
         }
-
-        if (!isWaiting && !agent.pathPending && agent.remainingDistance < 0.5f)
-        {
-            if (!hasArrivedAtWaitingRoom)
-            {
-                bool foundPoint = CheckAndMoveToOptionalPoint();
-                hasArrivedAtWaitingRoom = true;
-
-                // Only set isWaiting to true if no points are available
-                if (!foundPoint)
-                {
-                    isWaiting = true; // NPC will now wait here if no optional points are available
-                    Debug.Log("No available points found. NPC has arrived at the initial point and is now waiting.");
-                    agent.velocity = Vector3.zero; // Explicitly stop the agent
-                    agent.isStopped = true; // Prevent the agent from recalculating path
-                }
-            }
-            else
-            {
-                // This condition is met when the NPC arrives at an optional point
-                // Log the arrival only once
-                if (!isWaiting) // This ensures the message is logged only once upon arrival
-                {
-                    Debug.Log("NPC has arrived at the optional point and is now waiting.");
-                    hasArrivedAtExamRoom = true; // NPC has arrived at the optional point
-                    agent.velocity = Vector3.zero; // Explicitly stop the agent
-                    agent.isStopped = true; // Stop the agent
-                }
-                isWaiting = true; // NPC will now wait here
-            }
-        }    
     }
 
-    void MoveToWaitingRoom()
+    void HandleMovingToWaitingRoomState()
     {
         agent.destination = waitingRoom.position;
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = PatientState.Waiting;
+            // Perform any arrival logic here
+        }
     }
+
+    void HandleWaitingState()
+    {
+
+        if (CheckAndMoveToOptionalPoint())
+        {
+            currentState = PatientState.MovingToExamRoom;
+        }
+    }
+
+    void HandleMovingToExamRoomState()
+    {
+        // Transition to InExamRoom when arrived
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = PatientState.InExamRoom;
+            // Perform any arrival logic here
+        }
+    }
+
+    void HandleInExamRoomState()
+    {
+        // currently handled in NPCInteractable.cs
+    }
+
+    void HandlePlayingMinigameState()
+    {
+        // Logic for playing a minigame
+        // Transition to Despawning when minigame ends
+    }
+
+    void HandleDespawningState()
+    {
+        // Logic for despawning
+        // Transition to Despawned when arrived
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            MoveToPointAndDespawn();
+        }
+    }
+
+
+
+    // void Update()
+    // {
+
+    //     bool isMoving = agent.velocity.magnitude > 0.1f; // Adjust the threshold as needed
+    //     animator.SetBool("IsRunning", isMoving);
 
     bool CheckAndMoveToOptionalPoint()
     {
@@ -118,7 +148,7 @@ public class PatientAI : MonoBehaviour
 
     public void StartSelectedMinigame()
     {
-        if (!hasStartedMinigame && hasArrivedAtExamRoom)
+        if (!hasStartedMinigame)
         {
             hasStartedMinigame = true;
             switch (selectedMinigameIndex)
@@ -154,8 +184,7 @@ public class PatientAI : MonoBehaviour
             if (collidedObjectName.Equals(desiredPill))
             {
                 Debug.Log("Correct pill delivered to NPC, ending Fetch Minigame.");
-                fetchMinigame.OnItemDelivered(); // Call to end the minigame
-                fetchMinigameEnded = true; // Prevent future execution
+                currentState = PatientState.Despawning;
                 Destroy(other.gameObject); // Destroy the correct pill GameObject
             }
             else
@@ -169,13 +198,11 @@ public class PatientAI : MonoBehaviour
 
     public void MoveToPointAndDespawn()
     {
-        isDespawning = true; // Set despawning state
-
-        agent.isStopped = false;
         // Free up the room the NPC was using
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
         // Update this line to use despawnPoint instead of waitingRoom
         agent.destination = despawnPoint.position; 
+        
         Debug.Log("NPC moving to despawn point and will be despawned.");
 
         // Increment the score by 10
@@ -190,15 +217,4 @@ public class PatientAI : MonoBehaviour
 
         Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
     }
-
-    public void ResetAfterRagdoll()
-    {
-        agent.destination = currentDestinationPoint.position;
-    }
-
-    public bool HasArrivedAtExamRoom {
-    get { return hasArrivedAtExamRoom; }
-}   
-
-
 }

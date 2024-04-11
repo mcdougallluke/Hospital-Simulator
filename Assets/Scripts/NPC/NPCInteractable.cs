@@ -39,21 +39,29 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
         
         ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Neutral, responseText);
         animator.SetTrigger("Talk");
-        patientAI.StartSelectedMinigame();
     }
 
     private string DetermineResponseText() {
         // Check if the NPC has not arrived at an exam room
-        if (!patientAI.HasArrivedAtExamRoom) {
-            return "Hi";
+        if (patientAI.currentState != PatientState.InExamRoom) {
+        return "Hi";
+    
         }
         
+        //patientAI.StartSelectedMinigame();
+
+
         // Existing conditions for minigame responses
         if (patientAI.selectedMinigameIndex == 0) { // Spelling Minigame
 
+            patientAI.StartSelectedMinigame();
+            patientAI.currentState = PatientState.PlayingMinigame;
             return "I have a horrible disease";
             
+            
         } else if (patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
+            patientAI.StartSelectedMinigame();
+            patientAI.currentState = PatientState.PlayingMinigame;
             return "Bring me the " + patientAI.desiredPill;
         }
         

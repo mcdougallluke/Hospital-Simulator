@@ -17,12 +17,7 @@ public class FetchMinigame : MonoBehaviour
     // New method to be called when the doctor/player brings the correct item
     public void OnItemDelivered()
     {
-        EndMinigame();
+        patientAI.currentState = PatientState.Despawning;
     }
 
-    // Call this method to end the minigame
-    public void EndMinigame()
-    {
-        patientAI.MoveToPointAndDespawn();
-    }
 }
