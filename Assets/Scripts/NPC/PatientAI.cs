@@ -29,6 +29,8 @@ public class PatientAI : MonoBehaviour
     private Animator animator;
     public string desiredPill; 
     public PatientState currentState;
+    private bool isDespawningInitiated = false;
+
 
     void Start()
     {
@@ -114,8 +116,9 @@ public class PatientAI : MonoBehaviour
     {
         // Logic for despawning
         // Transition to Despawned when arrived
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!isDespawningInitiated && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
+            isDespawningInitiated = true;
             MoveToPointAndDespawn();
         }
     }
