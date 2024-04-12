@@ -900,6 +900,7 @@ MonoBehaviour:
   scoreScript: {fileID: 0}
   selectedMinigameIndex: 0
   desiredPill: 
+  currentState: 0
 --- !u!195 &8457637207017139811
 NavMeshAgent:
   m_ObjectHideFlags: 0
