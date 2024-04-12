@@ -85,7 +85,7 @@ public class PatientAI : MonoBehaviour
 
         if (CheckAndMoveToOptionalPoint())
         {
-            currentState = PatientState.MovingToExamRoom;
+            currentState = PatientState.InExamRoom;
         }
     }
 
@@ -119,8 +119,6 @@ public class PatientAI : MonoBehaviour
             MoveToPointAndDespawn();
         }
     }
-
-
 
     // void Update()
     // {
