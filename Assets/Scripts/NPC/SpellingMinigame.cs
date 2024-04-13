@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; // Required for setting focus
+using UnityEngine.EventSystems; 
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -24,6 +24,7 @@ public class SpellingMinigame : MonoBehaviour
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
+    
     void Start()
     {
         minigameUI.SetActive(false);
@@ -98,8 +99,6 @@ public class SpellingMinigame : MonoBehaviour
         inputField.DeactivateInputField();
     }
 
-
-    // New method to validate input and toggle the submit button's interactability
     void ValidateInput(string input)
     {
         // Ensure all input is treated in lowercase to standardize comparisons
@@ -134,9 +133,6 @@ public class SpellingMinigame : MonoBehaviour
             submitButton.interactable = (correctChars == currentWord.Length);
         }
     }
-
-
-
 
     public void playSound()
     {

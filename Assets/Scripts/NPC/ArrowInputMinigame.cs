@@ -1,18 +1,61 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems; 
+using System.Collections;
+using System.Collections.Generic;
 
 public class ArrowInputMinigame : MonoBehaviour
 {
     private int currentIndex = 0;
-    private KeyCode[] correctSequence = new KeyCode[6]; // Array to store the sequence
+    private KeyCode[] correctSequence = new KeyCode[6];
     private bool isMinigameActive = false;
+    public PatientAI patientAI; // Reference to the PatientAI script
+    public PlayerMovementAdvanced playerMovementAdvanced;
+
+
 
     public void StartMinigame()
     {
-        // Randomize the sequence or define a fixed one
+        playerMovementAdvanced.SetPlayerFreeze(true);
+        // Define a fixed sequence or randomize it
         correctSequence = new KeyCode[] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow };
         currentIndex = 0;
         isMinigameActive = true;
-        Debug.Log("Arrow Input Minigame Started. Follow the sequence!");
+        
+        // Log the sequence for the player
+        Debug.Log("Arrow Input Minigame Started. Follow the sequence: " + GetSequenceAsString());
+    }
+
+    public void SetNPC(PatientAI npc)
+    {
+        patientAI = npc;
+    }
+
+    private string GetSequenceAsString()
+    {
+        string sequenceString = "";
+        foreach (KeyCode key in correctSequence)
+        {
+            sequenceString += KeyCodeToArrow(key) + " ";
+        }
+        return sequenceString.Trim();
+    }
+
+    private string KeyCodeToArrow(KeyCode key)
+    {
+        switch (key)
+        {
+            case KeyCode.UpArrow:
+                return "↑";
+            case KeyCode.DownArrow:
+                return "↓";
+            case KeyCode.LeftArrow:
+                return "←";
+            case KeyCode.RightArrow:
+                return "→";
+            default:
+                return key.ToString();
+        }
     }
 
     void Update()
@@ -28,14 +71,16 @@ public class ArrowInputMinigame : MonoBehaviour
                 {
                     Debug.Log("Sequence complete! Minigame won.");
                     isMinigameActive = false;
-                    // You can add score increment or any other success logic here
+                    patientAI.currentState = PatientState.Despawning;
+                    playerMovementAdvanced.SetPlayerFreeze(false);
                 }
             }
             else
             {
                 Debug.Log("Wrong input! Minigame failed.");
                 isMinigameActive = false;
-                // Logic to handle failure, e.g., despawning the character
+                playerMovementAdvanced.SetPlayerFreeze(false);
+                // Additional failure logic
             }
         }
     }

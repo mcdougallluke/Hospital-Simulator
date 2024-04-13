@@ -30,6 +30,8 @@ public class PatientAI : MonoBehaviour
     public string desiredPill; 
     public PatientState currentState;
     private bool isDespawningInitiated = false;
+    public ArrowInputMinigame arrowInputMinigame; 
+
 
 
     void Start()
@@ -39,7 +41,7 @@ public class PatientAI : MonoBehaviour
         animator = GetComponent<Animator>(); // Get the Animator component
         fetchMinigameEnded = false;
 
-        selectedMinigameIndex = Random.Range(0, 2);
+        selectedMinigameIndex = Random.Range(0, 3); 
         if(selectedMinigameIndex == 1)
         {
             desiredPill = ChooseRandomPill();
@@ -163,6 +165,11 @@ public class PatientAI : MonoBehaviour
                     Debug.Log($"Starting Fetch Minigame. Please bring me the {desiredPill}.");
                     fetchMinigame.StartMinigame();
                     fetchMinigame.SetNPC(this);
+                    break;
+                case 2:
+                    Debug.Log("Starting Arrow Input Minigame.");
+                    arrowInputMinigame.StartMinigame();
+                    arrowInputMinigame.SetNPC(this);
                     break;
             }
         }

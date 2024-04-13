@@ -59,10 +59,18 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
             return "I have a horrible disease";
             
             
-        } else if (patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
+        }
+        
+        if (patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
             patientAI.StartSelectedMinigame();
             patientAI.currentState = PatientState.PlayingMinigame;
             return "Bring me the " + patientAI.desiredPill;
+        }
+
+        else if (patientAI.selectedMinigameIndex == 2) { // Arrow Input Minigame
+        patientAI.StartSelectedMinigame();
+        patientAI.currentState = PatientState.PlayingMinigame;
+        return "Follow the arrow sequence!";
         }
         
         return ""; // Default response if none match
