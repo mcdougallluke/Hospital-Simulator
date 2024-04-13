@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Michsky.MUIP;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class PauseMenu : MonoBehaviour
     private ButtonManager[] buttonManagers; // Array to hold ButtonManager components for menu options
     public ScoreData scoreData;
     public RoomManager roomManager;
-
+    public Canvas canvasObject1;
+    //public Canvas canvasObject2;
     AudioManager audioManager;
+    public InputField inputField;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -117,6 +120,11 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+        // inputField.enabled = true;
+        inputField.interactable = true;
+        canvasObject1.enabled = true;
+      
+        //canvasObject2.enabled = true;
     }
 
     public void Pause()
@@ -127,6 +135,11 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+       // inputField.enabled = false;
+       inputField.interactable = false;
+        canvasObject1.enabled = false;
+
+        //canvasObject2.enabled = false;
     }
 
     public void LoadMenu()
