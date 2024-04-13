@@ -11,7 +11,7 @@ public class ArrowInputMinigame : MonoBehaviour
     private bool isMinigameActive = false;
     public PatientAI patientAI; // Reference to the PatientAI script
     public PlayerMovementAdvanced playerMovementAdvanced;
-
+    AudioManager audioManager;
 
 
     public void StartMinigame()
@@ -25,7 +25,10 @@ public class ArrowInputMinigame : MonoBehaviour
         // Log the sequence for the player
         Debug.Log("Arrow Input Minigame Started. Follow the sequence: " + GetSequenceAsString());
     }
-
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
     public void SetNPC(PatientAI npc)
     {
         patientAI = npc;
@@ -70,6 +73,7 @@ public class ArrowInputMinigame : MonoBehaviour
                 if (currentIndex >= correctSequence.Length)
                 {
                     Debug.Log("Sequence complete! Minigame won.");
+                    audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
                     isMinigameActive = false;
                     patientAI.currentState = PatientState.Despawning;
                     playerMovementAdvanced.SetPlayerFreeze(false);

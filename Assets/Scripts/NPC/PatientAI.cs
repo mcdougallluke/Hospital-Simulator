@@ -31,7 +31,7 @@ public class PatientAI : MonoBehaviour
     public PatientState currentState;
     private bool isDespawningInitiated = false;
     public ArrowInputMinigame arrowInputMinigame; 
-
+    AudioManager audioManager;
 
 
     void Start()
@@ -47,6 +47,12 @@ public class PatientAI : MonoBehaviour
             desiredPill = ChooseRandomPill();
         }
     }
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
 
     void Update()
     {
@@ -192,6 +198,7 @@ public class PatientAI : MonoBehaviour
             if (collidedObjectName.Equals(desiredPill))
             {
                 Debug.Log("Correct pill delivered to NPC, ending Fetch Minigame.");
+                audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
                 currentState = PatientState.Despawning;
                 Destroy(other.gameObject); // Destroy the correct pill GameObject
             }
