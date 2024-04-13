@@ -16,6 +16,8 @@ public class SpellingMinigame : MonoBehaviour
     public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
     private string lastValidInput = ""; // Store the last valid input
+    public Text overlayText; // Assign this in the inspector to the Text component that overlays the InputField
+
 
     AudioManager audioManager;
     private void Awake()
@@ -33,13 +35,9 @@ public class SpellingMinigame : MonoBehaviour
     public void StartMinigame()
     {
         currentWord = words[Random.Range(0, words.Count)];
-        wordText.text = $"You probably have: {currentWord}"; // Display the word elsewhere if needed
-        inputField.text = ""; // Clear previous input
-
-        // Update the placeholder text to show the current word
-        // Assumes the placeholder is the first child of the input field and has a Text component
-        Text placeholderText = inputField.placeholder as Text;
-        placeholderText.text = $"{currentWord}"; // Customize this message as needed
+        inputField.text = ""; // Clear the input field
+        overlayText.text = "<color=#808080FF>" + currentWord + "</color>"; // Set overlay text in grey
+        lastValidInput = ""; // Reset last valid input
 
         minigameUI.SetActive(true);
         playerMovementAdvanced.SetPlayerFreeze(true);
@@ -104,28 +102,40 @@ public class SpellingMinigame : MonoBehaviour
     // New method to validate input and toggle the submit button's interactability
     void ValidateInput(string input)
     {
-        // Convert the input to lower case to simplify comparison
+        // Ensure all input is treated in lowercase to standardize comparisons
         string lowerInput = input.ToLower();
 
-        // Determine the correct substring to compare against
-        string correctSubString = currentWord.Substring(0, Mathf.Min(input.Length, currentWord.Length)).ToLower();
+        // Initialize the length of correct input
+        int correctChars = 0;
 
-        // Check if the input matches the correct substring
-        if (correctSubString == lowerInput)
+        // Compare each character inputted to the corresponding character in the target word
+        for (int i = 0; i < lowerInput.Length; i++)
         {
-            // Update the last valid input to the current correct input
-            lastValidInput = lowerInput;
-            submitButton.interactable = (lowerInput.Length == currentWord.Length); // Enable submit button only when full word is correct
+            if (i < currentWord.Length && lowerInput[i] == currentWord.ToLower()[i])
+                correctChars++;
+            else
+                break; // Stop the loop if a character does not match
+        }
+
+        // If the input length exceeds the correct characters or mismatches, revert it
+        if (lowerInput.Length > correctChars)
+        {
+            inputField.text = lowerInput.Substring(0, correctChars); // Only allow correct input
+            inputField.caretPosition = correctChars; // Reset the caret position
         }
         else
         {
-            // Revert to the last valid input
-            inputField.text = lastValidInput;
-        }
+            // Update the overlay text with correct letters in black and remaining in grey
+            string correctPart = "<color=#000000FF>" + currentWord.Substring(0, correctChars) + "</color>";
+            string remainingPart = "<color=#808080FF>" + currentWord.Substring(correctChars) + "</color>";
+            overlayText.text = correctPart + remainingPart;
 
-        // Manually set the caret position to the end of the input field text
-        inputField.caretPosition = inputField.text.Length;
+            // Enable submit button only when the entire word is correctly typed
+            submitButton.interactable = (correctChars == currentWord.Length);
+        }
     }
+
+
 
 
     public void playSound()
