@@ -15,6 +15,7 @@ public class SpellingMinigame : MonoBehaviour
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
+    private string lastValidInput = ""; // Store the last valid input
 
     AudioManager audioManager;
     private void Awake()
@@ -103,8 +104,29 @@ public class SpellingMinigame : MonoBehaviour
     // New method to validate input and toggle the submit button's interactability
     void ValidateInput(string input)
     {
-        submitButton.interactable = input.ToLower().Equals(currentWord.ToLower());
+        // Convert the input to lower case to simplify comparison
+        string lowerInput = input.ToLower();
+
+        // Determine the correct substring to compare against
+        string correctSubString = currentWord.Substring(0, Mathf.Min(input.Length, currentWord.Length)).ToLower();
+
+        // Check if the input matches the correct substring
+        if (correctSubString == lowerInput)
+        {
+            // Update the last valid input to the current correct input
+            lastValidInput = lowerInput;
+            submitButton.interactable = (lowerInput.Length == currentWord.Length); // Enable submit button only when full word is correct
+        }
+        else
+        {
+            // Revert to the last valid input
+            inputField.text = lastValidInput;
+        }
+
+        // Manually set the caret position to the end of the input field text
+        inputField.caretPosition = inputField.text.Length;
     }
+
 
     public void playSound()
     {
