@@ -1,10 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
-    
+    public Text[] roomTexts; // Assign this array in the inspector with your UI Texts
+
+    private void Update()
+    {
+        UpdateRoomStatus();
+    }
+
+    void UpdateRoomStatus()
+    {
+        for (int i = 0; i < roomTexts.Length; i++)
+        {
+            if (RoomManager.Instance.IsRoomAvailable(RoomManager.Instance.initialRooms[i]))
+            {
+                roomTexts[i].text = $"Empty";
+            }
+            else
+            {
+                roomTexts[i].text = $"Occupied";
+            }
+        }
+    }
+
     // Public list to assign in the Unity Editor
     public List<Transform> initialRooms;
     private Dictionary<Transform, bool> roomAvailability = new Dictionary<Transform, bool>();

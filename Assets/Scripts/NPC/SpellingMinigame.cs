@@ -15,7 +15,6 @@ public class SpellingMinigame : MonoBehaviour
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
-    private string lastValidInput = ""; // Store the last valid input
     public Text overlayText; // Assign this in the inspector to the Text component that overlays the InputField
 
 
@@ -38,7 +37,6 @@ public class SpellingMinigame : MonoBehaviour
         currentWord = words[Random.Range(0, words.Count)];
         inputField.text = ""; // Clear the input field
         overlayText.text = "<color=#808080FF>" + currentWord + "</color>"; // Set overlay text in grey
-        lastValidInput = ""; // Reset last valid input
 
         minigameUI.SetActive(true);
         playerMovementAdvanced.SetPlayerFreeze(true);
