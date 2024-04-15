@@ -62,30 +62,48 @@ public class ArrowInputMinigame : MonoBehaviour
     }
 
     void Update()
+{
+    if (isMinigameActive)
     {
-        if (isMinigameActive && Input.anyKeyDown)
+        // Only listen for arrow key inputs
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
+            // Check if the pressed key matches the current key in the sequence
             if (Input.GetKeyDown(correctSequence[currentIndex]))
             {
                 currentIndex++;
                 Debug.Log("Correct! Continue...");
 
+                // Check if the sequence is complete
                 if (currentIndex >= correctSequence.Length)
                 {
                     Debug.Log("Sequence complete! Minigame won.");
                     audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
-                    isMinigameActive = false;
-                    patientAI.currentState = PatientState.Despawning;
-                    playerMovementAdvanced.SetPlayerFreeze(false);
+                    EndMinigame(true); // Minigame success
                 }
             }
             else
             {
                 Debug.Log("Wrong input! Minigame failed.");
-                isMinigameActive = false;
-                playerMovementAdvanced.SetPlayerFreeze(false);
-                // Additional failure logic
+                EndMinigame(false); // Minigame failure
             }
         }
     }
+}
+
+void EndMinigame(bool success)
+{
+    isMinigameActive = false;
+    playerMovementAdvanced.SetPlayerFreeze(false);
+
+    if (success)
+    {
+        patientAI.currentState = PatientState.Despawning;
+    }
+    else
+    {
+        // Handle the minigame failure case (optional)
+    }
+}
 }
