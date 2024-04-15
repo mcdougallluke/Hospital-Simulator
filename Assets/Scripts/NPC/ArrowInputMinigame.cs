@@ -1,21 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; 
-using System.Collections;
-using System.Collections.Generic;
+using System;
 
 public class ArrowInputMinigame : MonoBehaviour
 {
     public Text sequenceDisplay; // Reference to the Text UI element
     private int currentIndex = 0;
-    private KeyCode[] correctSequence = new KeyCode[6];
+    private KeyCode[] correctSequence = new KeyCode[9]; // 9 key codes for the sequence
     private bool isMinigameActive = false;
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     AudioManager audioManager;
 
 
-     private void Awake()
+    private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
@@ -23,7 +21,7 @@ public class ArrowInputMinigame : MonoBehaviour
     public void StartMinigame()
     {
         playerMovementAdvanced.SetPlayerFreeze(true);
-        correctSequence = new KeyCode[] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow };
+        GenerateRandomSequence(); // Generate a random sequence of arrow keys
         currentIndex = 0;
         isMinigameActive = true;
         
@@ -33,12 +31,22 @@ public class ArrowInputMinigame : MonoBehaviour
         Debug.Log("Arrow Input Minigame Started. Follow the sequence: " + GetSequenceAsString());
     }
 
+    private void GenerateRandomSequence()
+    {
+        System.Random random = new System.Random();
+        KeyCode[] arrows = {KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow};
+        
+        for (int i = 0; i < correctSequence.Length; i++)
+        {
+            correctSequence[i] = arrows[random.Next(arrows.Length)]; // Assign a random arrow key
+        }
+    }
+
     private void UpdateSequenceDisplay()
     {
         sequenceDisplay.text = ""; // Clear previous text
         for (int i = 0; i < correctSequence.Length; i++)
         {
-            // Highlight the current arrow in the sequence
             if (i == currentIndex)
             {
                 sequenceDisplay.text += "<color=red>" + KeyCodeToArrow(correctSequence[i]) + "</color> ";
@@ -101,7 +109,7 @@ public class ArrowInputMinigame : MonoBehaviour
                 EndMinigame(false); // Minigame failure
             }
         }
-    }
+    }   
 
     void EndMinigame(bool success)
     {
