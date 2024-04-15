@@ -6,35 +6,56 @@ using System.Collections.Generic;
 
 public class ArrowInputMinigame : MonoBehaviour
 {
+    public Text sequenceDisplay; // Reference to the Text UI element
     private int currentIndex = 0;
     private KeyCode[] correctSequence = new KeyCode[6];
     private bool isMinigameActive = false;
-    public PatientAI patientAI; // Reference to the PatientAI script
+    public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     AudioManager audioManager;
 
 
+     private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     public void StartMinigame()
     {
         playerMovementAdvanced.SetPlayerFreeze(true);
-        // Define a fixed sequence or randomize it
         correctSequence = new KeyCode[] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow };
         currentIndex = 0;
         isMinigameActive = true;
         
-        // Log the sequence for the player
+        // Update UI
+        UpdateSequenceDisplay();
+
         Debug.Log("Arrow Input Minigame Started. Follow the sequence: " + GetSequenceAsString());
     }
-    private void Awake()
+
+    private void UpdateSequenceDisplay()
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        sequenceDisplay.text = ""; // Clear previous text
+        for (int i = 0; i < correctSequence.Length; i++)
+        {
+            // Highlight the current arrow in the sequence
+            if (i == currentIndex)
+            {
+                sequenceDisplay.text += "<color=red>" + KeyCodeToArrow(correctSequence[i]) + "</color> ";
+            }
+            else
+            {
+                sequenceDisplay.text += KeyCodeToArrow(correctSequence[i]) + " ";
+            }
+        }
     }
+
     public void SetNPC(PatientAI npc)
     {
         patientAI = npc;
     }
 
-    private string GetSequenceAsString()
+   private string GetSequenceAsString()
     {
         string sequenceString = "";
         foreach (KeyCode key in correctSequence)
@@ -48,34 +69,24 @@ public class ArrowInputMinigame : MonoBehaviour
     {
         switch (key)
         {
-            case KeyCode.UpArrow:
-                return "↑";
-            case KeyCode.DownArrow:
-                return "↓";
-            case KeyCode.LeftArrow:
-                return "←";
-            case KeyCode.RightArrow:
-                return "→";
-            default:
-                return key.ToString();
+            case KeyCode.UpArrow: return "↑";
+            case KeyCode.DownArrow: return "↓";
+            case KeyCode.LeftArrow: return "←";
+            case KeyCode.RightArrow: return "→";
+            default: return key.ToString();
         }
     }
 
     void Update()
-{
-    if (isMinigameActive)
     {
-        // Only listen for arrow key inputs
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
-            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (isMinigameActive && Input.anyKeyDown)
         {
-            // Check if the pressed key matches the current key in the sequence
             if (Input.GetKeyDown(correctSequence[currentIndex]))
             {
                 currentIndex++;
+                UpdateSequenceDisplay(); // Update the display with the new current index
                 Debug.Log("Correct! Continue...");
 
-                // Check if the sequence is complete
                 if (currentIndex >= correctSequence.Length)
                 {
                     Debug.Log("Sequence complete! Minigame won.");
@@ -83,27 +94,31 @@ public class ArrowInputMinigame : MonoBehaviour
                     EndMinigame(true); // Minigame success
                 }
             }
-            else
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
+                     Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 Debug.Log("Wrong input! Minigame failed.");
                 EndMinigame(false); // Minigame failure
             }
         }
     }
-}
 
-void EndMinigame(bool success)
-{
-    isMinigameActive = false;
-    playerMovementAdvanced.SetPlayerFreeze(false);
+    void EndMinigame(bool success)
+    {
+        isMinigameActive = false;
+        playerMovementAdvanced.SetPlayerFreeze(false);
+        
+        // Clear the sequence display text
+        sequenceDisplay.text = "";
 
-    if (success)
-    {
-        patientAI.currentState = PatientState.Despawning;
+        if (success)
+        {
+            patientAI.currentState = PatientState.Despawning;
+        }
+        else
+        {
+            // Handle the minigame failure case (optional)
+        }
     }
-    else
-    {
-        // Handle the minigame failure case (optional)
-    }
-}
+
 }
