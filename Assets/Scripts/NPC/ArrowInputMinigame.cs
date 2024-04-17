@@ -5,6 +5,7 @@ using System;
 public class ArrowInputMinigame : MonoBehaviour
 {
     public Text sequenceDisplay; // Reference to the Text UI element
+    public Image startImage;     // Reference to the Image UI element for the start of the game
     private int currentIndex = 0;
     private KeyCode[] correctSequence = new KeyCode[9]; // 9 key codes for the sequence
     private bool isMinigameActive = false;
@@ -25,6 +26,9 @@ public class ArrowInputMinigame : MonoBehaviour
         currentIndex = 0;
         isMinigameActive = true;
         
+        // Display the start image
+        startImage.gameObject.SetActive(true);  // Make sure the image is active
+
         // Update UI
         UpdateSequenceDisplay();
 
@@ -118,6 +122,7 @@ public class ArrowInputMinigame : MonoBehaviour
         
         // Clear the sequence display text
         sequenceDisplay.text = "";
+        startImage.gameObject.SetActive(false);  // Hide the image when the minigame ends
 
         if (success)
         {
