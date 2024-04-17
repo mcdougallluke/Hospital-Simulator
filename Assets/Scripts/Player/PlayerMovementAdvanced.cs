@@ -397,7 +397,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         // Wait for the specified time (in seconds)
         // Assuming your game runs at 60 FPS, 15 frames would be 0.25 seconds
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.0f);
 
         // reset y velocity and apply the jump force after the delay
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
