@@ -127,7 +127,11 @@ public class ArrowInputMinigame : MonoBehaviour
         isMinigameActive = false;
         playerMovementAdvanced.SetPlayerFreeze(false);
         sequenceDisplay.text = "";
-        startImage.gameObject.SetActive(false); // Hide the image when the minigame ends
+        startImage.gameObject.SetActive(false);  // Hide the image when the minigame ends
+
+        // Reset the start image to the initial sprite (assuming it's at index 0)
+        if (successSprites.Length > 0)
+            startImage.sprite = successSprites[0];
 
         if (success)
         {
@@ -138,5 +142,6 @@ public class ArrowInputMinigame : MonoBehaviour
             patientAI.Unalive();
         }
     }
+
 
 }
