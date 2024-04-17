@@ -24,6 +24,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float slopeIncreaseMultiplier;
 
     public float groundDrag;
+    public float stoppingDrag;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -120,7 +121,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         if ((state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching) && !activeGrapple)
             rb.drag = groundDrag;
         else if (state == MovementState.idle)
-            rb.drag = 30;
+            rb.drag = stoppingDrag;
         else
             rb.drag = 0;
     }
