@@ -125,7 +125,8 @@ public class ArrowInputMinigame : MonoBehaviour
         }
         else
         {
-            // Handle the minigame failure case (optional)
+            patientAI.currentState = PatientState.Despawning;
+            // This needs to be changed.
         }
     }
 
