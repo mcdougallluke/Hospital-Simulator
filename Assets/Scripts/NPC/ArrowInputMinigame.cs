@@ -6,6 +6,7 @@ public class ArrowInputMinigame : MonoBehaviour
 {
     public Text sequenceDisplay; // Reference to the Text UI element
     public Image startImage;     // Reference to the Image UI element for the start of the game
+    public Sprite[] successSprites; // Array of sprites to display on successful key presses
     private int currentIndex = 0;
     private KeyCode[] correctSequence = new KeyCode[9]; // 9 key codes for the sequence
     private bool isMinigameActive = false;
@@ -17,6 +18,7 @@ public class ArrowInputMinigame : MonoBehaviour
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        startImage.gameObject.SetActive(false); // Ensure image is initially disabled
     }
 
     public void StartMinigame()
@@ -53,7 +55,7 @@ public class ArrowInputMinigame : MonoBehaviour
         {
             if (i == currentIndex)
             {
-                sequenceDisplay.text += "<color=red>" + KeyCodeToArrow(correctSequence[i]) + "</color> ";
+                sequenceDisplay.text += (i == currentIndex ? "<color=red>" : "") + KeyCodeToArrow(correctSequence[i]) + (i == currentIndex ? "</color>" : "") + " ";
             }
             else
             {
@@ -95,22 +97,27 @@ public class ArrowInputMinigame : MonoBehaviour
         {
             if (Input.GetKeyDown(correctSequence[currentIndex]))
             {
+                if (currentIndex < successSprites.Length)
+                {
+                    startImage.sprite = successSprites[currentIndex]; // Update the image with a new sprite
+                }
+
                 currentIndex++;
-                UpdateSequenceDisplay(); // Update the display with the new current index
+                UpdateSequenceDisplay();
                 Debug.Log("Correct! Continue...");
 
                 if (currentIndex >= correctSequence.Length)
                 {
                     Debug.Log("Sequence complete! Minigame won.");
                     audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
-                    EndMinigame(true); // Minigame success
+                    EndMinigame(true);
                 }
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
                      Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 Debug.Log("Wrong input! Minigame failed.");
-                EndMinigame(false); // Minigame failure
+                EndMinigame(false);
             }
         }
     }   
@@ -119,10 +126,8 @@ public class ArrowInputMinigame : MonoBehaviour
     {
         isMinigameActive = false;
         playerMovementAdvanced.SetPlayerFreeze(false);
-        
-        // Clear the sequence display text
         sequenceDisplay.text = "";
-        startImage.gameObject.SetActive(false);  // Hide the image when the minigame ends
+        startImage.gameObject.SetActive(false); // Hide the image when the minigame ends
 
         if (success)
         {
@@ -131,7 +136,6 @@ public class ArrowInputMinigame : MonoBehaviour
         else
         {
             patientAI.Unalive();
-            // This needs to be changed.
         }
     }
 
