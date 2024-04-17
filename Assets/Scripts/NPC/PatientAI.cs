@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Security;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -82,6 +83,8 @@ public class PatientAI : MonoBehaviour
 
     void HandleMovingToWaitingRoomState()
     {
+
+        animator.SetBool("IsRunning", true);
         agent.destination = waitingRoom.position;
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -93,15 +96,16 @@ public class PatientAI : MonoBehaviour
 
     void HandleWaitingState()
     {
-
+        animator.SetBool("IsRunning", false);
         if (CheckAndMoveToOptionalPoint())
         {
+            animator.SetBool("IsRunning", true);
             currentState = PatientState.InExamRoom;
         }
     }
 
     void HandleMovingToExamRoomState()
-    {
+    {   
         // Transition to InExamRoom when arrived
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
@@ -112,7 +116,10 @@ public class PatientAI : MonoBehaviour
 
     void HandleInExamRoomState()
     {
-        // currently handled in NPCInteractable.cs
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            animator.SetBool("IsRunning", false);
+        }
     }
 
     void HandlePlayingMinigameState()
@@ -206,10 +213,32 @@ public class PatientAI : MonoBehaviour
             else
             {
                 Debug.Log(other.gameObject.name + " is colliding. It should be " + desiredPill);
-                Debug.Log("Incorrect pill. Please bring the correct one.");
+                Debug.Log("Incorrect pill. I am now unalive");
+                Unalive(); // NPC despawns
                 // Optionally, handle the case for incorrect pill delivery (e.g., provide feedback to the player)
             }
         }
+    }
+
+    public void Unalive()
+    {
+        // Free up the room the NPC was using
+        RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
+        // Update this line to use despawnPoint instead of waitingRoom
+        
+        Debug.Log("NPC unalive.");
+
+        // Increment the score by 10
+        if(scoreScript != null) // Check if the scoreScript reference is set
+        {
+            scoreScript.updateScore(-10); // decrease the score by 10
+        }
+        else
+        {
+            Debug.LogError("Score script reference not set in NPC.");
+        }
+
+        Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
     }
 
     public void MoveToPointAndDespawn()
