@@ -1846,6 +1846,7 @@ MonoBehaviour:
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
   groundDrag: 4
+  stoppingDrag: 10
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -3033,7 +3034,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bda6a2495f2722d49895b6674478fb43, type: 2}
+  - {fileID: 2100000, guid: 4e938817007c00b49877c29efc084452, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3076,7 +3077,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bda6a2495f2722d49895b6674478fb43, type: 2}
+  - {fileID: 2100000, guid: 7954968a4368c524c8f536c2aa556877, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
