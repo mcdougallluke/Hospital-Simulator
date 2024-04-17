@@ -119,6 +119,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         // handle drag
         if ((state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching) && !activeGrapple)
             rb.drag = groundDrag;
+        else if (state == MovementState.idle)
+            rb.drag = 30;
         else
             rb.drag = 0;
     }
@@ -389,20 +391,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         exitingSlope = true;
         animator.SetTrigger("Jump");
-        // Start the coroutine to delay the jump force
-        StartCoroutine(DelayedJump(jumpForce));
-    }
-
-    private IEnumerator DelayedJump(float force)
-    {
-        // Wait for the specified time (in seconds)
-        // Assuming your game runs at 60 FPS, 15 frames would be 0.25 seconds
-        yield return new WaitForSeconds(0.0f);
-
-        // reset y velocity and apply the jump force after the delay
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * force, ForceMode.Impulse);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
     private void ResetJump()
     {
         readyToJump = true;
