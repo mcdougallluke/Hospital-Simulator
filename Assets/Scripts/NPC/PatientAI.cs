@@ -42,8 +42,8 @@ public class PatientAI : MonoBehaviour
         animator = GetComponent<Animator>(); // Get the Animator component
         fetchMinigameEnded = false;
 
-        //selectedMinigameIndex = Random.Range(0, 3); 
-        selectedMinigameIndex = 2;
+        selectedMinigameIndex = Random.Range(0, 3); 
+        //selectedMinigameIndex = 2;
         if(selectedMinigameIndex == 1)
         {
             desiredPill = ChooseRandomPill();
