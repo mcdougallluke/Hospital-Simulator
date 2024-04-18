@@ -15,7 +15,8 @@ public class PauseMenu : MonoBehaviour
     public ScoreData scoreData;
     public RoomManager roomManager;
     public Canvas canvasObject1;
-    //public Canvas canvasObject2;
+    public Canvas canvasObject2;
+    public GameObject arrowMinigameObject;
     AudioManager audioManager;
     public InputField inputField;
     private void Awake()
@@ -123,7 +124,8 @@ public class PauseMenu : MonoBehaviour
         // inputField.enabled = true;
         inputField.interactable = true;
         canvasObject1.enabled = true;
-      
+        canvasObject2.enabled = true;
+      //  arrowMinigameObject.SetActive(true);
         //canvasObject2.enabled = true;
     }
 
@@ -138,7 +140,8 @@ public class PauseMenu : MonoBehaviour
        // inputField.enabled = false;
        inputField.interactable = false;
         canvasObject1.enabled = false;
-
+        canvasObject2.enabled = false;
+       // arrowMinigameObject.SetActive(false);
         //canvasObject2.enabled = false;
     }
 

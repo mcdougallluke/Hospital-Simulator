@@ -93,7 +93,7 @@ public class ArrowInputMinigame : MonoBehaviour
 
     void Update()
     {
-        if (isMinigameActive && Input.anyKeyDown)
+        if (isMinigameActive && Input.anyKeyDown && Input.inputString != "\b")
         {
             if (Input.GetKeyDown(correctSequence[currentIndex]))
             {
