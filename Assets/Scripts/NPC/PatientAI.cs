@@ -53,6 +53,11 @@ public class PatientAI : MonoBehaviour
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = true;  // Ensures physics does not move these parts
+        }
     }
 
 
@@ -84,7 +89,6 @@ public class PatientAI : MonoBehaviour
     void HandleMovingToWaitingRoomState()
     {
 
-        animator.SetBool("IsRunning", true);
         agent.destination = waitingRoom.position;
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -96,10 +100,8 @@ public class PatientAI : MonoBehaviour
 
     void HandleWaitingState()
     {
-        animator.SetBool("IsRunning", false);
         if (CheckAndMoveToOptionalPoint())
         {
-            animator.SetBool("IsRunning", true);
             currentState = PatientState.InExamRoom;
         }
     }
@@ -118,7 +120,6 @@ public class PatientAI : MonoBehaviour
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            animator.SetBool("IsRunning", false);
         }
     }
 
@@ -138,12 +139,6 @@ public class PatientAI : MonoBehaviour
             MoveToPointAndDespawn();
         }
     }
-
-    // void Update()
-    // {
-
-    //     bool isMoving = agent.velocity.magnitude > 0.1f; // Adjust the threshold as needed
-    //     animator.SetBool("IsRunning", isMoving);
 
     bool CheckAndMoveToOptionalPoint()
     {
@@ -222,24 +217,41 @@ public class PatientAI : MonoBehaviour
 
     public void Unalive()
     {
-        // Free up the room the NPC was using
-        RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
-        // Update this line to use despawnPoint instead of waitingRoom
-        
-        Debug.Log("NPC unalive.");
-
-        // Increment the score by 10
-        if(scoreScript != null) // Check if the scoreScript reference is set
+        // Disable the Animator
+        if (animator != null)
         {
-            scoreScript.updateScore(-10); // decrease the score by 10
+            animator.enabled = false;
+        }
+
+        // Activate the ragdoll by enabling the Rigidbody components and setting isKinematic to false
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = false;  // This allows physics to take control
+        }
+
+        // Optionally disable the NavMeshAgent if it interferes with the ragdoll physics
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+
+        // Log the despawn and manage room availability
+        Debug.Log("NPC unalive.");
+        RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
+        if (scoreScript != null)
+        {
+            scoreScript.updateScore(-10);
         }
         else
         {
             Debug.LogError("Score script reference not set in NPC.");
         }
 
-        Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
+        // Destroy the gameObject after some delay (if needed to see the ragdoll effect)
+        Destroy(gameObject, 10); // Adjust time as necessary
     }
+
 
     public void MoveToPointAndDespawn()
     {
