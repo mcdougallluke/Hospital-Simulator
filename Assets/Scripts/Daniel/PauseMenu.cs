@@ -124,8 +124,8 @@ public class PauseMenu : MonoBehaviour
         // inputField.enabled = true;
         inputField.interactable = true;
         canvasObject1.enabled = true;
-        canvasObject2.enabled = true;
-      //  arrowMinigameObject.SetActive(true);
+        //canvasObject2.enabled = true;
+        arrowMinigameObject.SetActive(true);
         //canvasObject2.enabled = true;
     }
 
@@ -140,8 +140,8 @@ public class PauseMenu : MonoBehaviour
        // inputField.enabled = false;
        inputField.interactable = false;
         canvasObject1.enabled = false;
-        canvasObject2.enabled = false;
-       // arrowMinigameObject.SetActive(false);
+       // canvasObject2.enabled = false;
+        arrowMinigameObject.SetActive(false);
         //canvasObject2.enabled = false;
     }
 
