@@ -13,11 +13,4 @@ public class FetchMinigame : MonoBehaviour
     {
         patientAI = npc;
     }
-
-    // New method to be called when the doctor/player brings the correct item
-    public void OnItemDelivered()
-    {
-        patientAI.currentState = PatientState.Despawning;
-    }
-
 }

@@ -43,7 +43,7 @@ public class PatientAI : MonoBehaviour
         fetchMinigameEnded = false;
 
         selectedMinigameIndex = Random.Range(0, 3); 
-        //selectedMinigameIndex = 2;
+        //selectedMinigameIndex = 0;
         if(selectedMinigameIndex == 1)
         {
             desiredPill = ChooseRandomPill();
@@ -210,6 +210,7 @@ public class PatientAI : MonoBehaviour
                 Debug.Log(other.gameObject.name + " is colliding. It should be " + desiredPill);
                 Debug.Log("Incorrect pill. I am now unalive");
                 Unalive(); // NPC despawns
+                Destroy(other.gameObject); // Destroy the correct pill GameObject
                 // Optionally, handle the case for incorrect pill delivery (e.g., provide feedback to the player)
             }
         }

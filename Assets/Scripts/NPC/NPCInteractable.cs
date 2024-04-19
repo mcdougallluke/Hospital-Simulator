@@ -42,37 +42,36 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
     }
 
     private string DetermineResponseText() {
-        // Check if the NPC has not arrived at an exam room
-        if (patientAI.currentState != PatientState.InExamRoom) {
-        return "Hi";
-    
-        }
-        
-        //patientAI.StartSelectedMinigame();
 
+        if (patientAI.currentState == PatientState.InExamRoom || patientAI.currentState == PatientState.PlayingMinigame) {
+            // Existing conditions for minigame responses
+            if (patientAI.selectedMinigameIndex == 0) { // Spelling Minigame
 
-        // Existing conditions for minigame responses
-        if (patientAI.selectedMinigameIndex == 0) { // Spelling Minigame
+                patientAI.StartSelectedMinigame();
+                patientAI.currentState = PatientState.PlayingMinigame;
+                return "I have a horrible disease";
+                
+                
+            }
+            
+            if (patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
+                patientAI.StartSelectedMinigame();
+                patientAI.currentState = PatientState.PlayingMinigame;
+                return "Bring me the " + patientAI.desiredPill;
+            }
 
+            else if (patientAI.selectedMinigameIndex == 2) { // Arrow Input Minigame
             patientAI.StartSelectedMinigame();
             patientAI.currentState = PatientState.PlayingMinigame;
-            return "I have a horrible disease";
-            
-            
-        }
-        
-        if (patientAI.selectedMinigameIndex == 1) { // Fetch Minigame
-            patientAI.StartSelectedMinigame();
-            patientAI.currentState = PatientState.PlayingMinigame;
-            return "Bring me the " + patientAI.desiredPill;
+            return "Follow the arrow sequence!";
+            }
         }
 
-        else if (patientAI.selectedMinigameIndex == 2) { // Arrow Input Minigame
-        patientAI.StartSelectedMinigame();
-        patientAI.currentState = PatientState.PlayingMinigame;
-        return "Follow the arrow sequence!";
+        else{
+            return "I'm not feeling well";
         }
         
+
         return ""; // Default response if none match
     }
 
