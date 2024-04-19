@@ -251,6 +251,8 @@ public class PatientAI : MonoBehaviour
 
         // Destroy the gameObject after some delay (if needed to see the ragdoll effect)
         Destroy(gameObject, 10); // Adjust time as necessary
+        RoomManager.Instance.UnregisterNPC(transform);
+
     }
 
 
@@ -274,5 +276,7 @@ public class PatientAI : MonoBehaviour
         }
 
         Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
+        RoomManager.Instance.UnregisterNPC(transform);
+
     }
 }

@@ -7,7 +7,19 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
     public Text[] roomTexts; // Assign this array in the inspector with your UI Texts
+    public float proximityThreshold = 5.0f;
+    public List<Transform> npcs; // Assign NPC transforms in the Unity Editor
 
+
+
+    private void Start()
+    {
+        for (int i = 0; i < roomTexts.Length; i++)
+        {
+            roomTexts[i].text = "Empty";
+        }
+    }
+    
     private void Update()
     {
         UpdateRoomStatus();
@@ -17,16 +29,28 @@ public class RoomManager : MonoBehaviour
     {
         for (int i = 0; i < roomTexts.Length; i++)
         {
-            if (RoomManager.Instance.IsRoomAvailable(RoomManager.Instance.initialRooms[i]))
+            Transform room = initialRooms[i];
+            bool isRoomAvailable = IsRoomAvailable(room);
+            bool isNpcClose = false;
+
+            foreach (var npc in npcs)
             {
-                roomTexts[i].text = $"Empty";
+                if (IsNpcCloseToRoom(room, npc))
+                {
+                    isNpcClose = true;
+                    roomTexts[i].text = "Occupied";
+                }
             }
-            else
+
+            // Update the room availability if no NPC is close
+            if (!isNpcClose && !isRoomAvailable)
             {
-                roomTexts[i].text = $"Occupied";
+                roomTexts[i].text = "Empty";
             }
+
         }
     }
+
 
     // Public list to assign in the Unity Editor
     public List<Transform> initialRooms;
@@ -88,6 +112,33 @@ public class RoomManager : MonoBehaviour
         {
             roomAvailability[room] = true; // Reset all rooms to available
             Debug.Log($"Room {room.name} availability reset to: true");
+        }
+    }
+
+    public bool IsNpcCloseToRoom(Transform room, Transform npc)
+    {
+        // Calculate the distance between the room and the NPC
+        float distance = Vector3.Distance(room.position, npc.position);
+
+        // Check if the distance is less than or equal to the threshold
+        return distance <= proximityThreshold;
+    }
+
+    public void RegisterNPC(Transform npc)
+    {
+        if (!npcs.Contains(npc))
+        {
+            npcs.Add(npc);
+            Debug.Log($"NPC Registered: {npc.name}");
+        }
+    }
+
+    public void UnregisterNPC(Transform npc)
+    {
+        if (npcs.Contains(npc))
+        {
+            npcs.Remove(npc);
+            Debug.Log($"NPC Unregistered: {npc.name}");
         }
     }
 }

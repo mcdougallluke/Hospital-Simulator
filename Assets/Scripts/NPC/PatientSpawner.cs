@@ -57,6 +57,9 @@ public class PatientSpawner : MonoBehaviour
             patientAI.scoreScript = scoreScript;
             patientAI.waitingRoom = waitingRoom;
             patientAI.examRooms = examRooms;
+
+            RoomManager.Instance.RegisterNPC(patientAI.transform);
+
         }
 
         // New logic: Get all child GameObjects (skins) of the instantiated patient
