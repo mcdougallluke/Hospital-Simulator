@@ -113,12 +113,55 @@ public class TutorialPage : MonoBehaviour
     public void Back()
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
-        SceneManager.LoadScene("TutorialPage1");
+        audioManager.PlaySFX(audioManager.buttonPressed);
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        switch (sceneName)
+        {
+            case "TutorialPage1":
+                SceneManager.LoadScene("MainMenu");
+                break;
+            case "TutorialPage2":
+                SceneManager.LoadScene("TutorialPage1");
+                break;
+            case "TutorialPage3":
+                SceneManager.LoadScene("TutorialPage2");
+                break;
+            case "TutorialPage4":
+                SceneManager.LoadScene("TutorialPage3");
+                break;
+            default:
+                Debug.LogWarning("Unknown scene: " + sceneName);
+                break;
+        }
     }
     public void Next()
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
-        SceneManager.LoadScene("TutorialPage2");
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        switch (sceneName)
+        {
+            case "TutorialPage1":
+                SceneManager.LoadScene("TutorialPage2");
+                break;
+            case "TutorialPage2":
+                SceneManager.LoadScene("TutorialPage3");
+                break;
+            case "TutorialPage3":
+                SceneManager.LoadScene("TutorialPage4");
+                break;
+            case "TutorialPage4":
+                SceneManager.LoadScene("MainMenu");
+                break;
+            default:
+                Debug.LogWarning("Unknown scene: " + sceneName);
+                break;
+        }
     }
     public void LoadMainMenu()
     {
