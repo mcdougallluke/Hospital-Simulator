@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Michsky.MUIP;
+using Unity.VisualScripting;
 
-public class MainMenu : MonoBehaviour
+public class TutorialPage : MonoBehaviour
 {
     public GameObject[] menuOptions;
     private int currentSelection = 0;
@@ -78,20 +79,17 @@ public class MainMenu : MonoBehaviour
         // Execute the action associated with the current button name
         switch (buttonName)
         {
-            case "Play Button": 
-                PlayGame();
-                break;
-            case "Credits Button": 
-                Credits();
-                break;
-            case "Quit Button": 
+            case "Quit Button": // Quit the game
                 QuitGame();
                 break;
-            case "Back Button": 
+            case "Back Button": // Back one page
                 Back();
                 break;
-            case "MainMenu Button": 
+            case "MainMenu Button": // MainMenu
                 LoadMainMenu();
+                break;
+            case "Next Button": // Forward one page
+                Next();
                 break;
             case "Tutorial":
                 Tutorial();
@@ -106,33 +104,22 @@ public class MainMenu : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
-    public void PlayGame()
-    {
-        audioManager.PlaySFX(audioManager.buttonPressed);
-        scoreData.score = 0;
-        Cursor.visible = true;
-        SceneManager.LoadScene(1);
-    }
-    public void Credits()
-    {
-        audioManager.PlaySFX(audioManager.buttonPressed);
-        scoreData.score = 0;
-        Debug.Log("Going to credits scene.");
-        SceneManager.LoadScene(2);
-    }
     public void QuitGame()
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
         Application.Quit();
         Debug.Log("Quiting Game.");
     }
-
     public void Back()
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("TutorialPage1");
     }
-
+    public void Next()
+    {
+        audioManager.PlaySFX(audioManager.buttonPressed);
+        SceneManager.LoadScene("TutorialPage2");
+    }
     public void LoadMainMenu()
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
