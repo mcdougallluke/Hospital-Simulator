@@ -117,7 +117,7 @@ public class MainMenu : MonoBehaviour
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
         scoreData.score = 0;
-        Debug.Log("Going to credits scene.");
+       // Debug.Log("Going to credits scene.");
         SceneManager.LoadScene(2);
     }
     public void QuitGame()
@@ -141,7 +141,7 @@ public class MainMenu : MonoBehaviour
     public void Tutorial()
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
-        Debug.Log("Going to tutorial page 1");
+        //Debug.Log("Going to tutorial page 1");
         SceneManager.LoadScene("TutorialPage1");
     }
 }
