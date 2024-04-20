@@ -19,6 +19,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject arrowMinigameObject;
     AudioManager audioManager;
     public InputField inputField;
+    public GameObject ExamRoomPanel;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -43,10 +44,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-          
             if (GameIsPaused)
             {
-
                 Resume();
             }
             else
@@ -121,12 +120,10 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
-        // inputField.enabled = true;
         inputField.interactable = true;
         canvasObject1.enabled = true;
-        //canvasObject2.enabled = true;
         arrowMinigameObject.SetActive(true);
-        //canvasObject2.enabled = true;
+        ExamRoomPanel.SetActive(true);
     }
 
     public void Pause()
@@ -137,12 +134,10 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-       // inputField.enabled = false;
        inputField.interactable = false;
         canvasObject1.enabled = false;
-       // canvasObject2.enabled = false;
         arrowMinigameObject.SetActive(false);
-        //canvasObject2.enabled = false;
+        ExamRoomPanel.SetActive(false);
     }
 
     public void LoadMenu()
