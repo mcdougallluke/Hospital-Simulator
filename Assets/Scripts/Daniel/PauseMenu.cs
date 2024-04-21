@@ -38,12 +38,16 @@ public class PauseMenu : MonoBehaviour
         {
             buttonManagers[i] = menuOptions[i].GetComponent<ButtonManager>();
         }
+
+        //disable the menu on start
+        Resume();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            audioManager.PlaySFX(audioManager.buttonPressed);
             if (GameIsPaused)
             {
                 Resume();
@@ -116,7 +120,6 @@ public class PauseMenu : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        audioManager.PlaySFX(audioManager.buttonPressed);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -130,7 +133,6 @@ public class PauseMenu : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        audioManager.PlaySFX(audioManager.buttonPressed);
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
