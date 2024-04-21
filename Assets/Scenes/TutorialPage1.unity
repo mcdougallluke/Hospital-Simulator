@@ -6412,21 +6412,19 @@ MonoBehaviour:
 
 
     WASD:
-    Movement.
+    Movement
 
-    SPACE: Jump.
+    SPACE: Jump
 
-    Right Click: Unleash your grappling hook to
-    grapple to any surface.
+    Right Click: Unleash your grappling hook to grapple
+    to any surface
 
-    E: Interact with objects and patients.
+    E: Interact with objects and patients
 
-    ESCAPE:
-    Pause the game.
+    ESCAPE: Pause
+    the game
 
-    RIGHT CONTROL: Crouch.
-
-    SHIFT: Run.'
+    SHIFT: Run'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
   m_sharedMaterial: {fileID: 21419154506056544, guid: e5fa6cba27f1b7a47838db200baa1556, type: 2}
