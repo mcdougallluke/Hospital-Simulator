@@ -102,7 +102,7 @@ public class PatientAI : MonoBehaviour
     {
         if (CheckAndMoveToOptionalPoint())
         {
-            currentState = PatientState.InExamRoom;
+            currentState = PatientState.MovingToExamRoom;
         }
     }
 
