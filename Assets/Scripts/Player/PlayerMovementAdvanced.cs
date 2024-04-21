@@ -15,9 +15,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float walkSpeed;
     public float backwardsWalkSpeed;
     public float sprintSpeed;
-    public float slideSpeed;
-    public float wallrunSpeed;
-    public float vaultSpeed;
     public float airMinSpeed;
 
     public float speedIncreaseMultiplier;
@@ -32,15 +29,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
-    [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchYScale;
-    private float startYScale;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
-    public KeyCode crouchKey = KeyCode.LeftControl;
+
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -73,17 +66,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
         walkingBackwards,
         sprinting,
         grappling,
-        wallrunning,
-        vaulting,
-        crouching,
-        sliding,
         air
     }
 
-    public bool sliding;
-    public bool crouching;
-    public bool wallrunning;
-    public bool vaulting;
     public bool activeGrapple;
 
     public bool freeze;
@@ -103,8 +88,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
-
-        startYScale = transform.localScale.y;
     }
 
     private void Update()
@@ -118,7 +101,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         UpdateAnimator();
 
         // handle drag
-        if ((state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching) && !activeGrapple)
+        if ((state == MovementState.walking || state == MovementState.sprinting) && !activeGrapple)
             rb.drag = groundDrag;
         else if (state == MovementState.idle)
             rb.drag = stoppingDrag;
@@ -155,23 +138,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
-
-        // start crouch
-        if (Input.GetKeyDown(crouchKey) && horizontalInput == 0 && verticalInput == 0)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-
-            crouching = true;
-        }
-
-        // stop crouch
-        if (Input.GetKeyUp(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-
-            crouching = false;
-        }
     }
 
     bool keepMomentum;
@@ -196,43 +162,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.unlimited;
             desiredMoveSpeed = 999f;
-        }
-
-        // Mode - Vaulting
-        else if (vaulting)
-        {
-            state = MovementState.vaulting;
-            desiredMoveSpeed = vaultSpeed;
-        }
-
-        // Mode - Wallrunning
-        else if (wallrunning)
-        {
-            state = MovementState.wallrunning;
-            desiredMoveSpeed = wallrunSpeed;
-        }
-
-        // Mode - Sliding
-        else if (sliding)
-        {
-            state = MovementState.sliding;
-
-            // increase speed by one every second
-            if (OnSlope() && rb.velocity.y < 0.1f)
-            {
-                desiredMoveSpeed = slideSpeed;
-                keepMomentum = true;
-            }
-
-            else
-                desiredMoveSpeed = sprintSpeed;
-        }
-
-        // Mode - Crouching
-        else if (crouching)
-        {
-            state = MovementState.crouching;
-            desiredMoveSpeed = crouchSpeed;
         }
         // Mode - Idle
         else if (grounded && horizontalInput == 0 && verticalInput == 0)
@@ -359,8 +288,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
-        // turn gravity off while on slope
-        if(!wallrunning) rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
