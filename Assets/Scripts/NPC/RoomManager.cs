@@ -7,7 +7,7 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
     public Text[] roomTexts; // Assign this array in the inspector with your UI Texts
-    public float proximityThreshold = 10.0f;
+    public float proximityThreshold = 5.0f;
     public List<Transform> npcs; // Assign NPC transforms in the Unity Editor
 
 
@@ -43,7 +43,7 @@ public class RoomManager : MonoBehaviour
             }
 
             // Update the room availability if no NPC is close
-            if (!isNpcClose && !isRoomAvailable)
+            if (!isNpcClose)
             {
                 roomTexts[i].text = "Empty";
             }
