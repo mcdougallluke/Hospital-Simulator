@@ -240,15 +240,8 @@ public class PatientAI : MonoBehaviour
         // Log the despawn and manage room availability
         Debug.Log("NPC unalive.");
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
-        if (scoreScript != null)
-        {
-            scoreScript.UpdateScore(-10);
-            scoreScript.UpdatePatientsLost(1); // Increment the patients lost count
-        }
-        else
-        {
-            Debug.LogError("Score script reference not set in NPC.");
-        }
+
+
 
         // Destroy the gameObject after some delay (if needed to see the ragdoll effect)
         Destroy(gameObject, 10); // Adjust time as necessary
@@ -265,17 +258,6 @@ public class PatientAI : MonoBehaviour
         agent.destination = despawnPoint.position; 
         
         Debug.Log("NPC moving to despawn point and will be despawned.");
-
-        // Increment the score by 10
-        if(scoreScript != null) // Check if the scoreScript reference is set
-        {
-            scoreScript.UpdateScore(10); // Increase the score by 10
-            scoreScript.UpdatePatientsSaved(1); // Increment the patients saved count
-        }
-        else
-        {
-            Debug.LogError("Score script reference not set in NPC.");
-        }
 
         Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
         RoomManager.Instance.UnregisterNPC(transform);
