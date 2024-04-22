@@ -48,10 +48,7 @@ public class PlayerLocomotion : MonoBehaviour
     
     public void HandleAllMovement()
     {
-        HandleFallingAndLanding();
-        if (playerManager.isInteracting)
-            return;
-        
+        HandleFallingAndLanding();      
         HandleMovement();
         HandleRotation();
     }
@@ -124,7 +121,7 @@ public class PlayerLocomotion : MonoBehaviour
         rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
 
         if (!isGrounded && !isJumping) {
-            if (!playerManager.isInteracting) {
+            if (!true) {
                 animatorManager.PlayTargetAnimation("Fall", true);
             }
             inAirTimer = inAirTimer + Time.deltaTime;
@@ -133,7 +130,7 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         if (Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, maxDistance, groundLayer)) {
-            if (!isGrounded && !playerManager.isInteracting) {
+            if (!isGrounded) {
                 animatorManager.PlayTargetAnimation("Land", true);
             }
             Vector3 rayCastHitPoint = hit.point;
