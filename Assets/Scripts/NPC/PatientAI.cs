@@ -231,6 +231,9 @@ public class PatientAI : MonoBehaviour
             rb.isKinematic = false;  // This allows physics to take control
         }
 
+        scoreScript.UpdateScore(-10);
+        scoreScript.UpdatePatientsLost(1);
+
         // Optionally disable the NavMeshAgent if it interferes with the ragdoll physics
         if (agent != null)
         {
@@ -240,9 +243,6 @@ public class PatientAI : MonoBehaviour
         // Log the despawn and manage room availability
         Debug.Log("NPC unalive.");
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
-
-
-
         // Destroy the gameObject after some delay (if needed to see the ragdoll effect)
         Destroy(gameObject, 10); // Adjust time as necessary
         RoomManager.Instance.UnregisterNPC(transform);
@@ -256,7 +256,8 @@ public class PatientAI : MonoBehaviour
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
         // Update this line to use despawnPoint instead of waitingRoom
         agent.destination = despawnPoint.position; 
-        
+        scoreScript.UpdateScore(10);
+        scoreScript.UpdatePatientsSaved(1);
         Debug.Log("NPC moving to despawn point and will be despawned.");
 
         Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC

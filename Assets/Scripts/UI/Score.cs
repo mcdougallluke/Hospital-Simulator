@@ -7,6 +7,14 @@ public class Score : MonoBehaviour
     public TextMeshProUGUI gameOverText; // Used for game over screen
     public Text gamePlayScoreText; // Used for live score during gameplay
 
+
+    public GameObject scoreChangePrefab;
+    public Transform scoreParent;
+    public RectTransform endPosition;
+
+    public Color greenColor;
+    public Color redColor;
+
     // Reference to the ScoreData ScriptableObject
     public ScoreData scoreData;
 
@@ -32,7 +40,19 @@ public class Score : MonoBehaviour
     public void UpdateScore(int change)
     {
         scoreData.score += change;
-        UpdateGameplayScore();
+        var inst = Instantiate(scoreChangePrefab, Vector3.zero, Quaternion.identity);
+        inst.transform.SetParent(scoreParent, false);
+        RectTransform rect = inst.GetComponent<RectTransform>();
+
+        Text text = inst.GetComponent<Text>();
+        text.text = (change > 0 ? "+" : "") + change.ToString();
+        text.color = change > 0 ? greenColor : redColor;
+
+        LeanTween.moveY(rect, endPosition.anchoredPosition.y, 1f).setOnComplete(() => {
+            Destroy(inst);
+            UpdateGameplayScore();
+        });
+        LeanTween.alphaText(rect, 0.5f, 1f);
     }
 
     public void UpdatePatientsSaved(int count)
