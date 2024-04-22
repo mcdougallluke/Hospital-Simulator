@@ -25,7 +25,7 @@ public class PatientAI : MonoBehaviour
     public FetchMinigame fetchMinigame;
     public Score scoreScript; 
     private bool hasStartedMinigame = false;
-    public int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
+    public int selectedMinigameIndex;
     private bool fetchMinigameEnded = false; 
     private Animator animator;
     public string desiredPill; 
@@ -39,7 +39,7 @@ public class PatientAI : MonoBehaviour
     {
         currentState = PatientState.MovingToWaitingRoom;
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>(); // Get the Animator component
+        animator = GetComponent<Animator>();
         fetchMinigameEnded = false;
 
         selectedMinigameIndex = Random.Range(0, 3); 
@@ -231,6 +231,9 @@ public class PatientAI : MonoBehaviour
             rb.isKinematic = false;  // This allows physics to take control
         }
 
+        scoreScript.UpdateScore(-10);
+        scoreScript.UpdatePatientsLost(1);
+
         // Optionally disable the NavMeshAgent if it interferes with the ragdoll physics
         if (agent != null)
         {
@@ -240,15 +243,6 @@ public class PatientAI : MonoBehaviour
         // Log the despawn and manage room availability
         Debug.Log("NPC unalive.");
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
-        if (scoreScript != null)
-        {
-            scoreScript.updateScore(-10);
-        }
-        else
-        {
-            Debug.LogError("Score script reference not set in NPC.");
-        }
-
         // Destroy the gameObject after some delay (if needed to see the ragdoll effect)
         Destroy(gameObject, 10); // Adjust time as necessary
         RoomManager.Instance.UnregisterNPC(transform);
@@ -262,18 +256,9 @@ public class PatientAI : MonoBehaviour
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
         // Update this line to use despawnPoint instead of waitingRoom
         agent.destination = despawnPoint.position; 
-        
+        scoreScript.UpdateScore(10);
+        scoreScript.UpdatePatientsSaved(1);
         Debug.Log("NPC moving to despawn point and will be despawned.");
-
-        // Increment the score by 10
-        if(scoreScript != null) // Check if the scoreScript reference is set
-        {
-            scoreScript.updateScore(10); // Increase the score by 10
-        }
-        else
-        {
-            Debug.LogError("Score script reference not set in NPC.");
-        }
 
         Destroy(gameObject, 10); // Waits 10 seconds before destroying the NPC
         RoomManager.Instance.UnregisterNPC(transform);

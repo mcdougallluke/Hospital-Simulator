@@ -10,7 +10,7 @@ public class VolumeSettings : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider SFXSlider;
 
-    private bool isInitialized = false;
+    //private bool isInitialized = false;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class VolumeSettings : MonoBehaviour
             SetSFXVolume();
             SaveVolume(); // Save the default volume settings
         }
-        isInitialized = true;
+        //isInitialized = true;
     }
 
     public void SetMusicVolume()

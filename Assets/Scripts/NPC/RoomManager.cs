@@ -43,7 +43,7 @@ public class RoomManager : MonoBehaviour
             }
 
             // Update the room availability if no NPC is close
-            if (!isNpcClose && !isRoomAvailable)
+            if (!isNpcClose)
             {
                 roomTexts[i].text = "Empty";
             }
