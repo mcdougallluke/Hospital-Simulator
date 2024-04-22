@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     CameraManager cameraManager;
+    public bool isGamePaused = false;
+
     
     private void Awake()
     {
@@ -15,6 +17,8 @@ public class PlayerManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        cameraManager.HandleAllCameraMovement();
+        if (!isGamePaused) {
+            cameraManager.HandleAllCameraMovement();
+        }
     }
 }
