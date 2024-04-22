@@ -90,6 +90,7 @@ public class PatientAI : MonoBehaviour
     {
 
         agent.destination = waitingRoom.position;
+        animator.SetBool("IsRunning", true);
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
@@ -100,14 +101,18 @@ public class PatientAI : MonoBehaviour
 
     void HandleWaitingState()
     {
+        animator.SetBool("IsRunning", false);
         if (CheckAndMoveToOptionalPoint())
         {
             currentState = PatientState.MovingToExamRoom;
+
         }
     }
 
     void HandleMovingToExamRoomState()
-    {   
+    {      
+        
+        animator.SetBool("IsRunning", true);
         // Transition to InExamRoom when arrived
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
@@ -118,6 +123,7 @@ public class PatientAI : MonoBehaviour
 
     void HandleInExamRoomState()
     {
+        animator.SetBool("IsRunning", false);
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
         }
@@ -131,6 +137,7 @@ public class PatientAI : MonoBehaviour
 
     void HandleDespawningState()
     {
+        animator.SetBool("IsRunning", true);
         // Logic for despawning
         // Transition to Despawned when arrived
         if (!isDespawningInitiated && !agent.pathPending && agent.remainingDistance < 0.5f)
