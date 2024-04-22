@@ -4,52 +4,66 @@ using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public TextMeshProUGUI textMeshProUGUI;
-    public Text MyText;
+    public TextMeshProUGUI gameOverText; // Used for game over screen
+    public Text gamePlayScoreText; // Used for live score during gameplay
 
     // Reference to the ScoreData ScriptableObject
     public ScoreData scoreData;
 
     void Start()
     {
-        // Initialize the score if the ScoreData is null
+        // Initialize the data if ScoreData is null
         if (scoreData == null)
         {
             scoreData = ScriptableObject.CreateInstance<ScoreData>();
             scoreData.score = 0;
+            scoreData.patientsSaved = 0;
+            scoreData.patientsLost = 0;
         }
 
-        updateScore(0);
-    }
+        UpdateGameplayScore(); // Initial update to display initial score
 
-    public void Update()
-    {
-        //testing
-        /*if (Input.GetKey(KeyCode.L))
+        if (gameOverText != null)
         {
-            // score++;
-            updateScore(1);
-        }*/
+            DisplayFinalScores();
+        }
     }
 
-    /// <summary>
-    /// Updates the score count on the GUI, if arg is negative the score will decrease 
-    /// by the amount and if positive it will increase by the amount.
-    /// </summary>
-    public void updateScore(int change)
+    public void UpdateScore(int change)
     {
         scoreData.score += change;
-        if (textMeshProUGUI != null && MyText == null)
+        UpdateGameplayScore();
+    }
+
+    public void UpdatePatientsSaved(int count)
+    {
+        scoreData.patientsSaved += count;
+    }
+
+    public void UpdatePatientsLost(int count)
+    {
+        scoreData.patientsLost += count;
+    }
+
+    // Update the gameplay score display
+    private void UpdateGameplayScore()
+    {
+        if (gamePlayScoreText != null)
         {
-            textMeshProUGUI.text = "Score: " + scoreData.score;
-        }
-        else if (textMeshProUGUI == null && MyText != null)
-        {
-            MyText.text = "Score: " + scoreData.score; // Correctly display the current score
+            gamePlayScoreText.text = $"Score: {scoreData.score}";
         }
     }
-    public int CurrentScore()
+
+    // Call this at game over to display all details
+    public void DisplayFinalScores()
     {
-        return scoreData.score;
+        string finalScoreText = $"PATIENTS SAVED: {scoreData.patientsSaved}\n" +
+                                $"PATIENTS LOST: {scoreData.patientsLost}\n" +
+                                $"FINAL SCORE: {scoreData.score}";
+
+        if (gameOverText != null)
+        {
+            gameOverText.text = finalScoreText;
+        }
     }
 }

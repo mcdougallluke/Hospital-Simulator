@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Score
   m_EditorClassIdentifier: 
   score: 0
+  patientsSaved: 0
+  patientsLost: 0

@@ -25,7 +25,7 @@ public class PatientAI : MonoBehaviour
     public FetchMinigame fetchMinigame;
     public Score scoreScript; 
     private bool hasStartedMinigame = false;
-    public int selectedMinigameIndex; // 0 for spelling, 1 for touch and despawn
+    public int selectedMinigameIndex;
     private bool fetchMinigameEnded = false; 
     private Animator animator;
     public string desiredPill; 
@@ -39,7 +39,7 @@ public class PatientAI : MonoBehaviour
     {
         currentState = PatientState.MovingToWaitingRoom;
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>(); // Get the Animator component
+        animator = GetComponent<Animator>();
         fetchMinigameEnded = false;
 
         selectedMinigameIndex = Random.Range(0, 3); 
@@ -242,7 +242,8 @@ public class PatientAI : MonoBehaviour
         RoomManager.Instance.SetRoomAvailability(currentDestinationPoint, true);
         if (scoreScript != null)
         {
-            scoreScript.updateScore(-10);
+            scoreScript.UpdateScore(-10);
+            scoreScript.UpdatePatientsLost(1); // Increment the patients lost count
         }
         else
         {
@@ -268,7 +269,8 @@ public class PatientAI : MonoBehaviour
         // Increment the score by 10
         if(scoreScript != null) // Check if the scoreScript reference is set
         {
-            scoreScript.updateScore(10); // Increase the score by 10
+            scoreScript.UpdateScore(10); // Increase the score by 10
+            scoreScript.UpdatePatientsSaved(1); // Increment the patients saved count
         }
         else
         {

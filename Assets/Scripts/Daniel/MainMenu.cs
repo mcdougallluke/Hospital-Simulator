@@ -110,6 +110,8 @@ public class MainMenu : MonoBehaviour
     {
         audioManager.PlaySFX(audioManager.buttonPressed);
         scoreData.score = 0;
+        scoreData.patientsSaved = 0;
+        scoreData.patientsLost = 0;
         Cursor.visible = true;
         SceneManager.LoadScene(1);
     }
