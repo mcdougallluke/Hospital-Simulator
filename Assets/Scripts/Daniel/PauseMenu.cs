@@ -22,6 +22,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject ExamRoomPanel;
     public PlayerManager playerManager;
 
+    public GameObject menuContainer;  
+    public GameObject settingsContainer;
+
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -42,40 +45,36 @@ public class PauseMenu : MonoBehaviour
             buttonManagers[i] = menuOptions[i].GetComponent<ButtonManager>();
         }
 
-        //disable the menu on start
-        Resume();
+        menuContainer.SetActive(true);
+        settingsContainer.SetActive(false);
+        pauseMenuUI.SetActive(false);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            audioManager.PlaySFX(audioManager.buttonPressed);
             if (GameIsPaused)
             {
-                Resume();
+                if (settingsContainer.activeSelf)  // If in settings menu, go back to main menu
+                {
+                    HideSettings();
+                }
+                else  // Otherwise, resume game or show main menu
+                {
+                    if (pauseMenuUI.activeSelf)
+                    {
+                        Resume();
+                    }
+                    else
+                    {
+                        Pause();
+                    }
+                }
             }
             else
             {
                 Pause();
-            }
-        }
-
-        if (GameIsPaused)
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                currentSelection = (currentSelection - 1 + menuOptions.Length) % menuOptions.Length;
-                UpdateSelection();
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                currentSelection = (currentSelection + 1) % menuOptions.Length;
-                UpdateSelection();
-            }
-            else if (Input.GetKeyDown(KeyCode.Return))
-            {
-                ExecuteSelection();
             }
         }
     }
@@ -121,6 +120,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
@@ -136,6 +136,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
+        audioManager.PlaySFX(audioManager.buttonPressed);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
@@ -169,4 +170,20 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Quitting game...");
         Application.Quit();
     }
+
+
+    public void ShowSettings()
+    {
+        audioManager.PlaySFX(audioManager.buttonPressed);
+        menuContainer.SetActive(false);
+        settingsContainer.SetActive(true);
+    }
+
+    public void HideSettings()
+    {
+        audioManager.PlaySFX(audioManager.buttonPressed);
+        settingsContainer.SetActive(false);
+        menuContainer.SetActive(true);
+    }
+
 }

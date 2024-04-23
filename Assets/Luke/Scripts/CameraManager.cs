@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class CameraManager : MonoBehaviour
     public float cameraFollowSpeed = 0.2f;
     public float cameraLookSpeed = 2;
     public float cameraPivotSpeed = 2;
+    public Slider sensitivitySlider;
 
     public float lookAngle; // Horizontal rotation angle
     public float pivotAngle; // Vertical pivot angle
@@ -26,16 +28,58 @@ public class CameraManager : MonoBehaviour
 
     public Vector3 cameraOffset;
     
-    private void Awake() {
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("CameraSensitivity"))
+        {
+            sensitivitySlider.value = PlayerPrefs.GetFloat("CameraSensitivity");
+            UpdateCameraSensitivity(sensitivitySlider.value); 
+        }
+        else
+        {
+            sensitivitySlider.value = 1f;
+            UpdateCameraSensitivity(1f);
+            SaveSensitivity();
+        }
+        
+        sensitivitySlider.onValueChanged.AddListener(UpdateCameraSensitivity);
+    }
+
+    private void Awake()
+    {
         cameraTransform = Camera.main.transform;
         defaultPosition = cameraTransform.localPosition.z;
+
+        // Load the camera sensitivity if it has been saved
+        if (PlayerPrefs.HasKey("CameraSensitivity"))
+        {
+            float savedSensitivity = PlayerPrefs.GetFloat("CameraSensitivity");
+            cameraLookSpeed = savedSensitivity;
+            cameraPivotSpeed = savedSensitivity;
+        }
     }
+
 
     public void HandleAllCameraMovement() {
         FollowTarget();
         RotateCamera();
         HandleCameraCollisions();
     }
+
+    public void UpdateCameraSensitivity(float sensitivity)
+    {
+        cameraLookSpeed = sensitivity;
+        cameraPivotSpeed = sensitivity;
+        
+        PlayerPrefs.SetFloat("CameraSensitivity", sensitivity);
+        SaveSensitivity();
+    }
+
+    private void SaveSensitivity()
+    {
+        PlayerPrefs.Save();
+    }
+
 
     private void FollowTarget() {
         // Calculate the offset position from the target based on the target's rotation
