@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-
-    InputManager inputManager;
-
-    public Transform targetTransform;
+    public Transform targetTransform; // Target player transform
     public Transform cameraPivot;
     public Transform cameraTransform;
     public LayerMask collisionLayers;
@@ -22,15 +19,14 @@ public class CameraManager : MonoBehaviour
     public float cameraLookSpeed = 2;
     public float cameraPivotSpeed = 2;
 
-    public float lookAngle;
-    public float pivotAngle;
+    public float lookAngle; // Horizontal rotation angle
+    public float pivotAngle; // Vertical pivot angle
     public float minPivotAngle = -35;
     public float maxPivotAngle = 35;
-    
 
+    public Vector3 cameraOffset;
+    
     private void Awake() {
-        targetTransform = FindObjectOfType<PlayerManager>().transform;
-        inputManager = FindObjectOfType<InputManager>();
         cameraTransform = Camera.main.transform;
         defaultPosition = cameraTransform.localPosition.z;
     }
@@ -42,16 +38,22 @@ public class CameraManager : MonoBehaviour
     }
 
     private void FollowTarget() {
-        Vector3 targetPosition = Vector3.SmoothDamp(transform.position, targetTransform.position, ref cameraFollowVelocity, cameraFollowSpeed);
+        // Calculate the offset position from the target based on the target's rotation
+        Vector3 offsetPosition = targetTransform.TransformPoint(cameraOffset);
+
+        // Smoothly interpolate the camera's position towards the offset position
+        Vector3 targetPosition = Vector3.SmoothDamp(transform.position, offsetPosition, ref cameraFollowVelocity, cameraFollowSpeed);
         transform.position = targetPosition;
     }
+
 
     private void RotateCamera() {
         Vector3 rotation;
         Quaternion targetRotation;
 
-        lookAngle = lookAngle + (inputManager.cameraInputX * cameraLookSpeed);
-        pivotAngle = pivotAngle - (inputManager.cameraInputY * cameraPivotSpeed);
+        // Replace inputManager.cameraInputX/Y with Input.GetAxis calls
+        lookAngle += (Input.GetAxis("Mouse X") * cameraLookSpeed);
+        pivotAngle -= (Input.GetAxis("Mouse Y") * cameraPivotSpeed);
         pivotAngle = Mathf.Clamp(pivotAngle, minPivotAngle, maxPivotAngle);
 
         rotation = Vector3.zero;
@@ -59,11 +61,19 @@ public class CameraManager : MonoBehaviour
         targetRotation = Quaternion.Euler(rotation);
         transform.rotation = targetRotation;
 
+        // Rotate the player object to match the camera's horizontal rotation
+        if (targetTransform != null) {
+            Vector3 playerRotation = Vector3.zero;
+            playerRotation.y = lookAngle;
+            targetTransform.rotation = Quaternion.Euler(playerRotation);
+        }
+
         rotation = Vector3.zero;
         rotation.x = pivotAngle;
         targetRotation = Quaternion.Euler(rotation);
         cameraPivot.localRotation = targetRotation;
     }
+
 
     private void HandleCameraCollisions() {
         float targetPosition = defaultPosition;
@@ -73,16 +83,14 @@ public class CameraManager : MonoBehaviour
 
         if (Physics.SphereCast(cameraPivot.transform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetPosition), collisionLayers)) {
             float distance = Vector3.Distance(cameraPivot.position, hit.point);
-            targetPosition =- (distance - cameraCollisionOffset);
+            targetPosition = -(distance - cameraCollisionOffset);
         }
 
         if (Mathf.Abs(targetPosition) < minimumCollisionOffset) {
-            targetPosition = targetPosition - minimumCollisionOffset;
+            targetPosition -= minimumCollisionOffset;
         }
 
         cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
         cameraTransform.localPosition = cameraVectorPosition;
-
     }
-
 }

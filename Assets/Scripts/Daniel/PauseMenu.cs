@@ -20,9 +20,12 @@ public class PauseMenu : MonoBehaviour
     AudioManager audioManager;
     public InputField inputField;
     public GameObject ExamRoomPanel;
+    public PlayerManager playerManager;
+
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
     }
 
     void Start()
@@ -127,6 +130,8 @@ public class PauseMenu : MonoBehaviour
         canvasObject1.enabled = true;
         arrowMinigameObject.SetActive(true);
         ExamRoomPanel.SetActive(true);
+        if (playerManager != null)
+            playerManager.isGamePaused = false;  // Update PlayerManager's pause state
     }
 
     public void Pause()
@@ -136,11 +141,14 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-       inputField.interactable = false;
+        inputField.interactable = false;
         canvasObject1.enabled = false;
         arrowMinigameObject.SetActive(false);
         ExamRoomPanel.SetActive(false);
+        if (playerManager != null)
+            playerManager.isGamePaused = true;  // Update PlayerManager's pause state
     }
+
 
     public void LoadMenu()
     {
