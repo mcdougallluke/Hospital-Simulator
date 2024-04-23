@@ -14,7 +14,7 @@ public class SpellingMinigame : MonoBehaviour
     private string currentWord; // Word to spell, will be randomized from a list
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
-    private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "ebola", "rabies", "smallpox", "blackdeath", "cholera", "typhus", "measles", "scurvy", "leukemia", "anthrax", "malaria", "Pneumonoultramicroscopicsilicovolcanoconiosis"};
+    private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "hepatitis Z"};
     public Text overlayText; // Assign this in the inspector to the Text component that overlays the InputField
 
 
