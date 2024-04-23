@@ -7,11 +7,11 @@ public class ObjectGrabbable : MonoBehaviour
 
     private Rigidbody objectRigidbody;
     private Transform objectGrabPointTransform;
-    private Collider collider;
+    private Collider objCollider;
     AudioManager audioManager;
     private void Awake() {
         objectRigidbody = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        objCollider = GetComponent<Collider>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
     }
@@ -19,14 +19,14 @@ public class ObjectGrabbable : MonoBehaviour
         audioManager.PlaySFX(audioManager.pickupItem);
         this.objectGrabPointTransform = objectGrabPointTransform;
         objectRigidbody.useGravity = false;
-        collider.enabled = false;
+        objCollider.enabled = false;
     }
 
     public void Drop() {
         audioManager.PlaySFX(audioManager.pickupItem);
         this.objectGrabPointTransform = null;
         objectRigidbody.useGravity = true;
-        collider.enabled = true;
+        objCollider.enabled = true;
     }
 
     private void FixedUpdate() {
