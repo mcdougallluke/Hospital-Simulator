@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip grapple;
     public AudioClip miniGameOneCorrectAnswer;
     public AudioClip buttonPressed;
+    public AudioClip death;
 
     [Header("----- Background Music -----")]
     public AudioClip gameBackground;
@@ -53,7 +54,7 @@ public class AudioManager : MonoBehaviour
         if (sceneBackgroundMusic.ContainsKey(scene.name))
         {
 
-            if (scene.name == "HospitalMap 1")
+            /*if (scene.name == "HospitalMap 1")
             {
                 musicSource.volume = 0.2f; // Set volume to 10%
                 musicSource.loop = true;
@@ -62,7 +63,7 @@ public class AudioManager : MonoBehaviour
             {
                 musicSource.volume = 0.4f; // Set volume to default (40%)
                 musicSource.loop = true;
-            }
+            }*/
 
             // Set the background music for the loaded scene
             musicSource.clip = sceneBackgroundMusic[scene.name];
@@ -74,6 +75,10 @@ public class AudioManager : MonoBehaviour
         if (clip == jump)
         {
             SFXSource.volume = 0.1f;
+        }
+        else if (clip == death)
+        {
+            SFXSource.volume = 0.2f;
         }
         SFXSource.PlayOneShot(clip);
     }

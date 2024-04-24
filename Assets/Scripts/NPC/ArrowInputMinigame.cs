@@ -116,6 +116,7 @@ public class ArrowInputMinigame : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
                      Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {
+                audioManager.PlaySFX(audioManager.death);
                 Debug.Log("Wrong input! Minigame failed.");
                 EndMinigame(false);
             }
