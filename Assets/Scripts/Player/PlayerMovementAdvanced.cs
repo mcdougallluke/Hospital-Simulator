@@ -133,7 +133,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
-
+            audioManager.PlaySFX(audioManager.jump);
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);

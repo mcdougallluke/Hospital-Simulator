@@ -4555,7 +4555,7 @@ MonoBehaviour:
   musicSource: {fileID: 1512610645}
   SFXSource: {fileID: 1507936525}
   walking: {fileID: 0}
-  jump: {fileID: 0}
+  jump: {fileID: 8300000, guid: 5fe10500852e1074cb4cdbdcb9207cd5, type: 3}
   pickupItem: {fileID: 8300000, guid: ebb03b2b009894845b81a64051a5c698, type: 3}
   dropItem: {fileID: 8300000, guid: ae9ac757ba0b39e4f91369d167331c3e, type: 3}
   grapple: {fileID: 8300000, guid: d3c4ff9e65644464ca6a511840d1eb3a, type: 3}

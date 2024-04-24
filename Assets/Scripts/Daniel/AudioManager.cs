@@ -71,6 +71,10 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFX(AudioClip clip)
     {
+        if (clip == jump)
+        {
+            SFXSource.volume = 0.1f;
+        }
         SFXSource.PlayOneShot(clip);
     }
 }
