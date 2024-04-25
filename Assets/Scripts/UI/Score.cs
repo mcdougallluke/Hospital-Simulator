@@ -7,16 +7,14 @@ public class Score : MonoBehaviour
     public TextMeshProUGUI gameOverText; // Used for game over screen
     public Text gamePlayScoreText; // Used for live score during gameplay
 
+    public TextMeshProUGUI highScoreText; // Used for high score display
 
     public GameObject scoreChangePrefab;
     public Transform scoreParent;
     public RectTransform endPosition;
-
-    public Color greenColor;
-    public Color redColor;
-
-    // Reference to the ScoreData ScriptableObject
     public ScoreData scoreData;
+
+    private bool newHighScore = false;
 
     void Start()
     {
@@ -35,6 +33,7 @@ public class Score : MonoBehaviour
         {
             DisplayFinalScores();
         }
+        newHighScore = false;
     }
 
     public void UpdateScore(int change)
@@ -46,7 +45,6 @@ public class Score : MonoBehaviour
 
         Text text = inst.GetComponent<Text>();
         text.text = (change > 0 ? "+" : "") + change.ToString();
-        text.color = change > 0 ? greenColor : redColor;
 
         LeanTween.moveY(rect, endPosition.anchoredPosition.y, 1f).setOnComplete(() => {
             Destroy(inst);
@@ -77,6 +75,8 @@ public class Score : MonoBehaviour
     // Call this at game over to display all details
     public void DisplayFinalScores()
     {
+        CheckHighScore();
+
         string finalScoreText = $"PATIENTS SAVED: {scoreData.patientsSaved}\n" +
                                 $"PATIENTS LOST: {scoreData.patientsLost}\n" +
                                 $"FINAL SCORE: {scoreData.score}";
@@ -84,6 +84,24 @@ public class Score : MonoBehaviour
         if (gameOverText != null)
         {
             gameOverText.text = finalScoreText;
+        }
+
+        if (newHighScore)
+        {
+            highScoreText.enabled = true;
+        } else
+        {
+            highScoreText.enabled = false;
+        }
+    }
+
+    private void CheckHighScore()
+    {
+        if (scoreData.score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", scoreData.score);
+            Debug.Log("New High Score: " + scoreData.score);
+            newHighScore = true;
         }
     }
 }
