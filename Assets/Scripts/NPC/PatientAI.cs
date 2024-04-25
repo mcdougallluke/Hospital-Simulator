@@ -193,7 +193,7 @@ public class PatientAI : MonoBehaviour
 
     private string ChooseRandomPill()
     {
-        string[] pills = { "RedPill", "BluePill", "GreenPill" };
+        string[] pills = { "Red Pill", "Blue Pill", "Green Pill" };
         int index = Random.Range(0, pills.Length);
         return pills[index];
     }

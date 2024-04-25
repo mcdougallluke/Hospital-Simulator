@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 102605890015156458}
   - component: {fileID: -6001204513208044495}
   m_Layer: 0
-  m_Name: GreenPill
+  m_Name: Green Pill
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
