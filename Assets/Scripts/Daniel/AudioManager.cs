@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
     [Header("----- Audio Source -----")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
+    [SerializeField] AudioSource footstepsSource;
 
     [Header("----- Audio Clip -----")]
     public AudioClip walking;
+    public AudioClip running;
     public AudioClip jump;
     public AudioClip pickupItem;
     public AudioClip dropItem;
@@ -48,28 +49,17 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Check if the loaded scene exists in the sceneBackgroundMusic dictionary
         if (sceneBackgroundMusic.ContainsKey(scene.name))
         {
-
-            /*if (scene.name == "HospitalMap 1")
-            {
-                musicSource.volume = 0.2f; // Set volume to 10%
-                musicSource.loop = true;
-            }
-            else
-            {
-                musicSource.volume = 0.4f; // Set volume to default (40%)
-                musicSource.loop = true;
-            }*/
-
-            // Set the background music for the loaded scene
             musicSource.clip = sceneBackgroundMusic[scene.name];
             musicSource.Play();
         }
     }
+
     public void PlaySFX(AudioClip clip)
     {
         if (clip == jump)
@@ -81,5 +71,28 @@ public class AudioManager : MonoBehaviour
             SFXSource.volume = 0.2f;
         }
         SFXSource.PlayOneShot(clip);
+    }
+
+    void Update()
+    {
+        footstepsSource.volume = 0.2f;
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                footstepsSource.clip = running;
+                footstepsSource.enabled = true;
+            }
+            else
+            {
+                footstepsSource.clip = walking;
+                footstepsSource.enabled = true;
+            }    
+        }
+        else
+        {
+            footstepsSource.enabled = false;
+        }
     }
 }

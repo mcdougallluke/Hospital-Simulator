@@ -9,12 +9,12 @@ public class VolumeSettings : MonoBehaviour
     [SerializeField] private AudioMixer myMixer;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider SFXSlider;
-
+    [SerializeField] private Slider movementSoundSlider;
     //private bool isInitialized = false;
 
     void Start()
     {
-        if (PlayerPrefs.HasKey("musicVolume") && PlayerPrefs.HasKey("SFXVolume"))
+        if (PlayerPrefs.HasKey("musicVolume") && PlayerPrefs.HasKey("SFXVolume") && PlayerPrefs.HasKey("movementSoundVolume"))
         {
             LoadVolume();
         }
@@ -22,6 +22,8 @@ public class VolumeSettings : MonoBehaviour
         {
             SetMusicVolume();
             SetSFXVolume();
+            SetMovementVolume();
+
             SaveVolume(); // Save the default volume settings
         }
         //isInitialized = true;
@@ -45,12 +47,23 @@ public class VolumeSettings : MonoBehaviour
         SaveVolume(); // Save the new volume settings
     }
 
+    public void SetMovementVolume()
+    {
+        //   if (!isInitialized) return; // Avoid changing volume during initialization
+        float volume = movementSoundSlider.value;
+        myMixer.SetFloat("MovementSounds", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("movementSoundVolume", volume);
+        SaveVolume(); // Save the new volume settings
+    }
+
     private void LoadVolume()
     {
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+        movementSoundSlider.value = PlayerPrefs.GetFloat("movementSoundVolume");
         SetMusicVolume(); // Apply the loaded volume settings
         SetSFXVolume(); // Apply the loaded volume settings
+        SetMovementVolume(); // Apply the loaded movementVolume settings
     }
 
     private void SaveVolume()
