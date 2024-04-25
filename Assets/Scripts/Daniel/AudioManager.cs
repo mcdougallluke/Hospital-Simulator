@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip miniGameOneCorrectAnswer;
     public AudioClip buttonPressed;
     public AudioClip death;
+    public AudioClip sprint;
 
     [Header("----- Background Music -----")]
     public AudioClip gameBackground;
@@ -73,26 +74,41 @@ public class AudioManager : MonoBehaviour
         SFXSource.PlayOneShot(clip);
     }
 
-    void Update()
+    public void PlayMovementSound(AudioClip clip)
     {
-        footstepsSource.volume = 0.2f;
+        footstepsSource.PlayOneShot(clip);
+    }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+    /*void Update()
+    {
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) && !Input.GetMouseButton(1))
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 footstepsSource.clip = running;
                 footstepsSource.enabled = true;
+                if (!footstepsSource.isPlaying)
+                {
+                    footstepsSource.Play();
+                }
+                Debug.Log("RUNNNNNNNNNNNNN");
             }
             else
             {
                 footstepsSource.clip = walking;
                 footstepsSource.enabled = true;
-            }    
+                if (!footstepsSource.isPlaying)
+                {
+                    footstepsSource.Play();
+                }
+                Debug.Log("WAAGADF");
+            }
         }
         else
         {
+            footstepsSource.Stop(); // Stop the playback of the audio clip
             footstepsSource.enabled = false;
         }
     }
+    */
 }
