@@ -46,7 +46,7 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
     }
 
     private IEnumerator ResetInteraction() {
-    yield return new WaitForSeconds(1f); // Wait for 1 second or the time that fits your game flow
+    yield return new WaitForSeconds(6f); // Wait for 1 second or the time that fits your game flow
     isInteracting = false;
     }
 
