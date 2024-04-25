@@ -89,7 +89,7 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
                 "I really need the ",
                 "Big party this weekend, I need a ",
                 "I'm so bored, I need a ",
-                "My face burns, I need the",
+                "My face burns, I need the ",
                 "I'm here to pick up a perscription for the ",
                 "I heard pills are really great, get me the ",
                 "I'll slip you a 20 if you get me the "
