@@ -39,7 +39,10 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
         // Determine the response based on the minigame
         string responseText = DetermineResponseText();
         
-        ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Neutral, responseText);
+        // based on the length of the response text, adjust the chat bubble position so that it centers above the NPC
+        Vector3 bubblePosition = responseText.Length > 30 ? new Vector3(1.5f, 2.1f, 0) : new Vector3(0.5f, 2.1f, 0);
+
+        ChatBubble3D.Create(transform.transform, bubblePosition, ChatBubble3D.IconType.Neutral, responseText);
         animator.SetTrigger("Talk");
         StartCoroutine(ResetInteraction());
 
