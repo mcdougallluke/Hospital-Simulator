@@ -8,9 +8,12 @@ public class MainMenu : MonoBehaviour
     private int currentSelection = 0;
     private ButtonManager[] buttonManagers; // Array to hold ButtonManager components for menu options
     public ScoreData scoreData;
+
+    public GameObject mainMenuContainer;  // Holds the main menu buttons
+    public GameObject settingsContainer;  // Holds the settings UI and back button
+
     void Start()
     {
-        //ENABLE CURSOR MOVEMENT
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
@@ -24,7 +27,11 @@ public class MainMenu : MonoBehaviour
 
         // Set the initial selection
         UpdateSelection();
+
+        if (mainMenuContainer != null) mainMenuContainer.SetActive(true);  // Main menu is visible
+        if (settingsContainer != null) settingsContainer.SetActive(false);  // Settings menu is hidden
     }
+
 
     void Update()
     {
@@ -45,6 +52,21 @@ public class MainMenu : MonoBehaviour
             ExecuteSelection();
         }
     }
+
+    public void ShowSettings()
+    {
+        audioManager.PlaySFX(audioManager.buttonPressed);
+        mainMenuContainer.SetActive(false);
+        settingsContainer.SetActive(true);
+    }
+
+    public void HideSettings()
+    {
+        audioManager.PlaySFX(audioManager.buttonPressed);
+        settingsContainer.SetActive(false);
+        mainMenuContainer.SetActive(true);
+    }
+
 
     private void UpdateSelection()
     {
@@ -80,6 +102,9 @@ public class MainMenu : MonoBehaviour
         {
             case "Play Button": 
                 PlayGame();
+                break;
+            case "Settings Button":
+                ShowSettings();
                 break;
             case "Credits Button": 
                 Credits();
