@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VitalSignsGame : MonoBehaviour
+public class VitalsMinigame : MonoBehaviour
 {
     public float acceptableRange = 0.5f;  // Tight control given the scale of 1 to 9
     public GameObject minigameUI;
@@ -14,48 +14,68 @@ public class VitalSignsGame : MonoBehaviour
     public Image temperatureArrow;
 
     public Button stabilizeButton;  // Reference to the Stabilize button
-
+    public PatientAI patientAI;
+    public PlayerMovementAdvanced playerMovementAdvanced;
     private float targetBP, targetHR, targetTemp;
 
-    AudioManager audioManager;
+    private AudioManager audioManager;
+    public PlayerManager playerManager;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
     }
 
-    void Start()
+    public void Start()
     {
         minigameUI.SetActive(false);
+        stabilizeButton.onClick.AddListener(CheckVitals);
+    }
+
+    public void StartMinigame() {
+        playerMovementAdvanced.SetPlayerFreeze(true);
+        minigameUI.SetActive(true);
+        playerManager.isGamePaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SetRandomTargets();
         RandomizeSliderPositions();
-        stabilizeButton.onClick.AddListener(CheckVitals); // Attach the CheckVitals method to the button click event
+        Debug.Log("Vital Signs Minigame Started. Set the vitals to stabilize the patient.");
     }
 
-    void SetRandomTargets()
+    private void SetRandomTargets()
     {
-        targetBP = Random.Range(1, 10);  // Generate targets within 1-9
-        targetHR = Random.Range(1, 10);
-        targetTemp = Random.Range(1, 10);
+        targetBP = Random.Range(0, 21);  
+        targetHR = Random.Range(0, 21);
+        targetTemp = Random.Range(0, 21);
 
-        // Position arrow markers
-        bloodPressureArrow.rectTransform.anchoredPosition = new Vector2(CalculateMarkerPosition(bloodPressureSlider, targetBP), bloodPressureArrow.rectTransform.anchoredPosition.y);
-        heartRateArrow.rectTransform.anchoredPosition = new Vector2(CalculateMarkerPosition(heartRateSlider, targetHR), heartRateArrow.rectTransform.anchoredPosition.y);
-        temperatureArrow.rectTransform.anchoredPosition = new Vector2(CalculateMarkerPosition(temperatureSlider, targetTemp), temperatureArrow.rectTransform.anchoredPosition.y);
+        Debug.Log("Target values set to: BP: " + targetBP + ", HR: " + targetHR + ", Temp: " + targetTemp);
+
+        // Position arrow markers by temporarily setting slider values
+        SetArrowPosition(bloodPressureSlider, bloodPressureArrow, targetBP);
+        SetArrowPosition(heartRateSlider, heartRateArrow, targetHR);
+        SetArrowPosition(temperatureSlider, temperatureArrow, targetTemp);
     }
 
-    void RandomizeSliderPositions()
+    private void RandomizeSliderPositions()
     {
-        bloodPressureSlider.value = Random.Range(1, 10); // Random starting positions within 1-9
-        heartRateSlider.value = Random.Range(1, 10);
-        temperatureSlider.value = Random.Range(1, 10);
+        bloodPressureSlider.value = Random.Range(0, 21);
+        heartRateSlider.value = Random.Range(0, 21);
+        temperatureSlider.value = Random.Range(0, 21);
+        Debug.Log("Values set to: BP: " + bloodPressureSlider.value + ", HR: " + heartRateSlider.value + ", Temp: " + temperatureSlider.value);
     }
 
-    float CalculateMarkerPosition(Slider slider, float targetValue)
+    private void SetArrowPosition(Slider slider, Image arrow, float targetValue)
     {
-        // Calculate the position of the target marker on the slider
-        float handleCenter = slider.fillRect.localPosition.x + slider.fillRect.rect.width * (targetValue - slider.minValue) / (slider.maxValue - slider.minValue);
-        return handleCenter - slider.handleRect.rect.width * 0.5f; // Center the marker
+        float originalValue = slider.value;
+        slider.value = targetValue;
+        Canvas.ForceUpdateCanvases();
+        Vector3 handlePosition = slider.handleRect.localPosition;
+        arrow.rectTransform.anchoredPosition = new Vector2(handlePosition.x, arrow.rectTransform.anchoredPosition.y);
+        slider.value = originalValue;
+        Canvas.ForceUpdateCanvases();
     }
+
 
     public void CheckVitals()
     {
@@ -63,11 +83,37 @@ public class VitalSignsGame : MonoBehaviour
             Mathf.Abs(heartRateSlider.value - targetHR) < acceptableRange &&
             Mathf.Abs(temperatureSlider.value - targetTemp) < acceptableRange)
         {
+            EndMinigame(true);
+            audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
             Debug.Log("Patient stabilized!");
         }
         else
         {
+            EndMinigame(false);
+            audioManager.PlaySFX(audioManager.death);
             Debug.Log("Patient lost!");
+        }
+    }
+
+    public void SetNPC(PatientAI npc)
+    {
+        patientAI = npc;
+    }
+
+    public void EndMinigame(bool success) {
+        playerMovementAdvanced.SetPlayerFreeze(false);
+        playerManager.isGamePaused = false;
+        minigameUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (success)
+        {
+            patientAI.currentState = PatientState.Despawning;
+        }
+        else 
+        {
+            patientAI.Unalive();
         }
     }
 }

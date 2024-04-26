@@ -127,6 +127,17 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
             return responses[index];
 
             }
+            else if (patientAI.selectedMinigameIndex == 3) { // Vitals Minigame
+                List<string> responses = new List<string>() {
+                    "Are my vitals okay?",
+                };
+
+                int index = Random.Range(0, responses.Count);
+
+                patientAI.StartSelectedMinigame();
+                patientAI.currentState = PatientState.PlayingMinigame;
+                return responses[index];
+            }
         }
 
         else{

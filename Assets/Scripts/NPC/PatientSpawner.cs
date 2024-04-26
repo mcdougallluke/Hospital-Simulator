@@ -11,6 +11,7 @@ public class PatientSpawner : MonoBehaviour
     public SpellingMinigame spellingMinigame; // Assign in the inspector
     public FetchMinigame fetchMinigame; // Assign in the inspector
     public ArrowInputMinigame arrowInputMinigame; // Assign in the inspector
+    public VitalsMinigame vitalsMinigame; // Assign in the inspector
     public Score scoreScript; // Assign in the inspector
     public Transform waitingRoom; // Assign in the inspector
     public Transform[] examRooms; // Assign in the inspector
@@ -54,6 +55,7 @@ public class PatientSpawner : MonoBehaviour
             patientAI.spellingMinigame = spellingMinigame;
             patientAI.fetchMinigame = fetchMinigame;
             patientAI.arrowInputMinigame = arrowInputMinigame;
+            patientAI.vitalsMinigame = vitalsMinigame;
             patientAI.scoreScript = scoreScript;
             patientAI.waitingRoom = waitingRoom;
             patientAI.examRooms = examRooms;

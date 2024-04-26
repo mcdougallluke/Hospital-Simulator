@@ -32,6 +32,7 @@ public class PatientAI : MonoBehaviour
     public PatientState currentState;
     private bool isDespawningInitiated = false;
     public ArrowInputMinigame arrowInputMinigame; 
+    public VitalsMinigame vitalsMinigame;
     AudioManager audioManager;
 
 
@@ -42,8 +43,8 @@ public class PatientAI : MonoBehaviour
         animator = GetComponent<Animator>();
         fetchMinigameEnded = false;
 
-        selectedMinigameIndex = Random.Range(0, 3); 
-        //selectedMinigameIndex = 0;
+        selectedMinigameIndex = Random.Range(0, 4); 
+        //selectedMinigameIndex = 3;
         if(selectedMinigameIndex == 1)
         {
             desiredPill = ChooseRandomPill();
@@ -186,6 +187,11 @@ public class PatientAI : MonoBehaviour
                     Debug.Log("Starting Arrow Input Minigame.");
                     arrowInputMinigame.StartMinigame();
                     arrowInputMinigame.SetNPC(this);
+                    break;
+                case 3:
+                    Debug.Log("Starting Vitals Minigame.");
+                    vitalsMinigame.StartMinigame();
+                    vitalsMinigame.SetNPC(this);
                     break;
             }
         }

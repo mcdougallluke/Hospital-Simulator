@@ -1975,7 +1975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b098d2d166a8f44b9c1cfd87ea8cabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceptableRange: 5
+  acceptableRange: 0.5
   minigameUI: {fileID: 3681352607782517865}
   bloodPressureSlider: {fileID: 2334296295619766328}
   heartRateSlider: {fileID: 1327737462787935698}
@@ -1984,6 +1984,8 @@ MonoBehaviour:
   heartRateArrow: {fileID: 5881222572275105848}
   temperatureArrow: {fileID: 7547378549280191474}
   stabilizeButton: {fileID: 8235670459619467256}
+  patientAI: {fileID: 0}
+  playerMovementAdvanced: {fileID: 0}
 --- !u!1 &8123731292911071333
 GameObject:
   m_ObjectHideFlags: 0
