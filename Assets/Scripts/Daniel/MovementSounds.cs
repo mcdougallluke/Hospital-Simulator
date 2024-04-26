@@ -14,6 +14,7 @@ public class footsteps : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 footstepsSound.enabled = false;
+                footstepsSound.volume = 0f;
                 sprintSound.enabled = true;
             }
             else
