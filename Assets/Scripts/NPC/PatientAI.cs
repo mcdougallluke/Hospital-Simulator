@@ -216,6 +216,7 @@ public class PatientAI : MonoBehaviour
             {
                 Debug.Log(other.gameObject.name + " is colliding. It should be " + desiredPill);
                 Debug.Log("Incorrect pill. I am now unalive");
+                audioManager.PlaySFX(audioManager.death);
                 Unalive(); // NPC despawns
                 Destroy(other.gameObject); // Destroy the correct pill GameObject
                 // Optionally, handle the case for incorrect pill delivery (e.g., provide feedback to the player)
