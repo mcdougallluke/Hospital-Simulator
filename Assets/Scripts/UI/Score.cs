@@ -45,6 +45,7 @@ public class Score : MonoBehaviour
 
         Text text = inst.GetComponent<Text>();
         text.text = (change > 0 ? "+" : "") + change.ToString();
+        text.color = change > 0 ? Color.green : Color.red;
 
         LeanTween.moveY(rect, endPosition.anchoredPosition.y, 1f).setOnComplete(() => {
             Destroy(inst);
