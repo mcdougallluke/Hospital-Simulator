@@ -128,16 +128,25 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
 
             }
             else if (patientAI.selectedMinigameIndex == 3) { // Vitals Minigame
-                List<string> responses = new List<string>() {
-                    "Are my vitals okay?",
-                };
+            List<string> responses = new List<string>() {
+                "Are my vitals okay, or is this a set-up for a prank?",
+                "You sure this isn't a lie detector? I swear my blood pressure is innocent!",
+                "Let's not make my temperature rise more than my stocks did!",
+                "I bet my heart's beating faster than your last high score!",
+                "My blood pressure's higher than my last phone bill!",
+                "Can we adjust the thermostat, or is it just my temperature?",
+                "If you find my heart racing, it’s because it’s trying to escape this gown!",
+                "Tell me my heart rate, but only if it's ready for a marathon.",
+                "Is my blood boiling, or am I just excited to see a doctor?"
+            };
 
-                int index = Random.Range(0, responses.Count);
+            int index = Random.Range(0, responses.Count);
 
-                patientAI.StartSelectedMinigame();
-                patientAI.currentState = PatientState.PlayingMinigame;
-                return responses[index];
-            }
+            patientAI.StartSelectedMinigame();
+            patientAI.currentState = PatientState.PlayingMinigame;
+            return responses[index];
+        }
+
         }
 
         else{
