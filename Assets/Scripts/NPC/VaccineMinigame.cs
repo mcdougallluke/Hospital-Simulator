@@ -15,6 +15,7 @@ public class VaccineMinigame : MonoBehaviour
 
     private bool isMoving = true;
     private bool moveRight = true;
+    private bool gameIsActive = false;
 
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
@@ -34,6 +35,7 @@ public class VaccineMinigame : MonoBehaviour
 
     public void StartMinigame() {
         ResetMinigame(); // Reset the game to the initial state before starting
+        gameIsActive = true;
         playerMovementAdvanced.SetPlayerFreeze(true);
         minigameUI.SetActive(true);
         playerManager.isGamePaused = true;
@@ -42,14 +44,16 @@ public class VaccineMinigame : MonoBehaviour
 
     private void Update()
     {
-        if (isMoving)
-        {
-            MoveNeedle();
-        }
+        if (gameIsActive) {
+            if (isMoving)
+            {
+                MoveNeedle();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Return) && isMoving && !PauseMenu.GameIsPaused)
-        {
-            StopAndInject();
+            if (Input.GetKeyDown(KeyCode.Return) && isMoving && !PauseMenu.GameIsPaused)
+            {
+                StopAndInject();
+            }
         }
     }
 
@@ -108,6 +112,7 @@ public class VaccineMinigame : MonoBehaviour
 
     private void CheckInjectionAccuracy()
     {
+        gameIsActive = false;
         float xDistance = Mathf.Abs(needleImage.transform.position.x - targetX.transform.position.x);
         if (xDistance <= successRadius)
         {
