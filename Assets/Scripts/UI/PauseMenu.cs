@@ -17,6 +17,8 @@ public class PauseMenu : MonoBehaviour
     public RoomManager roomManager;
     public Canvas canvasObject1;
     public Canvas canvasObject2;
+    public Canvas canvasObject3;
+    public Canvas canvasObject4;
     public GameObject arrowMinigameObject;
     AudioManager audioManager;
     public InputField inputField;
@@ -129,6 +131,9 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
         inputField.interactable = true;
         canvasObject1.enabled = true;
+        canvasObject2.enabled = true;
+        canvasObject3.enabled = true;
+        canvasObject4.enabled = true;
         arrowMinigameObject.SetActive(true);
         ExamRoomPanel.SetActive(true);
         if (playerManager != null) {
@@ -150,6 +155,9 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
         inputField.interactable = false;
         canvasObject1.enabled = false;
+        canvasObject2.enabled = false;
+        canvasObject3.enabled = false;
+        canvasObject4.enabled = false;
         arrowMinigameObject.SetActive(false);
         ExamRoomPanel.SetActive(false);
         if (playerManager != null)
