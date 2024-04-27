@@ -255,6 +255,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public void SetPlayerFreeze(bool shouldFreeze)
     {
         freeze = shouldFreeze;
+        readyToJump = !shouldFreeze;
         if (freeze)
         {
             rb.velocity = Vector3.zero;

@@ -42,7 +42,7 @@ public class VaccineMinigame : MonoBehaviour, IPausable
         Cursor.visible = false;
         playerManager.freezeCamera = true;
         minigameUI.SetActive(true);
-        Debug.Log("Vaccine Minigame Started. Press Enter to inject the vaccine.");
+        Debug.Log("Vaccine Minigame Started. Press Space to inject the vaccine.");
     }
 
     private void Update()
@@ -53,7 +53,7 @@ public class VaccineMinigame : MonoBehaviour, IPausable
                 MoveNeedle();
             }
 
-            if (Input.GetKeyDown(KeyCode.Return) && isMoving && !PauseMenu.GameIsPaused)
+            if (Input.GetKeyDown(KeyCode.Space) && isMoving && !PauseMenu.GameIsPaused)
             {
                 StopAndInject();
             }
