@@ -3,21 +3,42 @@ using System.Collections;
 
 public class VaccineMinigame : MonoBehaviour
 {
+    public GameObject minigameUI;
     public GameObject needleImage;
     public GameObject leftBound;
     public GameObject rightBound;
-    public GameObject targetX; // The target "X" object on the arm
-
+    public GameObject targetX;
+    public Vector3 initialNeedlePosition;
     public float needleSpeed = 200.0f;
     public float downwardOffset = -65.0f;
-    public float successRadius = 10.0f; // Radius within which the injection is considered successful
+    public float successRadius = 10.0f;
 
     private bool isMoving = true;
     private bool moveRight = true;
 
+    public PatientAI patientAI;
+    public PlayerMovementAdvanced playerMovementAdvanced;
+    private AudioManager audioManager;
+    public PlayerManager playerManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
+        initialNeedlePosition = needleImage.transform.position; // Capture initial position for resets
+    }
+
     private void Start()
     {
-        PositionTargetX();
+        minigameUI.SetActive(false);
+    }
+
+    public void StartMinigame() {
+        ResetMinigame(); // Reset the game to the initial state before starting
+        playerMovementAdvanced.SetPlayerFreeze(true);
+        minigameUI.SetActive(true);
+        playerManager.isGamePaused = true;
+        Debug.Log("Vaccine Minigame Started. Press Enter to inject the vaccine.");
     }
 
     private void Update()
@@ -59,7 +80,6 @@ public class VaccineMinigame : MonoBehaviour
 
     private void PositionTargetX()
     {
-        // Randomize the X position of the target within the bounds
         float minX = leftBound.transform.position.x;
         float maxX = rightBound.transform.position.x;
         float randomX = Random.Range(minX, maxX);
@@ -68,14 +88,14 @@ public class VaccineMinigame : MonoBehaviour
 
     private void StopAndInject()
     {
-        isMoving = false; // This stops any further movement updates
+        isMoving = false;
         StartCoroutine(MoveNeedleDownward());
     }
 
     private IEnumerator MoveNeedleDownward()
     {
         Vector3 startPosition = needleImage.transform.position;
-        float endY = leftBound.transform.position.y - downwardOffset; // Now using leftBound's Y position minus the offset as the target
+        float endY = leftBound.transform.position.y - downwardOffset;
 
         while (needleImage.transform.position.y > endY)
         {
@@ -93,17 +113,41 @@ public class VaccineMinigame : MonoBehaviour
         if (xDistance <= successRadius)
         {
             Debug.Log("Injection Successful!");
+            audioManager.PlaySFX(audioManager.miniGameOneCorrectAnswer);
+            EndMinigame(true);
         }
         else
         {
             Debug.Log("Injection Failed!");
+            audioManager.PlaySFX(audioManager.death);
+            EndMinigame(false);
         }
-        OnInjectionComplete();
     }
 
-    private void OnInjectionComplete()
+    public void SetNPC(PatientAI npc)
     {
-        Debug.Log("Injection Complete!");
-        // Reset or handle the game ending here
+        patientAI = npc;
+    }
+
+    private void ResetMinigame()
+    {
+        isMoving = true;
+        moveRight = true;
+        needleImage.transform.position = initialNeedlePosition;
+        PositionTargetX();
+    }
+
+    private void EndMinigame(bool success) {
+        minigameUI.SetActive(false);
+        playerManager.isGamePaused = false;
+        playerMovementAdvanced.SetPlayerFreeze(false);
+        if (success)
+        {
+            patientAI.currentState = PatientState.Despawning;
+        }
+        else
+        {
+            patientAI.Unalive();
+        }
     }
 }

@@ -105,7 +105,7 @@ public class NPCInteractable : MonoBehaviour, IIInteractable {
                 //return "Bring me the " 
             }
 
-            else if (patientAI.selectedMinigameIndex == 2) { // Arrow Input Minigame
+            else if (patientAI.selectedMinigameIndex == 2 || patientAI.selectedMinigameIndex == 4) { // Arrow Input Minigame or Vaccine Minigame
             List<string> responses = new List<string>() {
                 "I hope you're not as nervous as I am",
                 "Is this gonna give me superpowers?",
