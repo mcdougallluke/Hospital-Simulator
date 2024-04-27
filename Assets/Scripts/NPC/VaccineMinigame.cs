@@ -20,7 +20,6 @@ public class VaccineMinigame : MonoBehaviour
     public PlayerMovementAdvanced playerMovementAdvanced;
     private AudioManager audioManager;
     public PlayerManager playerManager;
-
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -48,7 +47,7 @@ public class VaccineMinigame : MonoBehaviour
             MoveNeedle();
         }
 
-        if (Input.GetKeyDown(KeyCode.Return) && isMoving)
+        if (Input.GetKeyDown(KeyCode.Return) && isMoving && !PauseMenu.GameIsPaused)
         {
             StopAndInject();
         }
