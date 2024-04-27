@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VitalsMinigame : MonoBehaviour
+public class VitalsMinigame : MonoBehaviour, IPausable
 {
     public float acceptableRange = 0.5f;  // Tight control given the scale of 1 to 9
     public GameObject minigameUI;
@@ -34,6 +34,7 @@ public class VitalsMinigame : MonoBehaviour
 
     public void StartMinigame() {
         playerMovementAdvanced.SetPlayerFreeze(true);
+        FindObjectOfType<PauseMenu>().SetActivePausable(this);
         minigameUI.SetActive(true);
         playerManager.isGamePaused = true;
         Cursor.lockState = CursorLockMode.None;
@@ -115,5 +116,17 @@ public class VitalsMinigame : MonoBehaviour
         {
             patientAI.Unalive();
         }
+    }
+
+    public void OnGamePaused()
+    {
+
+    }
+
+    public void OnGameResumed()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        playerManager.isGamePaused = true;
     }
 }

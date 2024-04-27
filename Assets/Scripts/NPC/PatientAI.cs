@@ -45,7 +45,7 @@ public class PatientAI : MonoBehaviour
         fetchMinigameEnded = false;
 
         selectedMinigameIndex = Random.Range(0, 5); 
-        //selectedMinigameIndex = 4;
+        selectedMinigameIndex = 3;
         if(selectedMinigameIndex == 1)
         {
             desiredPill = ChooseRandomPill();

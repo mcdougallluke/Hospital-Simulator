@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     private int currentSelection = 0;
     public GameObject[] menuOptions;
     private ButtonManager[] buttonManagers; // Array to hold ButtonManager components for menu options
+    private IPausable pausableComponent;
     public ScoreData scoreData;
     public RoomManager roomManager;
     public Canvas canvasObject1;
@@ -130,8 +131,13 @@ public class PauseMenu : MonoBehaviour
         canvasObject1.enabled = true;
         arrowMinigameObject.SetActive(true);
         ExamRoomPanel.SetActive(true);
-        if (playerManager != null)
+        if (playerManager != null) {
             playerManager.isGamePaused = false;  // Update PlayerManager's pause state
+        }
+        if (pausableComponent != null)
+        {
+            pausableComponent.OnGameResumed();
+        }
     }
 
     public void Pause()
@@ -148,8 +154,15 @@ public class PauseMenu : MonoBehaviour
         ExamRoomPanel.SetActive(false);
         if (playerManager != null)
             playerManager.isGamePaused = true;  // Update PlayerManager's pause state
+        if (pausableComponent != null) {
+            pausableComponent.OnGamePaused();
+        }
     }
 
+    public void SetActivePausable(IPausable pausable)
+    {
+        pausableComponent = pausable;
+    }
 
     public void LoadMenu()
     {

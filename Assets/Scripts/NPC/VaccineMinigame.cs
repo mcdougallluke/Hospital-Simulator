@@ -24,7 +24,7 @@ public class VaccineMinigame : MonoBehaviour
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         playerManager = FindObjectOfType<PlayerManager>();
-        initialNeedlePosition = needleImage.transform.position; // Capture initial position for resets
+        initialNeedlePosition = needleImage.transform.position;
     }
 
     private void Start()
