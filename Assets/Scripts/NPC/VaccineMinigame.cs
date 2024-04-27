@@ -38,7 +38,7 @@ public class VaccineMinigame : MonoBehaviour
         gameIsActive = true;
         playerMovementAdvanced.SetPlayerFreeze(true);
         minigameUI.SetActive(true);
-        playerManager.isGamePaused = true;
+        playerManager.freezeCamera = true;
         Debug.Log("Vaccine Minigame Started. Press Enter to inject the vaccine.");
     }
 
@@ -143,7 +143,7 @@ public class VaccineMinigame : MonoBehaviour
 
     private void EndMinigame(bool success) {
         minigameUI.SetActive(false);
-        playerManager.isGamePaused = false;
+        playerManager.freezeCamera = false;
         playerMovementAdvanced.SetPlayerFreeze(false);
         if (success)
         {

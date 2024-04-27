@@ -132,7 +132,7 @@ public class PauseMenu : MonoBehaviour
         arrowMinigameObject.SetActive(true);
         ExamRoomPanel.SetActive(true);
         if (playerManager != null) {
-            playerManager.isGamePaused = false;  // Update PlayerManager's pause state
+            playerManager.freezeCamera = false;  // Update PlayerManager's pause state
         }
         if (pausableComponent != null)
         {
@@ -153,7 +153,7 @@ public class PauseMenu : MonoBehaviour
         arrowMinigameObject.SetActive(false);
         ExamRoomPanel.SetActive(false);
         if (playerManager != null)
-            playerManager.isGamePaused = true;  // Update PlayerManager's pause state
+            playerManager.freezeCamera = true;  // Update PlayerManager's pause state
         if (pausableComponent != null) {
             pausableComponent.OnGamePaused();
         }

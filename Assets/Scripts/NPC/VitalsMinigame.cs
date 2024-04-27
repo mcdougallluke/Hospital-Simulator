@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class VitalsMinigame : MonoBehaviour, IPausable
@@ -36,7 +37,7 @@ public class VitalsMinigame : MonoBehaviour, IPausable
         playerMovementAdvanced.SetPlayerFreeze(true);
         FindObjectOfType<PauseMenu>().SetActivePausable(this);
         minigameUI.SetActive(true);
-        playerManager.isGamePaused = true;
+        playerManager.freezeCamera = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SetRandomTargets();
@@ -103,7 +104,7 @@ public class VitalsMinigame : MonoBehaviour, IPausable
 
     public void EndMinigame(bool success) {
         playerMovementAdvanced.SetPlayerFreeze(false);
-        playerManager.isGamePaused = false;
+        playerManager.freezeCamera = false;
         minigameUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -127,6 +128,6 @@ public class VitalsMinigame : MonoBehaviour, IPausable
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        playerManager.isGamePaused = true;
+        playerManager.freezeCamera = true;
     }
 }
