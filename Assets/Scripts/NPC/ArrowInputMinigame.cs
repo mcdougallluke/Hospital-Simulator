@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ArrowInputMinigame : MonoBehaviour
+public class ArrowInputMinigame : MonoBehaviour, IPausable
 {
     public Text sequenceDisplay; // Reference to the Text UI element
     public Image startImage;     // Reference to the Image UI element for the start of the game
@@ -13,17 +13,23 @@ public class ArrowInputMinigame : MonoBehaviour
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     AudioManager audioManager;
+    private PlayerManager playerManager;
 
 
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
         startImage.gameObject.SetActive(false); // Ensure image is initially disabled
     }
 
     public void StartMinigame()
     {
+        FindObjectOfType<PauseMenu>().SetActivePausable(this);
         playerMovementAdvanced.SetPlayerFreeze(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        playerManager.freezeCamera = true;
         GenerateRandomSequence(); // Generate a random sequence of arrow keys
         currentIndex = 0;
         isMinigameActive = true;
@@ -127,6 +133,7 @@ public class ArrowInputMinigame : MonoBehaviour
     {
         isMinigameActive = false;
         playerMovementAdvanced.SetPlayerFreeze(false);
+        playerManager.freezeCamera = false;
         sequenceDisplay.text = "";
         startImage.gameObject.SetActive(false);  // Hide the image when the minigame ends
 
@@ -142,6 +149,18 @@ public class ArrowInputMinigame : MonoBehaviour
         {
             patientAI.Unalive();
         }
+    }
+
+    public void OnGamePaused()
+    {
+
+    }
+
+    public void OnGameResumed()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        playerManager.freezeCamera = true;
     }
 
 

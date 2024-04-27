@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class VaccineMinigame : MonoBehaviour
+public class VaccineMinigame : MonoBehaviour, IPausable
 {
     public GameObject minigameUI;
     public GameObject needleImage;
@@ -35,10 +35,13 @@ public class VaccineMinigame : MonoBehaviour
 
     public void StartMinigame() {
         ResetMinigame(); // Reset the game to the initial state before starting
+        FindObjectOfType<PauseMenu>().SetActivePausable(this);
         gameIsActive = true;
         playerMovementAdvanced.SetPlayerFreeze(true);
-        minigameUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         playerManager.freezeCamera = true;
+        minigameUI.SetActive(true);
         Debug.Log("Vaccine Minigame Started. Press Enter to inject the vaccine.");
     }
 
@@ -153,5 +156,17 @@ public class VaccineMinigame : MonoBehaviour
         {
             patientAI.Unalive();
         }
+    }
+
+    public void OnGamePaused()
+    {
+
+    }
+
+    public void OnGameResumed()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        playerManager.freezeCamera = true;
     }
 }

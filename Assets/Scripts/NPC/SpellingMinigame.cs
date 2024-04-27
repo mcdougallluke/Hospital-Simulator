@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public class SpellingMinigame : MonoBehaviour
+public class SpellingMinigame : MonoBehaviour, IPausable
 {
     public GameObject minigameUI; // Assign in inspector
     public InputField inputField; // Assign in inspector
@@ -16,12 +16,13 @@ public class SpellingMinigame : MonoBehaviour
     public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "ebola", "rabies", "smallpox", "blackdeath", "cholera", "typhus", "measles", "scurvy", "leukemia", "anthrax", "malaria", "Pneumonoultramicroscopicsilicovolcanoconiosis"};
     public Text overlayText; // Assign this in the inspector to the Text component that overlays the InputField
-
+    public PlayerManager playerManager;
 
     AudioManager audioManager;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
     }
     
     void Start()
@@ -34,12 +35,14 @@ public class SpellingMinigame : MonoBehaviour
 
     public void StartMinigame()
     {
+        FindObjectOfType<PauseMenu>().SetActivePausable(this);
         currentWord = words[Random.Range(0, words.Count)];
         inputField.text = ""; // Clear the input field
         overlayText.text = "<color=#808080FF>" + currentWord + "</color>"; // Set overlay text in grey
 
         minigameUI.SetActive(true);
         playerMovementAdvanced.SetPlayerFreeze(true);
+        playerManager.freezeCamera = true;
         StartCoroutine(SetInputFieldFocus());
     }
 
@@ -77,6 +80,7 @@ public class SpellingMinigame : MonoBehaviour
             Debug.Log("SpellingMinigame: Incorrect spelling.");
         }
         playerMovementAdvanced.SetPlayerFreeze(false);
+        playerManager.freezeCamera = false;
         minigameUI.SetActive(false);
     }
 
@@ -130,6 +134,16 @@ public class SpellingMinigame : MonoBehaviour
             // Enable submit button only when the entire word is correctly typed
             submitButton.interactable = (correctChars == currentWord.Length);
         }
+    }
+
+    public void OnGamePaused()
+    {
+
+    }
+
+    public void OnGameResumed()
+    {
+        playerManager.freezeCamera = true;
     }
 
     public void playSound()
