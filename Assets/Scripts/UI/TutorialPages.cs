@@ -132,6 +132,9 @@ public class TutorialPage : MonoBehaviour
             case "TutorialPage4":
                 SceneManager.LoadScene("TutorialPage3");
                 break;
+            case "TutorialPage5":
+                SceneManager.LoadScene("TutorialPage4");
+                break;
             default:
                 Debug.LogWarning("Unknown scene: " + sceneName);
                 break;
@@ -156,6 +159,9 @@ public class TutorialPage : MonoBehaviour
                 SceneManager.LoadScene("TutorialPage4");
                 break;
             case "TutorialPage4":
+                SceneManager.LoadScene("TutorialPage5");
+                break;
+            case "TutorialPage5":
                 SceneManager.LoadScene("MainMenu");
                 break;
             default:
