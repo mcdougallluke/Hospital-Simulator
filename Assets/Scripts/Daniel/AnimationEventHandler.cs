@@ -14,7 +14,7 @@ public class AnimationEventHandler : MonoBehaviour
 
         {
             audioManager.PlayMovementSound(audioManager.walking);
-            Debug.Log("Footstep sound played!");
+           // Debug.Log("Footstep sound played!");
         }
     }
     public void RunSound()
