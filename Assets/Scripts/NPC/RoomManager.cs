@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 
 public class RoomManager : MonoBehaviour
@@ -56,16 +57,44 @@ public class RoomManager : MonoBehaviour
                 {
                     isNpcClose = true;
                     roomTexts[i].text = "Occupied";
-                    timerBars[i].SetActive(true); // Show timer bar when a patient is in the room
+                    timerBars[i].SetActive(true);
+                    StartTimerBarShrink(timerBars[i], 10f); // Start shrinking the timer bar over 10 seconds
+                    break; // Ensure only one NPC starts the timer per room
                 }
             }
 
             if (!isNpcClose)
             {
                 roomTexts[i].text = "Empty";
-                timerBars[i].SetActive(false); // Hide timer bar when no patient is in the room
+                timerBars[i].SetActive(false);
             }
         }
+    }
+
+    private void StartTimerBarShrink(GameObject timerBar, float duration)
+    {
+        StartCoroutine(ShrinkTimerBar(timerBar, duration));
+    }
+
+    private IEnumerator ShrinkTimerBar(GameObject timerBar, float duration)
+    {
+        RectTransform barTransform = timerBar.GetComponent<RectTransform>();
+        Vector2 originalSize = barTransform.sizeDelta;
+
+        // Set pivot to the left side of the bar, so it shrinks towards the left
+        barTransform.pivot = new Vector2(0, 0.5f);
+
+        float currentTime = 0;
+        while (currentTime < duration)
+        {
+            float scale = 1 - (currentTime / duration);
+            barTransform.sizeDelta = new Vector2(originalSize.x * scale, originalSize.y);
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+
+        barTransform.sizeDelta = new Vector2(0, originalSize.y); // Ensure it's fully shrunk
+        timerBar.SetActive(false); // Optionally hide the bar completely after shrinking
     }
     
     public void RegisterRoom(Transform point)
