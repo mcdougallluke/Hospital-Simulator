@@ -75,11 +75,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public bool unlimited;
     
     public bool restricted;
+    public PlayerManager playerManager;
 
     AudioManager audioManager;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
     }
 
     private void Start()
@@ -255,6 +257,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public void SetPlayerFreeze(bool shouldFreeze)
     {
         freeze = shouldFreeze;
+        playerManager.SetCameraFreeze(shouldFreeze);
         readyToJump = !shouldFreeze;
         if (freeze)
         {

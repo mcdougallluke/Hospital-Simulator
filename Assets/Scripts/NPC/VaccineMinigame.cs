@@ -20,17 +20,17 @@ public class VaccineMinigame : MonoBehaviour, IPausable
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     private AudioManager audioManager;
-    public PlayerManager playerManager;
+    private bool isGameComplete = false;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        playerManager = FindObjectOfType<PlayerManager>();
         initialNeedlePosition = needleImage.transform.position;
     }
 
     private void Start()
     {
         minigameUI.SetActive(false);
+        isGameComplete = false;
     }
 
     public void StartMinigame() {
@@ -40,7 +40,6 @@ public class VaccineMinigame : MonoBehaviour, IPausable
         playerMovementAdvanced.SetPlayerFreeze(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        playerManager.freezeCamera = true;
         minigameUI.SetActive(true);
         Debug.Log("Vaccine Minigame Started. Press Space to inject the vaccine.");
     }
@@ -140,14 +139,15 @@ public class VaccineMinigame : MonoBehaviour, IPausable
     {
         isMoving = true;
         moveRight = true;
+        isGameComplete = false;
         needleImage.transform.position = initialNeedlePosition;
         PositionTargetX();
     }
 
     private void EndMinigame(bool success) {
         minigameUI.SetActive(false);
-        playerManager.freezeCamera = false;
         playerMovementAdvanced.SetPlayerFreeze(false);
+        isGameComplete = true;
         if (success)
         {
             patientAI.currentState = PatientState.Despawning;
@@ -165,8 +165,11 @@ public class VaccineMinigame : MonoBehaviour, IPausable
 
     public void OnGameResumed()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        playerManager.freezeCamera = true;
+        if (!isGameComplete)
+        {
+            playerMovementAdvanced.SetPlayerFreeze(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+        }
     }
 }

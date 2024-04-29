@@ -20,24 +20,24 @@ public class VitalsMinigame : MonoBehaviour, IPausable
     private float targetBP, targetHR, targetTemp;
 
     private AudioManager audioManager;
-    public PlayerManager playerManager;
+    private bool isGameComplete = false;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        playerManager = FindObjectOfType<PlayerManager>();
     }
 
     public void Start()
     {
         minigameUI.SetActive(false);
+        isGameComplete = false;
         stabilizeButton.onClick.AddListener(CheckVitals);
     }
 
     public void StartMinigame() {
         playerMovementAdvanced.SetPlayerFreeze(true);
         FindObjectOfType<PauseMenu>().SetActivePausable(this);
+        isGameComplete = false;
         minigameUI.SetActive(true);
-        playerManager.freezeCamera = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SetRandomTargets();
@@ -104,7 +104,7 @@ public class VitalsMinigame : MonoBehaviour, IPausable
 
     public void EndMinigame(bool success) {
         playerMovementAdvanced.SetPlayerFreeze(false);
-        playerManager.freezeCamera = false;
+        isGameComplete = true;
         minigameUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -126,8 +126,11 @@ public class VitalsMinigame : MonoBehaviour, IPausable
 
     public void OnGameResumed()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        playerManager.freezeCamera = true;
+        if (!isGameComplete)
+        {
+            playerMovementAdvanced.SetPlayerFreeze(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }

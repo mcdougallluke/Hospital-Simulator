@@ -16,18 +16,18 @@ public class SpellingMinigame : MonoBehaviour, IPausable
     public PlayerMovementAdvanced playerMovementAdvanced;
     private List<string> words = new List<string> { "chlamydia", "spondylitis", "hypothyroidism", "schizophrenia", "tuberculosis", "psoriasis", "gonorrhea", "syphilis", "ebola", "rabies", "smallpox", "blackdeath", "cholera", "typhus", "measles", "scurvy", "leukemia", "anthrax", "malaria", "Pneumonoultramicroscopicsilicovolcanoconiosis"};
     public Text overlayText; // Assign this in the inspector to the Text component that overlays the InputField
-    public PlayerManager playerManager;
 
     AudioManager audioManager;
+    private bool isGameComplete = false;
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        playerManager = FindObjectOfType<PlayerManager>();
     }
     
     void Start()
     {
         minigameUI.SetActive(false);
+        isGameComplete = false;
         submitButton.onClick.AddListener(CheckSpelling);
         inputField.onValueChanged.AddListener(ValidateInput);
         inputField.onEndEdit.AddListener(delegate { OnInputFieldSubmit(inputField.text); });
@@ -36,13 +36,13 @@ public class SpellingMinigame : MonoBehaviour, IPausable
     public void StartMinigame()
     {
         FindObjectOfType<PauseMenu>().SetActivePausable(this);
+        isGameComplete = false;
         currentWord = words[Random.Range(0, words.Count)];
         inputField.text = ""; // Clear the input field
         overlayText.text = "<color=#808080FF>" + currentWord + "</color>"; // Set overlay text in grey
 
         minigameUI.SetActive(true);
         playerMovementAdvanced.SetPlayerFreeze(true);
-        playerManager.freezeCamera = true;
         StartCoroutine(SetInputFieldFocus());
     }
 
@@ -80,8 +80,8 @@ public class SpellingMinigame : MonoBehaviour, IPausable
             Debug.Log("SpellingMinigame: Incorrect spelling.");
         }
         playerMovementAdvanced.SetPlayerFreeze(false);
-        playerManager.freezeCamera = false;
         minigameUI.SetActive(false);
+        isGameComplete = true;
     }
 
     public void SetNPC(PatientAI npc)
@@ -143,7 +143,13 @@ public class SpellingMinigame : MonoBehaviour, IPausable
 
     public void OnGameResumed()
     {
-        playerManager.freezeCamera = true;
+        if (!isGameComplete)
+        {
+            playerMovementAdvanced.SetPlayerFreeze(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+            RefocusInputField();
+        }
     }
 
     public void playSound()

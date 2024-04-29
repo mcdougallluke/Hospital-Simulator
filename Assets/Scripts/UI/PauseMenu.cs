@@ -23,15 +23,15 @@ public class PauseMenu : MonoBehaviour
     AudioManager audioManager;
     public InputField inputField;
     public GameObject ExamRoomPanel;
-    public PlayerManager playerManager;
 
     public GameObject menuContainer;  
     public GameObject settingsContainer;
+    public PlayerMovementAdvanced playerMovementAdvanced;
 
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        playerManager = FindObjectOfType<PlayerManager>();
+        playerMovementAdvanced = FindObjectOfType<PlayerMovementAdvanced>();
     }
 
     void Start()
@@ -126,6 +126,7 @@ public class PauseMenu : MonoBehaviour
         audioManager.PlaySFX(audioManager.buttonPressed);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        playerMovementAdvanced.SetPlayerFreeze(false);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
@@ -136,9 +137,6 @@ public class PauseMenu : MonoBehaviour
         canvasObject4.enabled = true;
         arrowMinigameObject.SetActive(true);
         ExamRoomPanel.SetActive(true);
-        if (playerManager != null) {
-            playerManager.freezeCamera = false;  // Update PlayerManager's pause state
-        }
         if (pausableComponent != null)
         {
             pausableComponent.OnGameResumed();
@@ -150,6 +148,7 @@ public class PauseMenu : MonoBehaviour
         audioManager.PlaySFX(audioManager.buttonPressed);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        playerMovementAdvanced.SetPlayerFreeze(true);
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -160,8 +159,6 @@ public class PauseMenu : MonoBehaviour
         canvasObject4.enabled = false;
         arrowMinigameObject.SetActive(false);
         ExamRoomPanel.SetActive(false);
-        if (playerManager != null)
-            playerManager.freezeCamera = true;  // Update PlayerManager's pause state
         if (pausableComponent != null) {
             pausableComponent.OnGamePaused();
         }

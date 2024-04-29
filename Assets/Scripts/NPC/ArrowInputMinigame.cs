@@ -13,13 +13,11 @@ public class ArrowInputMinigame : MonoBehaviour, IPausable
     public PatientAI patientAI;
     public PlayerMovementAdvanced playerMovementAdvanced;
     AudioManager audioManager;
-    private PlayerManager playerManager;
-
+    private bool isGameComplete = false;
 
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        playerManager = FindObjectOfType<PlayerManager>();
         startImage.gameObject.SetActive(false); // Ensure image is initially disabled
     }
 
@@ -27,9 +25,9 @@ public class ArrowInputMinigame : MonoBehaviour, IPausable
     {
         FindObjectOfType<PauseMenu>().SetActivePausable(this);
         playerMovementAdvanced.SetPlayerFreeze(true);
+        isGameComplete = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        playerManager.freezeCamera = true;
         GenerateRandomSequence(); // Generate a random sequence of arrow keys
         currentIndex = 0;
         isMinigameActive = true;
@@ -132,8 +130,8 @@ public class ArrowInputMinigame : MonoBehaviour, IPausable
     void EndMinigame(bool success)
     {
         isMinigameActive = false;
+        isGameComplete = true;
         playerMovementAdvanced.SetPlayerFreeze(false);
-        playerManager.freezeCamera = false;
         sequenceDisplay.text = "";
         startImage.gameObject.SetActive(false);  // Hide the image when the minigame ends
 
@@ -158,10 +156,11 @@ public class ArrowInputMinigame : MonoBehaviour, IPausable
 
     public void OnGameResumed()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        playerManager.freezeCamera = true;
+        if (!isGameComplete)
+        {
+            playerMovementAdvanced.SetPlayerFreeze(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+        }
     }
-
-
 }

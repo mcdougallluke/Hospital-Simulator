@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     CameraManager cameraManager;
-    public bool freezeCamera = false;
+    private bool freezeCamera = false;
 
     
     private void Awake()
@@ -20,5 +20,11 @@ public class PlayerManager : MonoBehaviour
         if (!freezeCamera) {
             cameraManager.HandleAllCameraMovement();
         }
+    }
+
+    public void SetCameraFreeze(bool freeze)
+    {
+        freezeCamera = freeze;
+        Debug.Log("Camera freeze set to: " + freeze);
     }
 }
