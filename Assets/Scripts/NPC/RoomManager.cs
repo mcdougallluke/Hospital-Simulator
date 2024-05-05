@@ -14,9 +14,11 @@ public class RoomManager : MonoBehaviour
     public List<Transform> initialRooms;
     private Dictionary<Transform, bool> roomAvailability = new Dictionary<Transform, bool>();
     private Dictionary<Transform, Coroutine> activeTimers = new Dictionary<Transform, Coroutine>();
-
+    private AudioManager audioManager;
+    private bool[] soundEffectPlayed;
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         if (Instance == null)
         {
             Instance = this;
@@ -37,6 +39,7 @@ public class RoomManager : MonoBehaviour
         {
             roomTexts[i].text = "Empty";
         }
+        soundEffectPlayed = new bool[roomTexts.Length];
     }
     
     private void Update()
@@ -58,6 +61,11 @@ public class RoomManager : MonoBehaviour
                 {
                     isNpcClose = true;
                     roomTexts[i].text = "Occupied";
+                    if (!soundEffectPlayed[i]) 
+                    {
+                        audioManager.PlaySFX(audioManager.patientArrived);
+                        soundEffectPlayed[i] = true; 
+                    }
                     timerBars[i].SetActive(true); // Show timer bar when a patient is in the room
                 }
             }
@@ -66,10 +74,11 @@ public class RoomManager : MonoBehaviour
             {
                 roomTexts[i].text = "Empty";
                 timerBars[i].SetActive(false); // Hide timer bar when no patient is in the room
+                soundEffectPlayed[i] = false;
             }
         }
     }
-    
+
     public void RegisterRoom(Transform point)
     {
         if (!roomAvailability.ContainsKey(point))
@@ -112,7 +121,7 @@ public class RoomManager : MonoBehaviour
     {
         // Calculate the distance between the room and the NPC
         float distance = Vector3.Distance(room.position, npc.position);
-
+        
         // Check if the distance is less than or equal to the threshold
         return distance <= proximityThreshold;
     }

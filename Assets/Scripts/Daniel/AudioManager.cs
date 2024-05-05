@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip buttonPressed;
     public AudioClip death;
     public AudioClip sprint;
+    public AudioClip patientArrived;
 
     [Header("----- Background Music -----")]
     public AudioClip gameBackground;
