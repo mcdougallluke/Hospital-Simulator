@@ -1299,6 +1299,8 @@ MonoBehaviour:
   desiredPill: 
   currentState: 0
   arrowInputMinigame: {fileID: 0}
+  vitalsMinigame: {fileID: 0}
+  vaccineMinigame: {fileID: 0}
 --- !u!195 &8457637207017139811
 NavMeshAgent:
   m_ObjectHideFlags: 0

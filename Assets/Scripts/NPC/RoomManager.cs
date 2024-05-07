@@ -66,14 +66,14 @@ public class RoomManager : MonoBehaviour
                         audioManager.PlaySFX(audioManager.patientArrived);
                         soundEffectPlayed[i] = true; 
                     }
-                    timerBars[i].SetActive(true); // Show timer bar when a patient is in the room
+                    //timerBars[i].SetActive(true); // Show timer bar when a patient is in the room
                 }
             }
 
             if (!isNpcClose)
             {
                 roomTexts[i].text = "Empty";
-                timerBars[i].SetActive(false); // Hide timer bar when no patient is in the room
+                //timerBars[i].SetActive(false); // Hide timer bar when no patient is in the room
                 soundEffectPlayed[i] = false;
             }
         }
