@@ -155,17 +155,27 @@ public class PatientAI : MonoBehaviour
         {
             if (RoomManager.Instance.IsRoomAvailable(point))
             {
-                agent.isStopped = false;
-                RoomManager.Instance.SetRoomAvailability(point, false); // Mark the point as unavailable
-                agent.destination = point.position;
-                currentDestinationPoint = point; // Store the current destination
-                Debug.Log($"Moving to point: {point.name}");
-                return true; // Point found
+                // Disable the NavMeshAgent to perform the teleport
+                agent.enabled = false;
+                transform.position = point.position;  // Teleport the NPC to the room
+                agent.enabled = true;  // Re-enable the NavMeshAgent if needed later
+
+                // Update the current state and destination point
+                currentDestinationPoint = point;  // Store the current destination
+                RoomManager.Instance.SetRoomAvailability(point, false);  // Mark the room as unavailable
+
+                // Log the teleportation for debugging
+                Debug.Log($"Teleported to point: {point.name}");
+
+                // Update the state to be in the exam room directly
+                currentState = PatientState.InExamRoom;
+
+                return true;  // Indicate successful teleportation
             }
         }
-        // If this point is reached, no available points were found
-        return false; // No point found
+        return false;  // No available room found
     }
+
 
     public void StartSelectedMinigame()
     {

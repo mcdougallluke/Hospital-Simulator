@@ -20,6 +20,9 @@ public class PatientSpawner : MonoBehaviour
     private float spawnCooldown = 0.1f;
     private int maxPatientCount = 6;
 
+    private int patientsSpawned = 0;
+
+
 
     void Start()
     {
@@ -28,12 +31,23 @@ public class PatientSpawner : MonoBehaviour
 
     private IEnumerator SpawnPatientRoutine()
     {
+        // Initial spawn of 6 patients with the normal cooldown
+        for (int i = 0; i < 6; i++)
+        {
+            SpawnPatient();
+            yield return new WaitForSeconds(spawnCooldown); // Initial fast spawn rate
+        }
+
+        // After the first 6 patients, increase the cooldown
+        float extendedSpawnCooldown = 20.0f;
+
         while (true)
         {
-            yield return new WaitForSeconds(spawnCooldown);
             SpawnPatientIfPossible();
+            yield return new WaitForSeconds(extendedSpawnCooldown); // Slower spawn rate after the initial rush
         }
     }
+
 
     private void SpawnPatientIfPossible()
     {
@@ -47,6 +61,7 @@ public class PatientSpawner : MonoBehaviour
     {
         // Instantiate the NPC at the spawn point
         GameObject patient = Instantiate(patientPrefab, spawnPoint.position, spawnPoint.rotation);
+        patientsSpawned++; // Increment the count of spawned patients
 
         // Get the PatientAI component and assign the references
         PatientAI patientAI = patient.GetComponent<PatientAI>();
