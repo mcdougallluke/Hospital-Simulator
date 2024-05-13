@@ -36,6 +36,9 @@ public class PatientAI : MonoBehaviour
     public VaccineMinigame vaccineMinigame;
     AudioManager audioManager;
 
+    public static int patientsSpawned = 0;
+
+
 
     void Start()
     {
@@ -155,22 +158,37 @@ public class PatientAI : MonoBehaviour
         {
             if (RoomManager.Instance.IsRoomAvailable(point))
             {
-                // Disable the NavMeshAgent to perform the teleport
-                agent.enabled = false;
-                transform.position = point.position;  // Teleport the NPC to the room
-                agent.enabled = true;  // Re-enable the NavMeshAgent if needed later
+                Debug.Log("number of patients spawned: " + patientsSpawned);
+                
+                if(patientsSpawned <= 6){
+                    // Disable the NavMeshAgent to perform the teleport
+                    agent.enabled = false;
+                    transform.position = point.position;  // Teleport the NPC to the room
+                    agent.enabled = true;  // Re-enable the NavMeshAgent if needed later
 
-                // Update the current state and destination point
-                currentDestinationPoint = point;  // Store the current destination
-                RoomManager.Instance.SetRoomAvailability(point, false);  // Mark the room as unavailable
+                    // Update the current state and destination point
+                    currentDestinationPoint = point;  // Store the current destination
+                    RoomManager.Instance.SetRoomAvailability(point, false);  // Mark the room as unavailable
 
-                // Log the teleportation for debugging
-                Debug.Log($"Teleported to point: {point.name}");
+                    // Log the teleportation for debugging
+                    Debug.Log($"Teleported to point: {point.name}");
 
-                // Update the state to be in the exam room directly
-                currentState = PatientState.InExamRoom;
+                    // Update the state to be in the exam room directly
+                    currentState = PatientState.InExamRoom;
 
-                return true;  // Indicate successful teleportation
+                    return true;  // Indicate successful teleportation
+                }
+
+                else if(patientsSpawned > 6)
+                {
+                    agent.isStopped = false;
+                    RoomManager.Instance.SetRoomAvailability(point, false); // Mark the point as unavailable
+                    agent.destination = point.position;
+                    currentDestinationPoint = point; // Store the current destination
+                    Debug.Log($"Moving to point: {point.name}");
+                    return true; // Point found
+                }
+                
             }
         }
         return false;  // No available room found
